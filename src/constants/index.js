@@ -81,14 +81,19 @@ export const myProjects = [
 export const calculateSizes = (isSmall, isMobile, isTablet, isUltraWide) => {
   return {
     deskScale: isSmall ? 0.60 : isMobile ? 0.80 : isUltraWide ? 1.4 : 1.20,
-    deskPosition: isSmall ? [-0.3, -2.1, 3.9] : isMobile ? [-0.2, -1.1, 3.9] : isUltraWide ? [0.0, -3, 3.9] : [0.0, -2.5, 3.9],
+    deskPos: isSmall ? [-0.3, -2.1, 3.9] : isMobile ? [-0.2, -1.1, 3.9] : isUltraWide ? [0.0, -3, 3.9] : [0.0, -2.5, 3.9],
+    laptopCameraPos: isSmall ? [-0.25, -0.30, 4.97]   : isMobile ? [0.4, 1.10, 5.223]    : isTablet ? [1.15, 0.90, 6.00]    : isUltraWide ? [2.10, 1.27, 6.00]    : [1.95, 1.15, 5.5],
+    laptopCameraRot: isSmall ? [-0.10, -0.92, -0.40]  : isMobile ? [-0.10, -0.92, -0.40] : isTablet ? [-0.10, -0.92, -0.40] : isUltraWide ? [-0.09, -0.92, -0.40] : [-0.10, -0.92, -0.4],
+    monitorCameraPos: isSmall ? [-0.25, -0.30, 4.97]  : isMobile ? [0.4, 1.10, 5.223]    : isTablet ? [1.15, 0.90, 6.00]    : isUltraWide ? [2.10, 1.27, 6.00]    : [-1, 1.0, 6.4],
+    monitorCameraRot: isSmall ? [-0.10, -0.92, -0.40] : isMobile ? [-0.10, -0.92, -0.40] : isTablet ? [-0.10, -0.92, -0.40] : isUltraWide ? [-0.09, -0.92, -0.40] : [0.3, -0.32, -0.02]
   };
 };
 
-export const calculateCameraPositions = (stateSections) => {
+export const calculateCameraPositions = (stateSections, isSmall, isMobile, isTablet, isUltraWide) => {
+  const sizes = calculateSizes(isSmall, isMobile, isTablet, isUltraWide)
   return {
-    pos: stateSections == STATES.LAPTOP ? [1.8, 1.2, 5.6] : [0, 0, 20],
-    rot: stateSections == STATES.LAPTOP ? [-0.1, -0.95, -0.39] : [0, 0, 0]
+    pos: stateSections == STATES.MONITOR ? sizes.monitorCameraPos : stateSections == STATES.LAPTOP ? sizes.laptopCameraPos : [0, 0, 20],
+    rot: stateSections == STATES.MONITOR ? sizes.monitorCameraRot : stateSections == STATES.LAPTOP ? sizes.laptopCameraRot : [0, 0, 0]
   };
 };
 

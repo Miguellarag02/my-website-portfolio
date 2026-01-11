@@ -2,14 +2,21 @@ import { useRef, useState  } from 'react'
 import { useGLTF, Outlines } from '@react-three/drei'
 import { STATES } from '../constants'
 
-const MyDesktop = ({ onLaptopClick, outlineEnable, ...props }) => {
+const MyDesktop = ({ onLaptopClick, onMonitorClick, outlineEnable, ...props }) => {
   const { nodes, materials } = useGLTF('/models/my_desktop.glb')
   const [hoverLaptop, setHoverLaptop] = useState(false)
+  const [hoverMonitor, setHoverMonitor] = useState(false)
 
   const handleLaptopClick = (e) => {
     e.stopPropagation()
     onLaptopClick?.()
   }
+
+  const handleMonitorClick = (e) => {
+    e.stopPropagation()
+    onMonitorClick?.()
+  }
+
 
   return (
     <group {...props} dispose={null}>
@@ -159,13 +166,30 @@ const MyDesktop = ({ onLaptopClick, outlineEnable, ...props }) => {
       </group>
 
       {/* Mesh from Monitor */}
-      <group position={[-0.907, 2.592, 0.485]} rotation={[0, Math.PI / 2, 0]} scale={0.5}>
+      <group 
+          position={[-0.907, 2.592, 0.485]}
+          rotation={[0, Math.PI / 2, 0]}
+          scale={0.5}
+          onClick={handleMonitorClick}
+          onPointerOver={(e) => {
+            e.stopPropagation()
+            setHoverMonitor(true)
+            document.body.style.cursor = "pointer"
+          }}
+          onPointerOut={(e) => {
+            e.stopPropagation()
+            setHoverMonitor(false)
+            document.body.style.cursor = "default"
+          }}
+      >
         <mesh
           castShadow
           receiveShadow
           geometry={nodes.실린더001.geometry}
           material={materials['매테리얼.005']}
-        />
+        >
+          { outlineEnable && hoverMonitor && <Outlines thickness={3.05} color="white"/>}
+        </mesh>
         <mesh
           castShadow
           receiveShadow

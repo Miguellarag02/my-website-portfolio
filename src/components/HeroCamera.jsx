@@ -13,7 +13,10 @@ const HeroCamera = ({children, freeMovement, cameraState}) => {
 
         if(freeMovement && groupRef.current) {
             easing.dampE(groupRef.current.rotation, [-state.pointer.y/12, -state.pointer.x/20, 0], 0.25, delta);
-        } 
+        }
+        else {
+            easing.dampE(groupRef.current.rotation, [0, 0, 0], 0.25, delta);
+        }
     });
 
     return (
