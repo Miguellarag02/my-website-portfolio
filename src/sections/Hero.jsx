@@ -8,6 +8,8 @@ import MyDesktop from "../components/MyDesktop.jsx"
 import CanvasLoader from "../components/CanvasLoader.jsx"
 import HeroCamera from "../components/HeroCamera.jsx"
 import Button from "../components/Button.jsx"
+import { EffectComposer, Bloom } from '@react-three/postprocessing'
+
 
 const Hero = () => {
     // const controls = useControls('MyDesktop', {
@@ -58,25 +60,25 @@ const Hero = () => {
 
     // Const for state machine for sections
     const [stateSection, setStateSection] = useState(STATES.IDLE)
+    const [outlineEnable, setOutlineEnable] = useState(true)
     const cameraState = calculateCameraPositions(stateSection)
 
 
     // Click Events
     const onLaptopClick = () => {
         setStateSection(STATES.LAPTOP);
-        console.log("Se ha pulsado el laptop")
+        setOutlineEnable(false)
     }
 
     // Keyboard Events
     useEffect(() => {
         const handleKeyDown = (event) => {
-        if (event.key === 'Escape') {
-            setStateSection(STATES.IDLE)
+            if (event.key === 'Escape') {
+                setStateSection(STATES.IDLE);
+                setTimeout(() => setOutlineEnable(true), 2000)
+            }
         }
-        }
-
         window.addEventListener('keydown', handleKeyDown)
-
         return () => {
             window.removeEventListener('keydown', handleKeyDown)
         }
@@ -101,11 +103,19 @@ const Hero = () => {
                                 position={sizes.deskPosition} 
                                 rotation={[0.39, 4.34, 0.00]}
                                 onLaptopClick={onLaptopClick}
+                                outlineEnable={outlineEnable}
                                 // scale={[controls.scale, controls.scale, controls.scale]}
                                 // position={[controls.posX, controls.posY, controls.posZ]}
                                 // rotation={[controls.rotX, controls.rotY, controls.rotZ]}
                             />
                         </HeroCamera>
+                        <EffectComposer resolutionScale={0.2}>
+                            <Bloom
+                                intensity={0.9}
+                                luminanceThreshold={0.5}
+                                luminanceSmoothing={0.9}
+                            />
+                        </EffectComposer>
                         <ambientLight intensity={1.0} />
                         <directionalLight position={[-10, 1, 1]} intensity={3.0} />
                     </Suspense>

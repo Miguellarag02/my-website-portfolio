@@ -1,18 +1,8 @@
 import { useRef, useState  } from 'react'
 import { useGLTF, Outlines } from '@react-three/drei'
+import { STATES } from '../constants'
 
-
-export const LaptopBorder = ({ enabled }) => {
-  return (
-    <Outlines
-      thickness={2.05}
-      color="white"
-      visible={enabled}   // <-- aquí lo activas o desactivas
-    />
-  )
-}
-
-const MyDesktop = ({ onLaptopClick, ...props }) => {
+const MyDesktop = ({ onLaptopClick, outlineEnable, ...props }) => {
   const { nodes, materials } = useGLTF('/models/my_desktop.glb')
   const [hoverLaptop, setHoverLaptop] = useState(false)
 
@@ -70,7 +60,7 @@ const MyDesktop = ({ onLaptopClick, ...props }) => {
                   material={materials.Body}
                   position={[0.008, -0.118, -0.537]}
                 >
-                 <LaptopBorder enabled={hoverLaptop} />
+                { outlineEnable && hoverLaptop && <Outlines thickness={2.05} color="white"/>}
                 </mesh>
               </group>
               <group position={[0.008, -0.118, -0.537]}>
@@ -151,7 +141,7 @@ const MyDesktop = ({ onLaptopClick, ...props }) => {
                   material={materials.Body}
                   position={[0.008, -0.118, -0.537]}
                 >
-                 <LaptopBorder enabled={hoverLaptop} />
+                { outlineEnable && hoverLaptop && <Outlines thickness={2.05} color="white"/>}
                 </mesh>
               </group>
               <group position={[0.008, -0.118, -0.537]}>
