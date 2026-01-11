@@ -2,7 +2,6 @@ import { PerspectiveCamera } from "@react-three/drei"
 import { Canvas } from "@react-three/fiber"
 import { Suspense, useState, useEffect } from "react"
 import { Leva, useControls } from "leva"
-import { EffectComposer, Outline, Selection } from '@react-three/postprocessing'
 import { useMediaQuery } from "react-responsive"
 import { STATES, calculateSizes, calculateCameraPositions } from "../constants/index.js"
 import MyDesktop from "../components/MyDesktop.jsx"
@@ -59,7 +58,6 @@ const Hero = () => {
 
     // Const for state machine for sections
     const [stateSection, setStateSection] = useState(STATES.IDLE)
-    const [selected, setSelected] = useState([])
     const cameraState = calculateCameraPositions(stateSection)
 
 
@@ -85,7 +83,7 @@ const Hero = () => {
     }, [])
 
     return (
-        <section className="min-h-screen w-full flex flex-col relative">
+        <section className="min-h-screen w-full flex flex-col">
             <div className="w-full mx-auto flex flex-col sm:mt-36 mt-32 c-space gap-3">
                 <p className="sm:text-3xl text-2xl font-medium text-white text-center font-generalsans"> Hi I am Miguel Angel 
                     <span className="waving-hand">👋</span>
@@ -94,33 +92,20 @@ const Hero = () => {
             </div>
             <div className="w-full h-full absolute inset-0">
                 {/* <Leva /> */}
-                <Canvas className="w-full h-full">
+                <Canvas className="w-full h-full flex-grow">
                     <Suspense fallback={<CanvasLoader />}>
                         <PerspectiveCamera makeDefault position={[0, 0, 20 ]} />
-                        <Selection>
-                            <HeroCamera freeMovement={ stateSection == STATES.IDLE ? !isMobile : false} cameraState={cameraState}>
-                                <MyDesktop 
-                                    scale={sizes.deskScale} 
-                                    position={sizes.deskPosition} 
-                                    rotation={[0.39, 4.34, 0.00]}
-                                    onLaptopClick={onLaptopClick}
-                                    onLaptopHoverChange={(hover, laptopObject) => {
-                                        setSelected(hover && laptopObject ? [laptopObject] : [])
-                                    }}
-                                    // scale={[controls.scale, controls.scale, controls.scale]}
-                                    // position={[controls.posX, controls.posY, controls.posZ]}
-                                    // rotation={[controls.rotX, controls.rotY, controls.rotZ]}
-                                />
-                            </HeroCamera>
-                            <EffectComposer multisampling={4}>
-                                <Outline
-                                    edgeStrength={3}
-                                    pulseSpeed={0.6}
-                                    visibleEdgeColor="white"
-                                    hiddenEdgeColor="white"
-                                />
-                            </EffectComposer>
-                        </Selection>
+                        <HeroCamera freeMovement={ stateSection == STATES.IDLE ? !isMobile : false} cameraState={cameraState}>
+                            <MyDesktop 
+                                scale={sizes.deskScale} 
+                                position={sizes.deskPosition} 
+                                rotation={[0.39, 4.34, 0.00]}
+                                onLaptopClick={onLaptopClick}
+                                // scale={[controls.scale, controls.scale, controls.scale]}
+                                // position={[controls.posX, controls.posY, controls.posZ]}
+                                // rotation={[controls.rotX, controls.rotY, controls.rotZ]}
+                            />
+                        </HeroCamera>
                         <ambientLight intensity={1.0} />
                         <directionalLight position={[-10, 1, 1]} intensity={3.0} />
                     </Suspense>

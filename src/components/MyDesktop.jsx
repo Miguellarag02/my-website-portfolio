@@ -1,11 +1,20 @@
 import { useRef, useState  } from 'react'
-import { useGLTF } from '@react-three/drei'
-import { Select } from '@react-three/postprocessing'
+import { useGLTF, Outlines } from '@react-three/drei'
 
-const MyDesktop = ({ onLaptopClick, onLaptopHoverChange, ...props }) => {
+
+export const LaptopBorder = ({ enabled }) => {
+  return (
+    <Outlines
+      thickness={2.05}
+      color="white"
+      visible={enabled}   // <-- aquí lo activas o desactivas
+    />
+  )
+}
+
+const MyDesktop = ({ onLaptopClick, ...props }) => {
   const { nodes, materials } = useGLTF('/models/my_desktop.glb')
-  const laptopRef = useRef()
-  const [isLaptopHovered, setIsLaptopHovered] = useState(false)
+  const [hoverLaptop, setHoverLaptop] = useState(false)
 
   const handleLaptopClick = (e) => {
     e.stopPropagation()
@@ -16,147 +25,149 @@ const MyDesktop = ({ onLaptopClick, onLaptopHoverChange, ...props }) => {
     <group {...props} dispose={null}>
 
       {/* Meshes from Laptop*/}
-      <Select enabled={isLaptopHovered}>
-        <group 
-            ref={laptopRef} 
-            position={[-0.332, 3.144, -2.707]} 
-            rotation={[-1.443, 0.185, 0.954]} 
-            scale={4} 
-            onClick={handleLaptopClick}
-            onPointerOver={(e) => {
-              e.stopPropagation()
-              setIsLaptopHovered(true)
-              document.body.style.cursor = 'pointer'
-            }}
-            onPointerOut={(e) => {
-              e.stopPropagation()
-              setIsLaptopHovered(false)
-              document.body.style.cursor = 'default'
-            }}
-          >
-          <group rotation={[Math.PI / 2, 0, 0]}>
-            <group position={[0, 0, 0.008]} rotation={[-Math.PI / 2, 0, 0]} scale={0.001}>
-              <group position={[0.008, 7.546, -0.537]}>
-                <group position={[0.008, -0.118, -0.537]}>
-                  <mesh
-                    castShadow
-                    receiveShadow
-                    geometry={nodes.Object_18.geometry}
-                    material={materials.Rubber}
-                    position={[0.008, -0.118, -0.537]}
-                  />
-                </group>
-                <group position={[0.008, -0.118, -0.537]}>
-                  <mesh
-                    castShadow
-                    receiveShadow
-                    geometry={nodes.Object_16.geometry}
-                    material={materials.Display_Rim}
-                    position={[0.008, -0.118, -0.537]}
-                  />
-                </group>
-                <group position={[0.008, -0.118, -0.537]}>
-                  <mesh
-                    castShadow
-                    receiveShadow
-                    geometry={nodes.Object_10.geometry}
-                    material={materials.Body}
-                    position={[0.008, -0.118, -0.537]}
-                  />
-                </group>
-                <group position={[0.008, -0.118, -0.537]}>
-                  <mesh
-                    castShadow
-                    receiveShadow
-                    geometry={nodes.Object_12.geometry}
-                    material={materials.Connector}
-                    position={[0.008, -0.118, -0.537]}
-                  />
-                </group>
-                <group position={[0.008, -0.118, -0.537]}>
-                  <mesh
-                    castShadow
-                    receiveShadow
-                    geometry={nodes.Object_20.geometry}
-                    material={materials.Connectors}
-                    position={[0.008, -0.118, -0.537]}
-                  />
-                </group>
-                <group position={[0.008, -0.118, -0.537]}>
-                  <mesh
-                    castShadow
-                    receiveShadow
-                    geometry={nodes.Object_8.geometry}
-                    material={materials.Keyboard}
-                    position={[0.008, -0.118, -0.537]}
-                  />
-                </group>
-                <group position={[0.008, -0.118, -0.537]}>
-                  <mesh
-                    castShadow
-                    receiveShadow
-                    geometry={nodes.Object_6.geometry}
-                    material={materials.Incognito}
-                    position={[0.008, -0.118, -0.537]}
-                  />
-                </group>
-                <group position={[0.008, -0.118, -0.537]}>
-                  <mesh
-                    castShadow
-                    receiveShadow
-                    geometry={nodes.Object_26.geometry}
-                    material={materials.Bottom_Screws}
-                    position={[0.008, -0.118, -0.537]}
-                  />
-                </group>
-                <group position={[0.008, -0.118, -0.537]}>
-                  <mesh
-                    castShadow
-                    receiveShadow
-                    geometry={nodes.Object_28.geometry}
-                    material={materials.Speaker}
-                    position={[0.008, -0.118, -0.537]}
-                  />
-                  <mesh
-                    castShadow
-                    receiveShadow
-                    geometry={nodes.Object_29.geometry}
-                    material={materials.Speaker}
-                    position={[0.008, -0.118, -0.537]}
-                  />
-                </group>
-                <group position={[0.008, -0.118, -0.537]}>
-                  <mesh
-                    castShadow
-                    receiveShadow
-                    geometry={nodes.Object_24.geometry}
-                    material={materials.Rubber}
-                    position={[0.008, -0.118, -0.537]}
-                  />
-                </group>
-                <group position={[0.008, -0.118, -0.537]}>
-                  <mesh
-                    castShadow
-                    receiveShadow
-                    geometry={nodes.Object_14.geometry}
-                    material={materials.Body}
-                    position={[0.008, -0.118, -0.537]}
-                  />
-                </group>
-                <group position={[0.008, -0.118, -0.537]}>
-                  <mesh
-                    castShadow
-                    receiveShadow
-                    geometry={nodes.Object_22.geometry}
-                    material={materials.Touchpad}
-                    position={[0.008, -0.118, -0.537]}
-                  />
-                </group>
+      <group 
+          position={[-0.332, 3.144, -2.707]} 
+          rotation={[-1.443, 0.185, 0.954]} 
+          scale={4} 
+          onClick={handleLaptopClick}
+          onPointerOver={(e) => {
+            e.stopPropagation()
+            setHoverLaptop(true)
+            document.body.style.cursor = "pointer"
+          }}
+          onPointerOut={(e) => {
+            e.stopPropagation()
+            setHoverLaptop(false)
+            document.body.style.cursor = "default"
+          }}
+        >
+        <group rotation={[Math.PI / 2, 0, 0]}>
+          <group position={[0, 0, 0.008]} rotation={[-Math.PI / 2, 0, 0]} scale={0.001}>
+            <group position={[0.008, 7.546, -0.537]}>
+              <group position={[0.008, -0.118, -0.537]}>
+                <mesh
+                  castShadow
+                  receiveShadow
+                  geometry={nodes.Object_18.geometry}
+                  material={materials.Rubber}
+                  position={[0.008, -0.118, -0.537]}
+                />
+              </group>
+              <group position={[0.008, -0.118, -0.537]}>
+                <mesh
+                  castShadow
+                  receiveShadow
+                  geometry={nodes.Object_16.geometry}
+                  material={materials.Display_Rim}
+                  position={[0.008, -0.118, -0.537]}
+                />
+              </group>
+              <group position={[0.008, -0.118, -0.537]}>
+                <mesh
+                  castShadow
+                  receiveShadow
+                  geometry={nodes.Object_10.geometry}
+                  material={materials.Body}
+                  position={[0.008, -0.118, -0.537]}
+                >
+                 <LaptopBorder enabled={hoverLaptop} />
+                </mesh>
+              </group>
+              <group position={[0.008, -0.118, -0.537]}>
+                <mesh
+                  castShadow
+                  receiveShadow
+                  geometry={nodes.Object_12.geometry}
+                  material={materials.Connector}
+                  position={[0.008, -0.118, -0.537]}
+                />
+              </group>
+              <group position={[0.008, -0.118, -0.537]}>
+                <mesh
+                  castShadow
+                  receiveShadow
+                  geometry={nodes.Object_20.geometry}
+                  material={materials.Connectors}
+                  position={[0.008, -0.118, -0.537]}
+                />
+              </group>
+              <group position={[0.008, -0.118, -0.537]}>
+                <mesh
+                  castShadow
+                  receiveShadow
+                  geometry={nodes.Object_8.geometry}
+                  material={materials.Keyboard}
+                  position={[0.008, -0.118, -0.537]}
+                />
+              </group>
+              <group position={[0.008, -0.118, -0.537]}>
+                <mesh
+                  castShadow
+                  receiveShadow
+                  geometry={nodes.Object_6.geometry}
+                  material={materials.Incognito}
+                  position={[0.008, -0.118, -0.537]}
+                />
+              </group>
+              <group position={[0.008, -0.118, -0.537]}>
+                <mesh
+                  castShadow
+                  receiveShadow
+                  geometry={nodes.Object_26.geometry}
+                  material={materials.Bottom_Screws}
+                  position={[0.008, -0.118, -0.537]}
+                />
+              </group>
+              <group position={[0.008, -0.118, -0.537]}>
+                <mesh
+                  castShadow
+                  receiveShadow
+                  geometry={nodes.Object_28.geometry}
+                  material={materials.Speaker}
+                  position={[0.008, -0.118, -0.537]}
+                />
+                <mesh
+                  castShadow
+                  receiveShadow
+                  geometry={nodes.Object_29.geometry}
+                  material={materials.Speaker}
+                  position={[0.008, -0.118, -0.537]}
+                />
+              </group>
+              <group position={[0.008, -0.118, -0.537]}>
+                <mesh
+                  castShadow
+                  receiveShadow
+                  geometry={nodes.Object_24.geometry}
+                  material={materials.Rubber}
+                  position={[0.008, -0.118, -0.537]}
+                />
+              </group>
+              <group position={[0.008, -0.118, -0.537]}>
+                <mesh
+                  castShadow
+                  receiveShadow
+                  geometry={nodes.Object_14.geometry}
+                  material={materials.Body}
+                  position={[0.008, -0.118, -0.537]}
+                >
+                 <LaptopBorder enabled={hoverLaptop} />
+                </mesh>
+              </group>
+              <group position={[0.008, -0.118, -0.537]}>
+                <mesh
+                  castShadow
+                  receiveShadow
+                  geometry={nodes.Object_22.geometry}
+                  material={materials.Touchpad}
+                  position={[0.008, -0.118, -0.537]}
+                />
               </group>
             </group>
           </group>
         </group>
-      </Select>
+      </group>
+
       {/* Mesh from Monitor */}
       <group position={[-0.907, 2.592, 0.485]} rotation={[0, Math.PI / 2, 0]} scale={0.5}>
         <mesh
