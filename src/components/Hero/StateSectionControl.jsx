@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { DEFAULT_HASH, hashToState, stateToHash, STATES } from "../../constants/HeroRoutes.js";
 
 export function useStateSectionControl() {
-  const [stateSection, setStateSection] = useState(STATES.IDLE);
+  const [stateSection, setStateSection] = useState(STATES.HOME);
 
   // Inicializa hash si no existe
   useEffect(() => {

@@ -1,19 +1,22 @@
 export const STATES = {
-      IDLE: 'IDLE',
-      LAPTOP: 'LAPTOP',
-      MONITOR: 'MONITOR',
+      HOME: 'HOME',
+      WORK: 'WORK',
+      ABOUT: 'ABOUT',
+      PROJECTS: 'PROJECTS',
   };
 
 export const hashToState = {
-  "#idle": STATES.IDLE,
-  "#laptop": STATES.LAPTOP,
-  "#monitor": STATES.MONITOR,
+  "#home": STATES.HOME,
+  "#work": STATES.WORK,
+  "#about": STATES.ABOUT,
+  "#projects": STATES.PROJECTS
 };
 
 export const stateToHash = {
-  [STATES.IDLE]: "#idle",
-  [STATES.LAPTOP]: "#laptop",
-  [STATES.MONITOR]: "#monitor",
+  [STATES.HOME]: "#home",
+  [STATES.WORK]: "#work",
+  [STATES.ABOUT]: "#about",
+  [STATES.PROJECTS]: "#projects"
 };
 
-export const DEFAULT_HASH = "#idle";
+export const DEFAULT_HASH = "#home";

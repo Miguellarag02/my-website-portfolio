@@ -1,6 +1,40 @@
 import { useMediaQuery } from "react-responsive";
 import { STATES } from "./HeroRoutes.js"
 
+export function useResponsiveFlags() {
+  const isSmall = useMediaQuery({ maxWidth: 480 });
+  const isMobile = useMediaQuery({ minWidth: 481, maxWidth: 768 });
+  const isTablet = useMediaQuery({ minWidth: 769, maxWidth: 1024 });
+  const isUltraWide = useMediaQuery({ minWidth: 1920 });
+
+  return { isSmall, isMobile, isTablet, isUltraWide };
+}
+
+export const calculateSizes = (isSmall, isMobile, isTablet, isUltraWide) => {
+  return {
+    deskScale: isSmall ? 0.60 : isMobile ? 0.80 : isUltraWide ? 1.4 : 1.20,
+    deskPos: isSmall ? [-0.3, -2.1, 3.9] : isMobile ? [-0.2, -1.1, 3.9] : isUltraWide ? [0.0, -3, 3.9] : [0.0, -2.5, 3.9],
+    laptopCameraPos:  isSmall ? [-0.25, -0.30, 4.97]  : isMobile ? [0.76, 0.92, 4.88]     : isTablet ? [1.76, 0.92, 5.58]    : isUltraWide ? [2.37, 1.10, 5.80]    : [1.97, 1.02, 5.44],
+    laptopCameraRot:  isSmall ? [0.155, -0.965, -0.195] : isMobile ? [0.155, -0.965, -0.195] : isTablet ? [0.155, -0.965, -0.195] : isUltraWide ? [0.155, -0.965, -0.195] : [0.155, -0.965, -0.195],
+    monitorCameraPos: isSmall ? [-0.25, -0.30, 4.97]  : isMobile ? [0.4, 1.10, 5.223]     : isTablet ? [1.15, 0.90, 6.00]    : isUltraWide ? [2.10, 1.27, 6.00]    : [-1.16, 0.96, 6.08],
+    monitorCameraRot: isSmall ? [-0.10, -0.92, -0.40] : isMobile ? [-0.10, -0.92, -0.40]  : isTablet ? [-0.10, -0.92, -0.40] : isUltraWide ? [-0.09, -0.92, -0.40] : [0.39, -0.38, 0.00]
+  };
+};
+
+export const calculateCameraPositions = (stateSections, isSmall, isMobile, isTablet, isUltraWide) => {
+  const sizes = calculateSizes(isSmall, isMobile, isTablet, isUltraWide)
+  return {
+    pos: stateSections == STATES.PROJECTS ? sizes.laptopCameraPos 
+       : stateSections == STATES.ABOUT ? sizes.monitorCameraPos 
+       : stateSections == STATES.WORK ? sizes.laptopCameraPos 
+       : [0, 0, 20],
+    rot: stateSections == STATES.PROJECTS ? sizes.laptopCameraRot 
+       : stateSections == STATES.ABOUT ? sizes.monitorCameraRot 
+       : stateSections == STATES.WORK ? sizes.laptopCameraRot 
+       : [0, 0, 0]
+  };
+};
+
 export const navLinks = [
   {
     id: 1,
@@ -19,6 +53,11 @@ export const navLinks = [
   },
   {
     id: 4,
+    name: 'Projects',
+    href: '#projects',
+  },
+  {
+    id: 5,
     name: 'Contact',
     href: '#contact',
   },
@@ -74,34 +113,6 @@ export const myProjects = [
     ],
   }
 ];
-
-export function useResponsiveFlags() {
-  const isSmall = useMediaQuery({ maxWidth: 480 });
-  const isMobile = useMediaQuery({ minWidth: 481, maxWidth: 768 });
-  const isTablet = useMediaQuery({ minWidth: 769, maxWidth: 1024 });
-  const isUltraWide = useMediaQuery({ minWidth: 1920 });
-
-  return { isSmall, isMobile, isTablet, isUltraWide };
-}
-
-export const calculateSizes = (isSmall, isMobile, isTablet, isUltraWide) => {
-  return {
-    deskScale: isSmall ? 0.60 : isMobile ? 0.80 : isUltraWide ? 1.4 : 1.20,
-    deskPos: isSmall ? [-0.3, -2.1, 3.9] : isMobile ? [-0.2, -1.1, 3.9] : isUltraWide ? [0.0, -3, 3.9] : [0.0, -2.5, 3.9],
-    laptopCameraPos:  isSmall ? [-0.25, -0.30, 4.97]  : isMobile ? [0.76, 0.92, 4.88]     : isTablet ? [1.76, 0.92, 5.58]    : isUltraWide ? [2.37, 1.10, 5.80]    : [1.97, 1.02, 5.44],
-    laptopCameraRot:  isSmall ? [0.155, -0.965, -0.195] : isMobile ? [0.155, -0.965, -0.195] : isTablet ? [0.155, -0.965, -0.195] : isUltraWide ? [0.155, -0.965, -0.195] : [0.155, -0.965, -0.195],
-    monitorCameraPos: isSmall ? [-0.25, -0.30, 4.97]  : isMobile ? [0.4, 1.10, 5.223]     : isTablet ? [1.15, 0.90, 6.00]    : isUltraWide ? [2.10, 1.27, 6.00]    : [-1.16, 0.96, 6.08],
-    monitorCameraRot: isSmall ? [-0.10, -0.92, -0.40] : isMobile ? [-0.10, -0.92, -0.40]  : isTablet ? [-0.10, -0.92, -0.40] : isUltraWide ? [-0.09, -0.92, -0.40] : [0.39, -0.38, 0.00]
-  };
-};
-
-export const calculateCameraPositions = (stateSections, isSmall, isMobile, isTablet, isUltraWide) => {
-  const sizes = calculateSizes(isSmall, isMobile, isTablet, isUltraWide)
-  return {
-    pos: stateSections == STATES.MONITOR ? sizes.monitorCameraPos : stateSections == STATES.LAPTOP ? sizes.laptopCameraPos : [0, 0, 20],
-    rot: stateSections == STATES.MONITOR ? sizes.monitorCameraRot : stateSections == STATES.LAPTOP ? sizes.laptopCameraRot : [0, 0, 0]
-  };
-};
 
 export const workExperiences = [
     {

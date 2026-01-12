@@ -14,11 +14,11 @@ export function useKeyboardControls({ stateSection, setStateSection, setOutlineE
     const onKeyDown = (e) => {
       if (e.key !== "Escape") return;
 
-      setStateSection(STATES.IDLE);
+      setStateSection(STATES.HOME);
 
       clearTimeout(timeoutId);
       timeoutId = setTimeout(() => {
-        if (stateRef.current === STATES.IDLE) {
+        if (stateRef.current === STATES.HOME) {
           setOutlineEnable(true);
         }
       }, delayMs);
