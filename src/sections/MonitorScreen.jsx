@@ -1,4 +1,4 @@
-import { STATES } from "../../constants/HeroRoutes.js"
+import { STATES } from "../constants/HeroRoutes.js"
 
 export default function HeroOverlay({ stateSection }) {
   return (

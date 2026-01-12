@@ -213,7 +213,7 @@ const MyDesktop = ({ onLaptopClick, onMonitorClick, outlineEnable, ...props }) =
         receiveShadow
         geometry={nodes.Floor.geometry}
         material={materials.ground_mat}
-        position={[-0.353, -0.001, -0.328]}
+        position={[-1.553, -0.001, -0.028]}
         scale={[0.086, 1, 0.086]}
       />
 
