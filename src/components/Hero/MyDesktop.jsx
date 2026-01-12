@@ -1,10 +1,11 @@
 import { useState  } from 'react'
 import { useGLTF, Outlines } from '@react-three/drei'
 
-const MyDesktop = ({ onLaptopClick, onMonitorClick, outlineEnable, ...props }) => {
+const MyDesktop = ({ onLaptopClick, onMonitorClick, onKeyboardClick, outlineEnable, ...props }) => {
   const { nodes, materials } = useGLTF('/models/my_desktop.glb')
   const [hoverLaptop, setHoverLaptop] = useState(false)
   const [hoverMonitor, setHoverMonitor] = useState(false)
+  const [hoverKeyboard, setHoverKeyboard] = useState(false)
 
   const handleLaptopClick = (e) => {
     e.stopPropagation()
@@ -14,6 +15,11 @@ const MyDesktop = ({ onLaptopClick, onMonitorClick, outlineEnable, ...props }) =
   const handleMonitorClick = (e) => {
     e.stopPropagation()
     onMonitorClick?.()
+  }
+
+  const handleKeyboardClick = (e) => {
+    e.stopPropagation()
+    onKeyboardClick?.()
   }
 
 
@@ -218,9 +224,23 @@ const MyDesktop = ({ onLaptopClick, onMonitorClick, outlineEnable, ...props }) =
       />
 
       {/* Meshes from Keyboard */}
-      <group position={[0, 0, 13.419]} rotation={[-Math.PI / 2, 0, 0]}>
+      <group 
+          position={[0, 0, 13.419]} 
+          rotation={[-Math.PI / 2, 0, 0]}
+          onClick={handleKeyboardClick}
+          onPointerOver={(e) => {
+            e.stopPropagation()
+            setHoverKeyboard(true)
+            document.body.style.cursor = "pointer"
+          }}
+          onPointerOut={(e) => {
+            e.stopPropagation()
+            setHoverKeyboard(false)
+            document.body.style.cursor = "default"
+          }}
+      >
         <group rotation={[Math.PI / 2, 0, 0]} scale={0.01}>
-          <group position={[0, -0.209, 0]}>
+          <group position={[0, 4.009, 0]}>
             <group
               position={[412.461, -0.219, -1444.942]}
               rotation={[-Math.PI / 2, 0, 0]}
@@ -233,7 +253,9 @@ const MyDesktop = ({ onLaptopClick, onMonitorClick, outlineEnable, ...props }) =
                 position={[-3.318, -1.593, 2.633]}
                 rotation={[0, 0.023, Math.PI / 2]}
                 scale={0.35}
-              />
+              >
+                { outlineEnable && hoverKeyboard && <Outlines thickness={3.05} color="white"/>}
+              </mesh>
             </group>
           </group>
         </group>
@@ -331,7 +353,21 @@ const MyDesktop = ({ onLaptopClick, onMonitorClick, outlineEnable, ...props }) =
       </group>
 
       {/* Meshes from Mouse Computer */}
-      <group position={[-0.081, -0.002, -0.342]} rotation={[0, -0.394, 0]}>
+      <group 
+          position={[-0.081, 0.032, -0.342]} 
+          rotation={[0, -0.394, 0]}
+          onClick={handleKeyboardClick}
+          onPointerOver={(e) => {
+            e.stopPropagation()
+            setHoverKeyboard(true)
+            document.body.style.cursor = "pointer"
+          }}
+          onPointerOut={(e) => {
+            e.stopPropagation()
+            setHoverKeyboard(false)
+            document.body.style.cursor = "default"
+          }}
+      >
         <group position={[0.001, 2.898, -0.5]} rotation={[-1.684, 0.295, -1.199]} scale={4}>
           <group rotation={[Math.PI / 2, 0, 0]}>
             <group position={[0, -0.018, -0.189]} rotation={[-1.257, 0, 0]}>
@@ -450,7 +486,9 @@ const MyDesktop = ({ onLaptopClick, onMonitorClick, outlineEnable, ...props }) =
                           geometry={nodes.Object_37.geometry}
                           material={materials['g305_top_other.003']}
                           position={[0, 0.001, -0.55]}
-                        />
+                        >
+                          { outlineEnable && hoverKeyboard && <Outlines thickness={3.05} color="white"/>}
+                        </mesh>
                       </group>
                     </group>
                   </group>
