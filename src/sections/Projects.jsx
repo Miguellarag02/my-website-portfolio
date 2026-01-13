@@ -27,19 +27,19 @@ export default function Projects({ stateSection }) {
 
   return (
     <section className= "c-space lg:ml-12 md:mt-48 mt-36 z-10 fade-in">
-      <p className="head-text">My Work</p>
+      <p className="head-text">My Projects</p>
       <div className="grid lg:grid-cols-2 grid-cols-1 mt-84 gap-5 w-full">
           <div className="flex flex-col gap-3 relative sm:p-10 py-10 px-5 shadow-black-200">
-              <div className="p-3 backdrop-filter backdrop-blur-3xl w-fit rounded-lg flex flex-row items-center gap-3" style={currentProject.logoStyle}>
-                  <img src={currentProject.logo} alt="logo" className="w-10 h-10 shadow-sm"/>
-                  <p className="text-white text-2xl font-semibold animatedText md:hidden block">{currentProject.title}</p>
+                <div className="flex flex-row items-center gap-3">
+                    <div className="p-3 backdrop-filter backdrop-blur-3xl w-24 rounded-lg" style={currentProject.logoStyle}>
+                        <img src={currentProject.logo} alt="logo" className="w-10 h-10 shadow-sm object-cover"/>
+                    </div>
+                    <p className="text-white text-xl font-semibold animatedText">{currentProject.title}</p>
               </div>
               <div className="flex flex-col gap-3 text-white-600 my-5">
-                  <p className="text-white text-2xl font-semibold animatedText md:block hidden">{currentProject.title}</p>
-                  <p className="animatedText">{currentProject.desc}</p>
-                  <p className="animatedText">{currentProject.subdesc}</p>
-              
-                <div className="flex items-center justify-between flex-wrap gap-5">
+                  {/* <p className="text-white text-2xl font-semibold animatedText md:block hidden">{currentProject.title}</p> */}
+                  <p className="whitespace-pre-line text-justify animatedText max-h-[380px] overflow-y-auto pr-2 mr-8 scrollbar-thin scrollbar-thumb-white/30 scrollbar-track-transparent hover:scrollbar-thumb-white/50">{currentProject.desc}</p>
+                <div className="flex items-center justify-between flex-wrap gap-5 mt-4">
                     <div className="flex items-center gap-3">
                         {currentProject.tags.map((tag, index) => (
                             <div key={index} className="tech-logo">
@@ -48,12 +48,12 @@ export default function Projects({ stateSection }) {
                         ))}
                     </div>
                     <a className="flex items-center gap-2 cursor-pointer text-white-600" href={currentProject.href} target="_blank" rel="noreferrer">
-                        <p>Check Live Site</p>
+                        <p>{currentProject.checkLinkTxt}</p>
                         <img src="/assets/arrow-up.png" className="w-3 h-3" alt="arrow"/>
                     </a>
                 </div>
               </div>
-              <div className="flex justify-between items-center mt-7">
+              <div className="flex justify-between items-center">
                   <button className="arrow-btn" onClick={() => {handleNavigation('previous')}}>
                       <img src="/assets/left-arrow.png" alt="left-arrow" className="w-4 h-4"/>
                   </button>
