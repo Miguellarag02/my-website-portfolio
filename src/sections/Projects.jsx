@@ -9,9 +9,7 @@ import DemoComputer from "../components/DemoComputer.jsx";
 import { Suspense } from "react";
 import PdfViewer from "../components/PdfViewer.jsx";
 
-export default function Projects({ stateSection }) {
-
-  const [selectedProjectIndex, setSelectedProjectIndex] = useState(0);
+export default function Projects({ selectedProjectIndex, setSelectedProjectIndex }) {
   const projectsLength = myProjects.length;
 
   const handleNavigation = (direction) => {

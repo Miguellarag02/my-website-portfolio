@@ -1,11 +1,17 @@
 import { useState  } from 'react'
-import { useGLTF, Outlines } from '@react-three/drei'
+import { useGLTF, Outlines, useTexture } from '@react-three/drei'
+import { myProjects } from '../../constants/index.js'
+import { STATES } from '../../constants/HeroRoutes.js'
 
-const MyDesktop = ({ onLaptopClick, onMonitorClick, onKeyboardClick, outlineEnable, ...props }) => {
+const MyDesktop = ({stateSection, onLaptopClick, onMonitorClick, onKeyboardClick, outlineEnable, selectedProjectIndex, ...props }) => {
   const { nodes, materials } = useGLTF('/models/my_desktop.glb')
   const [hoverLaptop, setHoverLaptop] = useState(false)
   const [hoverMonitor, setHoverMonitor] = useState(false)
   const [hoverKeyboard, setHoverKeyboard] = useState(false)
+  const currentProject = myProjects[selectedProjectIndex];
+
+  const txt = useTexture('assets/spotlight1.png')
+  const screenTexture = useTexture('textures/desk/screen.png')
 
   const handleLaptopClick = (e) => {
     e.stopPropagation()
@@ -110,7 +116,10 @@ const MyDesktop = ({ onLaptopClick, onMonitorClick, onKeyboardClick, outlineEnab
                   material={materials.Incognito}
                   position={[0.008, -0.118, -0.537]}
                 >
-                  <meshBasicMaterial color="black" />
+                  <meshMatcapMaterial
+                    map={stateSection === STATES.PROJECTS ? txt : null}
+                    color={stateSection === STATES.PROJECTS ? 'white' : 'black'}
+                  />
                 </mesh>
               </group>
               <group position={[0.008, -0.118, -0.537]}>

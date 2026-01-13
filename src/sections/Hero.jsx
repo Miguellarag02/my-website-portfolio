@@ -18,6 +18,7 @@ export default function Hero() {
     const { stateSection, setStateSection } = useStateSectionControl();
     const [outlineEnable, setOutlineEnable] = useState(true);
     const [cameraIsMoving, setCameraIsMoving] = useState(false)
+    const [selectedProjectIndex, setSelectedProjectIndex] = useState(0);
 
     // Sizing
     const { isSmall, isMobile, isTablet, isUltraWide } = useResponsiveFlags();
@@ -60,17 +61,17 @@ export default function Hero() {
                 <>
                     {/* WORK SECTION (LAPTOP) */}
                     {stateSection === STATES.WORK && (
-                        <WorkSection stateSection={stateSection} />
+                        <WorkSection />
                     )}
 
                     {/* ABOUT SECTION (MONITOR) */}
                     {stateSection === STATES.ABOUT && (
-                        <MonitorScreen stateSection={stateSection} />
+                        <MonitorScreen />
                     )}
 
                     {/* PROJECTS SECTION (KEYBOARD) */}
                     {stateSection === STATES.PROJECTS && (
-                        <ProjectsSection stateSection={stateSection} />
+                        <ProjectsSection selectedProjectIndex={selectedProjectIndex} setSelectedProjectIndex={setSelectedProjectIndex} />
                     )}
                 </>
             )}
@@ -84,10 +85,12 @@ export default function Hero() {
                             scale={sizes.deskScale}
                             position={sizes.deskPos}
                             rotation={[0.39, 4.34, 0.0]}
+                            stateSection={stateSection}
                             onLaptopClick={onLaptopClick}
                             onMonitorClick={onMonitorClick}
                             onKeyboardClick={onKeyboardClick}
                             outlineEnable={outlineEnable}
+                            selectedProjectIndex={selectedProjectIndex}
                         />
                     </HeroCamera>
 

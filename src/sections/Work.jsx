@@ -6,7 +6,7 @@ import Target from "../components/Target.jsx"
 import { OrbitControls } from "@react-three/drei";
 import { Suspense } from "react";
 
-export default function Work({ stateSection }) {
+export default function Work() {
 
   return (
     <section className="c-space lg:ml-12 md:mt-48 mt-36 z-10 fade-in">
