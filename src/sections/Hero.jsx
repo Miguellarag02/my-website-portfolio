@@ -9,7 +9,7 @@ import MyDesktop from "../components/Hero/MyDesktop.jsx";
 import Button from "../components/Button.jsx";
 import WorkSection from "./Work.jsx";
 import ProjectsSection from "./Projects.jsx";
-import MonitorScreen from "./MonitorScreen.jsx";
+import AboutSection from "./About.jsx";
 import { useKeyboardControls } from "../components/Hero/KeyboardControls.jsx";
 import { useStateSectionControl } from "../components/Hero/StateSectionControl.jsx";
 import { calculateSizes, calculateCameraPositions } from "../constants/index.js";
@@ -66,7 +66,7 @@ export default function Hero() {
 
                     {/* ABOUT SECTION (MONITOR) */}
                     {stateSection === STATES.ABOUT && (
-                        <MonitorScreen />
+                        <AboutSection />
                     )}
 
                     {/* PROJECTS SECTION (KEYBOARD) */}

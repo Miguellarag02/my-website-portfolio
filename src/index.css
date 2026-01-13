@@ -1,4 +1,6 @@
 @import url('https://fonts.cdnfonts.com/css/general-sans');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap');
+
 
 @tailwind base;
 @tailwind components;
@@ -16,6 +18,22 @@ body {
 @layer utilities {
   .c-space {
     @apply sm:px-10 px-5;
+  }
+
+  .preserve-3d {
+    transform-style: preserve-3d;
+  }
+
+  .perspective-1200 {
+    perspective: 1200px;
+  }
+
+  .translate-z-10 {
+    --tw-translate-z: 40px;
+  }
+
+  .translate-z-20 {
+    --tw-translate-z: 80px;
   }
 
   .head-text {
@@ -84,6 +102,53 @@ body {
   .copy-container {
     @apply cursor-pointer flex justify-center items-center gap-2;
   }
+
+  .card {
+    @apply absolute left-1/2 2xl:-ml-[24rem] xl:-ml-[20rem] md:-ml-[18rem] sm:-ml-[12rem] -ml-[10rem] 2xl:w-[780px] xl:w-[600px] md:w-[500px] sm:w-[380px] w-[300px]
+      md:h-[680px] h-[600px] bg-zinc-950
+      list-none p-0 m-0 text-white border-[5px] border-white rounded-[70px] bg-cover
+      shadow-[1px_1px_5px_#000,-1px_-1px_5px_#000]
+      transition-[transform,left,opacity,box-shadow] duration-1000 ease-in-out;
+
+    transform:
+      translate(var(--tw-translate-x), var(--tw-translate-y))
+      translateZ(var(--tw-translate-z, 0))
+      scale(var(--tw-scale-x), var(--tw-scale-y));
+  }
+
+  .card_tag {
+    @apply md:text-5xl sm:text-4xl text-2xl font-title font-black !leading-normal
+      transition-transform duration-1000 ease-in-out;
+  }
+
+  .card-inactive {
+    @apply scale-50 opacity-50 translate-z-10;
+  }
+
+  .card-active {
+    @apply pointer-events-none translate-z-20;
+  }
+
+  .card-left {
+    @apply md:left-1/4 sm:left-32 left-[6.5rem] translate-z-10;
+  }
+
+  .card-right {
+    @apply md:left-3/4 sm:left-[calc(100%-8rem)] left-[calc(100%-6.5rem)] translate-z-10;
+  }
+
+  .card-left .card_tag  { @apply 2xl:translate-x-20 xl:translate-x-14 sm:translate-x-4 translate-x-8 translate-y-8; }
+  .card-active .card_tag{ @apply 2xl:translate-x-60 xl:translate-x-44 sm:translate-x-24 translate-x-[4.5rem] translate-y-4; }
+  .card-right .card_tag { @apply 2xl:translate-x-96 xl:translate-x-64 sm:translate-x-48 translate-x-32 translate-y-8; }
+
+  .card-inactive:hover {
+    @apply transition-colors opacity-100 duration-300 ease-in-out shadow-[rgba(255,255,255,0.6)_0px_4px_15px,_rgba(0,0,0,0.3)_0px_4px_10px];
+  }
+
+  .avatar-frame {
+    @apply md:w-80 md:h-80 w-60 rounded-full p-1 bg-gradient-to-tr from-white/10 via-white/40 to-white/10 transition-transform duration-1000 ease-in-out
+  }
+  .card-inactive .avatar-frame {@apply scale-75}
 
   /* projects section  */
   .arrow-btn {

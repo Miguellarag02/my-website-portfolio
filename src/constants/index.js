@@ -12,12 +12,12 @@ export function useResponsiveFlags() {
 
 export const calculateSizes = (isSmall, isMobile, isTablet, isUltraWide) => {
   return {
-    deskScale: isSmall ? 0.60 : isMobile ? 0.80 : isUltraWide ? 1.4 : 1.20,
-    deskPos: isSmall ? [-0.3, -2.1, 3.9] : isMobile ? [-0.2, -1.1, 3.9] : isUltraWide ? [0.0, -3, 3.9] : [0.0, -2.5, 3.9],
-    laptopCameraPos:  isSmall ? [-0.25, -0.30, 4.97]  : isMobile ? [0.76, 0.92, 4.88]     : isTablet ? [1.76, 0.92, 5.58]    : isUltraWide ? [2.37, 1.10, 5.80]    : [1.97, 1.02, 5.44],
-    laptopCameraRot:  isSmall ? [0.155, -0.965, -0.195] : isMobile ? [0.155, -0.965, -0.195] : isTablet ? [0.155, -0.965, -0.195] : isUltraWide ? [0.155, -0.965, -0.195] : [0.155, -0.965, -0.195],
-    monitorCameraPos: isSmall ? [-0.25, -0.30, 4.97]  : isMobile ? [0.4, 1.10, 5.223]     : isTablet ? [1.15, 0.90, 6.00]    : isUltraWide ? [2.10, 1.27, 6.00]    : [-1.16, 0.96, 6.08],
-    monitorCameraRot: isSmall ? [-0.10, -0.92, -0.40] : isMobile ? [-0.10, -0.92, -0.40]  : isTablet ? [-0.10, -0.92, -0.40] : isUltraWide ? [-0.09, -0.92, -0.40] : [0.39, -0.38, 0.00]
+    deskScale:        isSmall ? 0.60                    : isMobile ? 0.80                     : isUltraWide ? 1.4 : 1.20,
+    deskPos:          isSmall ? [-0.3, -2.1, 3.9]       : isMobile ? [-0.2, -1.1, 3.9]        : isUltraWide ? [0.0, -3, 3.9]        : [0.0, -2.5, 3.9],
+    laptopCameraPos:  isSmall ? [-0.25, -0.30, 4.97]    : isMobile ? [0.76, 0.92, 4.88]       : isTablet ? [1.76, 0.92, 5.58]       : isUltraWide ? [2.37, 1.10, 5.80]      : [1.97, 1.02, 5.44],
+    laptopCameraRot:  isSmall ? [0.155, -0.965, -0.195] : isMobile ? [0.155, -0.965, -0.195]  : isTablet ? [0.155, -0.965, -0.195]  : isUltraWide ? [0.155, -0.965, -0.195] : [0.155, -0.965, -0.195],
+    monitorCameraPos: isSmall ? [-1.16, 0.96, 6.08]     : isMobile ? [-1, 0.98, 5.2]      : isTablet ? [-1.16, 0.96, 6.08]      : isUltraWide ? [-1.31, 1.15, 6.48]     : [-1.16, 0.96, 6.08],
+    monitorCameraRot: isSmall ? [0.39, -0.38, 0.00]     : isMobile ? [0.39, -0.38, 0.00]      : isTablet ? [0.39, -0.38, 0.00]      : isUltraWide ? [0.39, -0.38, 0.00]     : [0.39, -0.38, 0.00]
   };
 };
 
@@ -129,7 +129,7 @@ export const workExperiences = [
     pos: 'Software Engineer Intern',
     duration: 'May 2024 - Oct 2024',
     title:
-      'Enhanced the Philobot autonomous robotics platform using C++ and ROS, integrating YOLO models via TensorFlow and PyTorch for real-time object detection. Deployed inference pipelines that improved recognition performance and reduced response latency by approximately 40%. Worked within an Agile/Scrum environment, contributing to sprint planning and iterative development.',
+      'Enhanced the Philobot autonomous robotics platform using C++ and ROS, integrating YOLO models via TensorFlow and PyTorch for real-time object detection. Deployed inference pipelines that improved recognition performance and reduced response latency. Worked within an Agile/Scrum environment, contributing to sprint planning and iterative development.',
     icon: '/assets/bertrandt.svg',
   },
   {
@@ -138,7 +138,7 @@ export const workExperiences = [
     pos: 'Software Engineer',
     duration: 'Oct 2024 - Jul 2025',
     title:
-      'Developed adaptive Human-Machine Interfaces (HMI) for the European FCAS program (EPIIC Project), improving integration reliability across multi-module systems. Built backend APIs in Python and desktop applications in Java for Airbus projects, optimizing data flow and reducing processing overhead by approximately 30%. Actively participated in international workshops, enhancing cross-functional collaboration.',
+      'Developed adaptive Human-Machine Interfaces (HMI) for the European FCAS program (EPIIC Project), improving integration reliability across multi-module systems. Built backend APIs in Python and desktop applications in Java for Airbus projects, optimizing data flow and reducing processing overhead. Actively participated in international workshops, enhancing cross-functional collaboration.',
     icon: '/assets/bertrandt.svg',
   },
   {
@@ -147,7 +147,7 @@ export const workExperiences = [
     pos: 'Software Requirements & Architecture Engineer',
     duration: 'Jul 2025 - Present',
     title:
-      'Defined software architecture and functional specifications for a defense radar system developed by Indra. Designed verification and validation processes aligned with industry standards, improving traceability and compliance accuracy by 25%. Collaborated directly with clients to ensure system lifecycle consistency and technical alignment.',
+      'Defined software architecture and functional specifications for a defense radar system developed by Indra. Designed verification and validation processes aligned with industry standards, improving traceability. Collaborated directly with clients to ensure system lifecycle consistency and technical alignment.',
     icon: '/assets/bertrandt.svg',
   },
 ];

@@ -5,6 +5,8 @@ export default {
     extend: {
       fontFamily: {
         generalsans: ['General Sans', 'sans-serif'],
+        sans: ['Inter', 'ui-sans-serif', 'system-ui'],
+        title: ['Poppins', 'ui-sans-serif', 'system-ui']
       },
       colors: {
         black: {

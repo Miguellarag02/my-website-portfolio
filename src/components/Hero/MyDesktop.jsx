@@ -11,7 +11,6 @@ const MyDesktop = ({stateSection, onLaptopClick, onMonitorClick, onKeyboardClick
   const currentProject = myProjects[selectedProjectIndex];
 
   const txt = useTexture('assets/spotlight1.png')
-  const screenTexture = useTexture('textures/desk/screen.png')
 
   const handleLaptopClick = (e) => {
     e.stopPropagation()
@@ -118,7 +117,7 @@ const MyDesktop = ({stateSection, onLaptopClick, onMonitorClick, onKeyboardClick
                 >
                   <meshMatcapMaterial
                     map={stateSection === STATES.PROJECTS ? txt : null}
-                    color={stateSection === STATES.PROJECTS ? 'white' : 'black'}
+                    color='black'
                   />
                 </mesh>
               </group>
