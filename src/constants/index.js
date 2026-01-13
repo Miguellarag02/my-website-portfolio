@@ -80,7 +80,7 @@ export const myProjects = [
     desc: 'Given the complexity of handling real-time data presented by optical sensors, this work develops the design and implementation of a complete acquisition system that allows for the configuration, extraction, and storage of the information generated in a file. This system will be developed using Hardware Description Language.\nAdditionally, an application is incorporated to allow efficient control and processing of the data by the user. This enables the characterization of the sensor and ensures it meets the environmental requirements. \nFinally, it is important to mention that this Final Degree Project has been carried out within the context of a research project in collaboration with the company Alter Technology TÜV Nord. The objective of this project is the development of a modular platform for the characterization of image sensors.',
     href: '/pdf/TFG_Lara_Guarino.pdf',
     checkLinkTxt: 'Check document (Spanish)',
-    texture: '/textures/project/project1.mp4',
+    extraInformation: '/pdf/TFG_Lara_Guarino_power_point.pdf',
     logo: '/assets/project-logo1.png',
     logoStyle: {
       backgroundColor: '#2A1816',

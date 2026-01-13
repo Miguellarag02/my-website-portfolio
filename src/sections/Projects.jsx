@@ -7,6 +7,7 @@ import { Center, OrbitControls } from "@react-three/drei";
 import CanvasLoader from "../components/CanvasLoader.jsx";
 import DemoComputer from "../components/DemoComputer.jsx";
 import { Suspense } from "react";
+import PdfViewer from "../components/PdfViewer.jsx";
 
 export default function Projects({ stateSection }) {
 
@@ -29,17 +30,16 @@ export default function Projects({ stateSection }) {
     <section className= "c-space lg:ml-12 md:mt-48 mt-36 z-10 fade-in">
       <p className="head-text">My Projects</p>
       <div className="grid lg:grid-cols-2 grid-cols-1 mt-84 gap-5 w-full">
-          <div className="flex flex-col gap-3 relative sm:p-10 py-10 px-5 shadow-black-200">
+          <div className="flex flex-col gap-3 relative sm:p-10 md:py-10 py-4 px-3 shadow-black-200">
                 <div className="flex flex-row items-center gap-3">
                     <div className="p-3 backdrop-filter backdrop-blur-3xl w-24 rounded-lg" style={currentProject.logoStyle}>
                         <img src={currentProject.logo} alt="logo" className="w-10 h-10 shadow-sm object-cover"/>
                     </div>
                     <p className="text-white text-xl font-semibold animatedText">{currentProject.title}</p>
               </div>
-              <div className="flex flex-col gap-3 text-white-600 my-5">
-                  {/* <p className="text-white text-2xl font-semibold animatedText md:block hidden">{currentProject.title}</p> */}
-                  <p className="whitespace-pre-line text-justify animatedText max-h-[380px] overflow-y-auto pr-2 mr-8 scrollbar-thin scrollbar-thumb-white/30 scrollbar-track-transparent hover:scrollbar-thumb-white/50">{currentProject.desc}</p>
-                <div className="flex items-center justify-between flex-wrap gap-5 mt-4">
+              <div className="flex flex-col gap-3 text-white-600 md:my-5 ">
+                  <p className="whitespace-pre-line text-justify animatedText max-h-[160px] md:max-h-[380px] overflow-y-auto pr-2 mr-8 scrollbar-thin scrollbar-thumb-white/30 scrollbar-track-transparent hover:scrollbar-thumb-white/50">{currentProject.desc}</p>
+                <div className="flex items-center justify-between flex-wrap gap-5 md:mt-4">
                     <div className="flex items-center gap-3">
                         {currentProject.tags.map((tag, index) => (
                             <div key={index} className="tech-logo">
@@ -63,7 +63,8 @@ export default function Projects({ stateSection }) {
               </div>
           </div>
           <div className="border border-blaxck-300 bg-black-200 rounded-lg h-[38rem] lg:block hidden">
-              <Canvas>
+              <PdfViewer pdfLink={currentProject.extraInformation ?? currentProject.href} />
+              {/* <Canvas>
                   <ambientLight intensity={Math.PI} />
                   <directionalLight position={[10, 10, 5]} />
                   <Center>
@@ -74,7 +75,7 @@ export default function Projects({ stateSection }) {
                       </Suspense>
                   </Center>
                   <OrbitControls maxPolarAngle={Math.PI/2} enableZoom={false} />
-              </Canvas> 
+              </Canvas>  */}
           </div>
       </div>
     </section>
