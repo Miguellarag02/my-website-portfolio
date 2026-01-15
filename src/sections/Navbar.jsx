@@ -2,12 +2,12 @@ import { useEffect, useState } from "react"
 import { navLinks } from "../constants/index.js"
 
 
-const NavItems = () => {
+const NavItems = ({ onItemClick }) => {
     return (
         <ul className="nav-ul">
             {navLinks.map(({id, href, name}) => (
                 <li key={id} className="nav-li">
-                    <a href={href} className="nav-li_a" onClick={() => {}}>
+                    <a href={href} className="nav-li_a" onClick={onItemClick}>
                         {name}
                     </a>
                 </li>
@@ -58,7 +58,7 @@ const Navbar = () => {
 
     return (
         <header className="fixed top-0 left-0 right-0 z-50 bg-black/90">
-            <div className="max-w-7xl mx-auto">
+            <div className="max-w-10xl mx-auto">
                 <div className="flex justify-between items-center py-5 mx-auto c-space">
                     <div className="flex items-center gap-3 whitespace-nowrap flex-row">
                         <AliveCheck />
@@ -72,13 +72,13 @@ const Navbar = () => {
                     </button>
 
                     <nav className="sm:flex hidden">
-                        <NavItems/>
+                        <NavItems />
                     </nav>
                 </div>
             </div>
             <div className={`nav-sidebar ${isOpen ? 'max-h-screen' : 'max-h-0'}`}>
                 <nav className="p-5">
-                    <NavItems/>
+                    <NavItems onItemClick={() => setIsOpen(false)} />
                 </nav>
             </div>
         </header>

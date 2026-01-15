@@ -10,8 +10,8 @@ const HeroCamera = ({ children, freeMovement, cameraState, setCameraIsMoving }) 
   const target = useRef(new THREE.Vector3())
 
   useFrame((state, delta) => {
-    easing.damp3(state.camera.position, cameraState.pos, 0.5, delta)
-    easing.damp3(state.camera.rotation, cameraState.rot, 0.8, delta)
+    easing.damp3(state.camera.position, cameraState.pos, 0.8, delta)
+    easing.damp3(state.camera.rotation, cameraState.rot, 0.9, delta)
 
     if (groupRef.current) {
       easing.dampE(

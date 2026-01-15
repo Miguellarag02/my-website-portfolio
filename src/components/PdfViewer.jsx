@@ -8,7 +8,7 @@ const PdfViewer = ({ pdfLink }) => {
   }
 
   return (
-    <div className="h-[70vh] w-full overflow-y-auto rounded-xl border">
+    <div className="h-full w-full overflow-y-auto rounded-xl border">
       <object
         data={pdfLink}
         type="application/pdf"

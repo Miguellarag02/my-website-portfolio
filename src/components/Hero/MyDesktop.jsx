@@ -36,7 +36,7 @@ const MyDesktop = ({stateSection, onLaptopClick, onMonitorClick, onKeyboardClick
           position={[-0.332, 3.144, -2.707]} 
           rotation={[-1.443, 0.185, 0.954]} 
           scale={4} 
-          onClick={handleLaptopClick}
+          onClick={outlineEnable ? handleLaptopClick : null}
           onPointerOver={(e) => {
             e.stopPropagation()
             setHoverLaptop(true)
@@ -185,7 +185,7 @@ const MyDesktop = ({stateSection, onLaptopClick, onMonitorClick, onKeyboardClick
           position={[-0.907, 2.592, 0.485]}
           rotation={[0, Math.PI / 2, 0]}
           scale={0.5}
-          onClick={handleMonitorClick}
+          onClick={ outlineEnable ? handleMonitorClick : null }l
           onPointerOver={(e) => {
             e.stopPropagation()
             setHoverMonitor(true)

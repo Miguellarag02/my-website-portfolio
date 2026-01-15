@@ -1,4 +1,4 @@
-import { useState, Suspense } from "react";
+import { useState, Suspense, useEffect } from "react";
 import { Canvas } from "@react-three/fiber";
 import CanvasLoader from "../components/CanvasLoader.jsx";
 import { PerspectiveCamera } from "@react-three/drei";
@@ -42,6 +42,27 @@ export default function Hero() {
         setStateSection(STATES.PROJECTS);
         setOutlineEnable(false);
     };
+
+    // Enable outliners
+    useEffect(() => {
+        const checkHash = () => {
+            if (window.location.hash === "#home") {
+                setOutlineEnable(true);
+            } else {
+                setOutlineEnable(false);
+            }
+        };
+
+        // Comprobación inicial
+        checkHash();
+
+        // Escuchar cambios en el hash
+        window.addEventListener("hashchange", checkHash);
+
+        return () => {
+            window.removeEventListener("hashchange", checkHash);
+        };
+    }, []);
 
     return (
         <section className="min-h-screen w-full flex flex-col">
