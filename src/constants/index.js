@@ -95,13 +95,49 @@ export const myProjects = [
     tags: [
       {
         id: 1,
-        name: 'React.js',
-        path: '/assets/react.svg',
+        name: 'Xilinx_Vivado.js',
+        path: '/assets/vivado.png',
       },
       {
         id: 2,
-        name: 'TailwindCSS',
-        path: 'assets/tailwindcss.png',
+        name: 'C#',
+        path: 'assets/c-sharp.svg',
+      },
+      {
+        id: 3,
+        name: 'Gitlab',
+        path: '/assets/gitlab-icon.svg',
+      },
+      {
+        id: 4,
+        name: 'Matlab',
+        path: '/assets/matlab.jpg',
+      },
+    ],
+  },
+  {
+    title: 'My own website portfolio',
+    desc: 'This website is a personal portfolio project that I developed with great enthusiasm and attention to detail. It is built as a modern, interactive web application using React, TypeScript, Vite, and Tailwind CSS, with a strong focus on performance, clean architecture, and smooth animations.\nBeyond showcasing my projects and skills, this portfolio represents my personal approach to frontend development, combining technical rigor with thoughtful design and user experience. It is a project I was genuinely excited to design, build, and deploy, and it reflects how I enjoy turning ideas into polished, functional products.',
+    href: 'https://github.com/Miguellarag02/my-website-portfolio#',
+    checkLinkTxt: 'Check my repository',
+    extraInformation: '/pdf/TFG_Lara_Guarino_power_point.pdf',
+    logo: '/assets/project-logo1.png',
+    logoStyle: {
+      backgroundColor: '#13202F',
+      border: '0.2px solid #17293E',
+      boxShadow: '0px 0px 60px 0px #2F6DB54D',
+    },
+    spotlight: '/assets/spotlight2.png',
+    tags: [
+      {
+        id: 1,
+        name: 'Vite',
+        path: '/assets/vitejs.svg',
+      },
+      {
+        id: 2,
+        name: 'React',
+        path: 'assets/react.svg',
       },
       {
         id: 3,
@@ -110,8 +146,8 @@ export const myProjects = [
       },
       {
         id: 4,
-        name: 'Framer Motion',
-        path: '/assets/framer.png',
+        name: 'Tailwindcss',
+        path: '/assets/tailwindcss.png',
       },
     ],
   }
