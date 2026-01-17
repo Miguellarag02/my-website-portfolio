@@ -136,18 +136,15 @@ body {
   }
 
   .card-left {
-    /* desde el centro, desplaza a la izquierda */
     --tw-translate-x: calc(-50% - 12rem);
     --tw-translate-z: 40px;
   }
 
   .card-right {
-    /* desde el centro, desplaza a la derecha */
     --tw-translate-x: calc(-50% + 12rem);
     --tw-translate-z: 40px;
   }
 
-  /* si quieres offsets responsive, puedes hacerlo así: */
   @media (min-width: 640px) {
     .card-left  { --tw-translate-x: calc(-50% - 16rem); }
     .card-right { --tw-translate-x: calc(-50% + 16rem); }
@@ -156,7 +153,6 @@ body {
     .card-left  { --tw-translate-x: calc(-50% - 22rem); }
     .card-right { --tw-translate-x: calc(-50% + 22rem); }
   }
-
 
   .card-left .card_tag  { @apply 2xl:translate-x-20 xl:translate-x-14 sm:translate-x-4 translate-x-8 translate-y-8; }
   .card-active .card_tag{ @apply 2xl:translate-x-56 xl:translate-x-44 sm:translate-x-24 translate-x-[3.5rem] translate-y-3; }
@@ -172,9 +168,10 @@ body {
   .card-inactive .avatar-frame {@apply scale-75}
 
   .ability_card_base {
-    @apply w-full h-full border border-[2px] border-black-300 bg-black-200 rounded-lg
+    @apply w-full h-full absolute border-[2px] border-black-300 bg-black-200 rounded-3xl
           text-left p-5 cursor-pointer
           transition-all duration-700 ease-in-out;
+    transform: translate3d(0,0,0);
   }
   .ability_card_base:hover {
     @apply opacity-100 border-[4px] border-white;
@@ -194,7 +191,8 @@ body {
   }
 
   .ability_card_expanded {
-    @apply absolute translate-x-0 translate-y-0 opacity-100 z-50;
+    @apply absolute translate-x-0 translate-y-0 opacity-100;
+    transform: translate3d(0, 0, 80px);
   }
 
   /* projects section  */
@@ -326,6 +324,7 @@ body {
   justify-content: center;
   text-align: center;
 }
+
 .ability_title .cosmic_effect {
 	position: relative;
 	cursor: pointer;

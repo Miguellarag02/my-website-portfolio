@@ -65,7 +65,7 @@ const About = () => {
               </div>
             </div>
             <div className="flex items-center justify-center
-                sm:text-base text-xs
+                md:text-base sm:text-xs text-[10px]
                 leading-relaxed
                 text-justify
                 xl:row-span-3 row-span-4
@@ -79,10 +79,10 @@ const About = () => {
           {/* My Abilities */}
           <li className={`grid grid-rows-12 card ${cardPositions[cardStates[cardItems.ABILITIES]]}`} onClick={(e) => rotate(e, cardStates[cardItems.ABILITIES] > cardStates[cardItems.HOBBIES], cardItems.ABILITIES)}>
             <p className="card_tag text-gray row-span-2">My Abilities</p>
-            <div className={`row-span-6 z-100 mr-8 ml-8 ${cardContent[cardStates[cardItems.ABILITIES]]}`} >
+            <div className={`md:row-span-6 row-span-10 z-100 md:mr-8 md:ml-8 md:mb-0 mb-6 ${cardContent[cardStates[cardItems.ABILITIES]]}`} >
               <AbilitiesCard closedAbilitiesTab={cardStates[cardItems.ABILITIES] != 1}/>
             </div>
-            <div className="relative row-span-4 flex items-center justify-center mb-4 mr-10 ml-10 border rounded-lg border-x-teal-200">
+            <div className="relative md:row-span-4 md:flex hidden items-center justify-center mb-4 mr-10 ml-10 border rounded-lg border-x-teal-200">
               <p>Items volando</p>
             </div>
           </li>
