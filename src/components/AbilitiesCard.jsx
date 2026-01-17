@@ -27,19 +27,27 @@ const AbilitiesCard = (closedAbilitiesTab) => {
             key={card.id}
             onClick={() => setOpenId(card.id)}
             className={`ability_card_base  ${openId == card.id ? "ability_card_expanded" : `ability_card_${card.id}`}`}
-          >
-            <h3 className="text-white text-lg font-semibold">{card.title}</h3>
-            <p className="text-white/60 text-sm mt-2">Click para expandir…</p>
+          > 
+            <div className="ability_title text-2xl mt-[2vh] mx-auto">
+              <div className="cosmic_effect" style={{ "--color": "#23b1d8" }} data-text={card.title}>
+                <span>{card.title}</span>
+              </div>
+            </div>
+            <p className={
+              openId == card.id ? 
+              "text-white/60 text-sm mt-2 leading-relaxed whitespace-pre-line font-semibold fade-in-delay-1" 
+              : "hidden"}>{card.desc}
+            </p>
             <div className={openId == card.id ? "w-full h-full" : "hidden"}>
-                <div className="absolute top-[1vh] right-[0.5vw] ">
-					<button
-						className="w-10 h-10 text-2xl flex justify-center text-white/60"
-						aria-label="Close"
-						onClick={close}
-					>
-					✕
-					</button>
-                </div>
+              <div className="absolute top-[1vh] right-[0.5vw] ">
+                <button
+                  className="w-10 h-10 text-2xl flex justify-center text-white/60"
+                  aria-label="Close"
+                  onClick={close}
+                >
+                ✕
+                </button>
+              </div>
             </div>
           </div>
         ))}

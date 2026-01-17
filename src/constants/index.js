@@ -2,7 +2,7 @@ import { useMediaQuery } from "react-responsive";
 import { STATES } from "./HeroRoutes.js"
 
 export const AboutMe = {
-  description: 'Software Engineer with a background in Electronics, Robotics, and Mechatronics, specialized in the design and development of complex systems. I work across low-level software, systems architecture, and interactive visualization, with a strong interest in projects where rigorous engineering meets thoughtful design.'
+  description: "Software Engineer with a background in Electronics, Robotics, and Mechatronics, comfortable working across software, systems, and low-level development. I adapt quickly to new technologies and environments, and I genuinely enjoy learning and growing through challenging projects. This mindset has helped me contribute effectively and become productive early in the teams and projects I’ve worked on."
 }
 
 export function useResponsiveFlags() {
@@ -195,22 +195,23 @@ export const workExperiences = [
 export const myAbilities = [
   {
     id: 1,
-    title: 'Título 1',
-    desc: 'Descripción 1'
+    title: 'Software',
+    desc: "I’ve worked on software projects where I could combine hands-on development with a strong focus on structure and quality. I mainly use Python, Java, C++, and MATLAB, and I enjoy designing clean solutions supported by solid software architecture, APIs, databases, and UML models.\nWhat really matters to me is building software that makes sense beyond the code itself, so I usually work in a requirements-driven way. This naturally leads into verification and validation, where I ensure that what is implemented truly matches the original requirements and is properly tested and traceable."
   },
   {
     id: 2,
-    title: 'Título 2',
-    desc: 'Descripción 2'
+    title: 'Tools',
+    desc: "Over time, I’ve become comfortable working with a variety of engineering tools that support both development and collaboration. I use Git daily for version control, Jira to organize and track work, and Wireshark when I need to understand what’s really happening at protocol level.\nIn more structured environments, I’ve used IBM DOORS to manage requirements, versions, and traceability, which helped me understand how design, implementation, and verification fit together in real industrial projects. I also work regularly with Vivado, Linux/WSL, and MATLAB as part of my day-to-day workflow."
   },
   {
     id: 3,
-    title: 'Título 3',
-    desc: 'Descripción 3'
+    title: 'Firmware',
+    desc: "My interest in low-level systems led me into firmware and embedded development, where I’ve worked with C and VHDL. I’ve had hands-on experience with FPGA and SoC platforms such as Zynq, which gave me a solid understanding of how hardware and software interact.\nWorking with PetaLinux and the Linux kernel helped me see the full picture, from boot and hardware integration to higher-level software components, and reinforced my interest in building reliable systems close to the hardware."
   },
   {
     id: 4,
-    title: 'Título 4',
-    desc: 'Descripción 4'
+    title: 'Soft Skills',
+    desc: "Beyond technical skills, I see myself as a curious and proactive person who genuinely enjoys working with others. I feel comfortable in Agile teams, sharing ideas, asking questions, and communicating technical topics in a clear and approachable way.\nI like learning continuously, tackling problems step by step, and staying organized even in fast-paced environments. Adapting to multidisciplinary and international teams comes naturally to me, and I value collaboration as much as technical excellence."
   },
-]
+];
+
