@@ -1,8 +1,9 @@
-import { useState } from "react"
+import { useState, useRef } from "react"
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { AboutMe } from "../constants";
+import { AboutMe, ICONS } from "../constants";
 import AbilitiesCard from "../components/AbilitiesCard.jsx";
+import IconBox from "../components/FloatingIcon3D.jsx";
 
 gsap.registerPlugin(ScrollTrigger);
 const cardItems = {
@@ -12,6 +13,7 @@ const cardItems = {
   };
 
 const About = () => {
+  const boxRef = useRef(null);
   const cardPositions = {
     0: "card-inactive card-left",
     1: "card card-active",
@@ -82,8 +84,22 @@ const About = () => {
             <div className={`md:row-span-6 row-span-10 z-100 md:mr-8 md:ml-8 md:mb-0 mb-6 ${cardContent[cardStates[cardItems.ABILITIES]]}`} >
               <AbilitiesCard closedAbilitiesTab={cardStates[cardItems.ABILITIES] != 1}/>
             </div>
-            <div className="relative md:row-span-4 md:flex hidden items-center justify-center mb-4 mr-10 ml-10 border rounded-lg border-x-teal-200">
-              <p>Items volando</p>
+            <div className="relative md:row-span-4 md:flex hidden z-50">
+              <div className="w-full flex justify-center items-center overflow-hidden">
+                <div
+                  ref={boxRef}
+                  className="relative w-full h-full overflow-hidden"
+                  style={{ perspective: "900px", transformStyle: "preserve-3d" }}
+                >
+                  {ICONS.map((icon) => (
+                    <IconBox
+                      key={icon.id}
+                      boxRef={boxRef}
+                      iconSrc={icon.src}
+                    />
+                  ))}
+                </div>
+              </div>
             </div>
           </li>
       </ul>

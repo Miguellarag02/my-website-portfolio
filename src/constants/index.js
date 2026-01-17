@@ -215,3 +215,18 @@ export const myAbilities = [
   },
 ];
 
+export const ICONS = [
+  { id: "python",      src: "/assets/python.svg" },
+  { id: "java",        src: "/assets/java.svg" },
+  { id: "vivado",      src: "/assets/vivado.png" },
+  { id: "cpp",         src: "/assets/c-plusplus.svg" },
+  { id: "csharp",      src: "/assets/c-sharp.svg" },
+  { id: "docker",      src: "/assets/docker-icon.svg" },
+  { id: "git",         src: "/assets/git-icon.svg" },
+  { id: "matlab",      src: "/assets/matlab.jpg" },
+  { id: "react",       src: "/assets/react.svg" },
+  { id: "mysql",       src: "/assets/mysql.svg" },
+  { id: "agile",       src: "/assets/agile.png" },
+  { id: "partners",    src: "/assets/partners.png" },
+  { id: "proactivity", src: "/assets/proactivity.png" },
+];
