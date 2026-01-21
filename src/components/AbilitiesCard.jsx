@@ -1,17 +1,8 @@
-import { useEffect, useMemo, useState } from "react";
 import { myAbilities } from "../constants";
 
 const ANIM_MS = 220;
 
-const AbilitiesCard = (closedAbilitiesTab) => {
-  const [openId, setOpenId] = useState(0);
-  const abilityCardClass = {
-	1: "ability_card_1",
-	2: "ability_card_2",
-	3: "ability_card_3",
-	4: "ability_card_4",
-	};
-
+const AbilitiesCard = ({ closedAbilitiesTab, openId, setOpenId }) => {
   const close = () => {
     window.setTimeout(() => {
       setOpenId(0);

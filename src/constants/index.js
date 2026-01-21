@@ -1,6 +1,24 @@
 import { useMediaQuery } from "react-responsive";
 import { STATES } from "./HeroRoutes.js"
 
+export const ICONS = { 
+  python:       {name: "Python",      src: "/assets/python.svg"},
+  java:         {name: "Java",        src: "/assets/java.svg"},
+  vivado:       {name: "Vivado",      src: "/assets/vivado.png"},
+  cpp:          {name: "C++",         src: "/assets/c-plusplus.svg"},
+  csharp:       {name: "C#",          src: "/assets/c-sharp.svg"},
+  docker:       {name: "Docker",      src: "/assets/docker-icon.svg"},
+  git:          {name: "Git",         src: "/assets/git-icon.svg"},
+  matlab:       {name: "Matlab",      src: "/assets/matlab.jpg"},
+  react:        {name: "React",       src: "/assets/react.svg"},
+  mysql:        {name: "MySQL",       src: "/assets/mysql.svg"},
+  agile:        {name: "Agile",       src: "/assets/agile.png"},
+  partners:     {name: "Partners",    src: "/assets/partners.png"},
+  proactivity:  {name: "Proactivity", src: "/assets/proactivity.png"},
+  ubuntu:       {name: "Ubuntu",      src: "/assets/ubuntu.png"},
+  zynq:         {name: "Zynq",        src: "/assets/zynq.jpg"},
+};
+
 export const AboutMe = {
   description: "Software Engineer with a background in Electronics, Robotics, and Mechatronics, comfortable working across software, systems, and low-level development. I adapt quickly to new technologies and environments, and I genuinely enjoy learning and growing through challenging projects. This mindset has helped me contribute effectively and become productive early in the teams and projects I’ve worked on."
 }
@@ -196,37 +214,25 @@ export const myAbilities = [
   {
     id: 1,
     title: 'Software',
-    desc: "I’ve worked on software projects where I could combine hands-on development with a strong focus on structure and quality. I mainly use Python, Java, C++, and MATLAB, and I enjoy designing clean solutions supported by solid software architecture, APIs, databases, and UML models.\nWhat really matters to me is building software that makes sense beyond the code itself, so I usually work in a requirements-driven way. This naturally leads into verification and validation, where I ensure that what is implemented truly matches the original requirements and is properly tested and traceable."
+    desc: "I’ve worked on software projects where I could combine hands-on development with a strong focus on structure and quality. I mainly use Python, Java, C++, and MATLAB, and I enjoy designing clean solutions supported by solid software architecture, APIs, databases, and UML models.\nWhat really matters to me is building software that makes sense beyond the code itself, so I usually work in a requirements-driven way. This naturally leads into verification and validation, where I ensure that what is implemented truly matches the original requirements and is properly tested and traceable.",
+    icons: [ICONS.python, ICONS.java, ICONS.cpp, ICONS.matlab, ICONS.mysql]
   },
   {
     id: 2,
     title: 'Tools',
-    desc: "Over time, I’ve become comfortable working with a variety of engineering tools that support both development and collaboration. I use Git daily for version control, Jira to organize and track work, and Wireshark when I need to understand what’s really happening at protocol level.\nIn more structured environments, I’ve used IBM DOORS to manage requirements, versions, and traceability, which helped me understand how design, implementation, and verification fit together in real industrial projects. I also work regularly with Vivado, Linux/WSL, and MATLAB as part of my day-to-day workflow."
+    desc: "Over time, I’ve become comfortable working with a variety of engineering tools that support both development and collaboration. I use Git daily for version control, Jira to organize and track work, and Wireshark when I need to understand what’s really happening at protocol level.\nIn more structured environments, I’ve used IBM DOORS to manage requirements, versions, and traceability, which helped me understand how design, implementation, and verification fit together in real industrial projects. I also work regularly with Vivado, Linux/WSL, and MATLAB as part of my day-to-day workflow.",
+    icons: [ICONS.git, ICONS.docker, ICONS.ubuntu]
   },
   {
     id: 3,
     title: 'Firmware',
-    desc: "My interest in low-level systems led me into firmware and embedded development, where I’ve worked with C and VHDL. I’ve had hands-on experience with FPGA and SoC platforms such as Zynq, which gave me a solid understanding of how hardware and software interact.\nWorking with PetaLinux and the Linux kernel helped me see the full picture, from boot and hardware integration to higher-level software components, and reinforced my interest in building reliable systems close to the hardware."
+    desc: "My interest in low-level systems led me into firmware and embedded development, where I’ve worked with C and VHDL. I’ve had hands-on experience with FPGA and SoC platforms such as Zynq, which gave me a solid understanding of how hardware and software interact.\nWorking with PetaLinux and the Linux kernel helped me see the full picture, from boot and hardware integration to higher-level software components, and reinforced my interest in building reliable systems close to the hardware.",
+    icons: [ICONS.vivado, ICONS.csharp, ICONS.zynq]
   },
   {
     id: 4,
     title: 'Soft Skills',
-    desc: "Beyond technical skills, I see myself as a curious and proactive person who genuinely enjoys working with others. I feel comfortable in Agile teams, sharing ideas, asking questions, and communicating technical topics in a clear and approachable way.\nI like learning continuously, tackling problems step by step, and staying organized even in fast-paced environments. Adapting to multidisciplinary and international teams comes naturally to me, and I value collaboration as much as technical excellence."
+    desc: "Beyond technical skills, I see myself as a curious and proactive person who genuinely enjoys working with others. I feel comfortable in Agile teams, sharing ideas, asking questions, and communicating technical topics in a clear and approachable way.\nI like learning continuously, tackling problems step by step, and staying organized even in fast-paced environments. Adapting to multidisciplinary and international teams comes naturally to me, and I value collaboration as much as technical excellence.",
+    icons: [ICONS.partners, ICONS.proactivity, ICONS.agile]
   },
-];
-
-export const ICONS = [
-  { id: "python",      src: "/assets/python.svg" },
-  { id: "java",        src: "/assets/java.svg" },
-  { id: "vivado",      src: "/assets/vivado.png" },
-  { id: "cpp",         src: "/assets/c-plusplus.svg" },
-  { id: "csharp",      src: "/assets/c-sharp.svg" },
-  { id: "docker",      src: "/assets/docker-icon.svg" },
-  { id: "git",         src: "/assets/git-icon.svg" },
-  { id: "matlab",      src: "/assets/matlab.jpg" },
-  { id: "react",       src: "/assets/react.svg" },
-  { id: "mysql",       src: "/assets/mysql.svg" },
-  { id: "agile",       src: "/assets/agile.png" },
-  { id: "partners",    src: "/assets/partners.png" },
-  { id: "proactivity", src: "/assets/proactivity.png" },
 ];

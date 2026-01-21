@@ -1,11 +1,18 @@
 import { useState, useRef } from "react"
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { AboutMe, ICONS } from "../constants";
+import { AboutMe, ICONS, myAbilities } from "../constants";
 import AbilitiesCard from "../components/AbilitiesCard.jsx";
 import IconBox from "../components/FloatingIcon3D.jsx";
 
 gsap.registerPlugin(ScrollTrigger);
+
+const STATES = {
+    INACTIVE_LEFT: 0,
+    ACTIVE: 1,
+    INACTIVE_RIGHT: 2
+};
+
 const cardItems = {
       HOBBIES: 0,
       ABOUT: 1,
@@ -14,6 +21,7 @@ const cardItems = {
 
 const About = () => {
   const boxRef = useRef(null);
+  const [openId, setOpenId] = useState(0);
   const cardPositions = {
     0: "card-inactive card-left",
     1: "card card-active",
@@ -82,7 +90,7 @@ const About = () => {
           <li className={`grid grid-rows-12 card ${cardPositions[cardStates[cardItems.ABILITIES]]}`} onClick={(e) => rotate(e, cardStates[cardItems.ABILITIES] > cardStates[cardItems.HOBBIES], cardItems.ABILITIES)}>
             <p className="card_tag text-gray row-span-2">My Abilities</p>
             <div className={`md:row-span-6 row-span-10 z-100 md:mr-8 md:ml-8 md:mb-0 mb-6 ${cardContent[cardStates[cardItems.ABILITIES]]}`} >
-              <AbilitiesCard closedAbilitiesTab={cardStates[cardItems.ABILITIES] != 1}/>
+              <AbilitiesCard closedAbilitiesTab={cardStates[cardItems.ABILITIES] != STATES.ACTIVE} openId={openId} setOpenId={setOpenId}/>
             </div>
             <div className="relative md:row-span-4 md:flex hidden z-50">
               <div className="w-full flex justify-center items-center overflow-hidden">
@@ -91,12 +99,17 @@ const About = () => {
                   className="relative w-full h-full overflow-hidden"
                   style={{ perspective: "900px", transformStyle: "preserve-3d" }}
                 >
-                  {ICONS.map((icon) => (
-                    <IconBox
-                      key={icon.id}
-                      boxRef={boxRef}
-                      iconSrc={icon.src}
-                    />
+                  {myAbilities.map((abilityTab) => (
+                    abilityTab.icons.map((icon) => (
+                      <IconBox
+                        key={icon.name}
+                        boxRef={boxRef}
+                        iconSrc={icon.src}
+                        isRandomMovement={openId == abilityTab.id ? false : true}
+                        currentScale={cardStates[cardItems.ABILITIES] != STATES.ACTIVE ? 1 : 0.5}
+                        opacity={openId == 0 ? 1 : openId == abilityTab.id ? 1 : 0.15}
+                      />
+                    ))
                   ))}
                 </div>
               </div>
