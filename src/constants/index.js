@@ -17,6 +17,9 @@ export const ICONS = {
   proactivity:  {name: "Proactivity", src: "/assets/proactivity.png"},
   ubuntu:       {name: "Ubuntu",      src: "/assets/ubuntu.png"},
   zynq:         {name: "Zynq",        src: "/assets/zynq.jpg"},
+  vite:         {name: "Vite",        src: "/assets/vitejs.svg"},
+  tailwindcss:  {name: "TailwindCSS", src: "/assets/tailwindcss.png"},
+  typescript:   {name: "TypeScript",  src: "/assets/typescript.png"},
 };
 
 export const AboutMe = {
@@ -113,23 +116,28 @@ export const myProjects = [
     tags: [
       {
         id: 1,
-        name: 'Xilinx_Vivado.js',
-        path: '/assets/vivado.png',
+        name: ICONS.vivado.name,
+        path: ICONS.vivado.src,
       },
       {
         id: 2,
-        name: 'C#',
-        path: 'assets/c-sharp.svg',
+        name: ICONS.csharp.name,
+        path: ICONS.csharp.src,
       },
       {
         id: 3,
-        name: 'Gitlab',
-        path: '/assets/gitlab-icon.svg',
+        name: ICONS.git.name,
+        path: ICONS.git.src,
       },
       {
         id: 4,
-        name: 'Matlab',
-        path: '/assets/matlab.jpg',
+        name: ICONS.matlab.name,
+        path: ICONS.matlab.src,
+      },
+      {
+        id: 5,
+        name: ICONS.zynq.name,
+        path: ICONS.zynq.src,
       },
     ],
   },
@@ -149,23 +157,23 @@ export const myProjects = [
     tags: [
       {
         id: 1,
-        name: 'Vite',
-        path: '/assets/vitejs.svg',
+        name: ICONS.vite.name,
+        path: ICONS.vite.src,
       },
       {
         id: 2,
-        name: 'React',
-        path: 'assets/react.svg',
+        name: ICONS.react.name,
+        path: ICONS.react.src,
       },
       {
         id: 3,
-        name: 'TypeScript',
-        path: '/assets/typescript.png',
+        name: ICONS.typescript.name,
+        path: ICONS.typescript.src,
       },
       {
         id: 4,
-        name: 'Tailwindcss',
-        path: '/assets/tailwindcss.png',
+        name: ICONS.tailwindcss.name,
+        path: ICONS.tailwindcss.src,
       },
     ],
   }
@@ -196,7 +204,7 @@ export const workExperiences = [
     pos: 'Software Engineer',
     duration: 'Oct 2024 - Jul 2025',
     title:
-      'Developed adaptive Human-Machine Interfaces (HMI) for the European FCAS program (EPIIC Project), improving integration reliability across multi-module systems. Built backend APIs in Python and desktop applications in Java for Airbus projects, optimizing data flow and reducing processing overhead. Actively participated in international workshops, enhancing cross-functional collaboration.',
+      'Research adaptive Human-Machine Interfaces (HMI) for the European FCAS program (EPIIC Project), improving integration reliability across multi-module systems. Built backend APIs in Python and desktop applications in Java for Airbus projects, optimizing data flow and reducing processing overhead. Actively participated in international workshops, enhancing cross-functional collaboration.',
     icon: '/assets/bertrandt.svg',
   },
   {
@@ -220,7 +228,7 @@ export const myAbilities = [
   {
     id: 2,
     title: 'Tools',
-    desc: "Over time, I’ve become comfortable working with a variety of engineering tools that support both development and collaboration. I use Git daily for version control, Jira to organize and track work, and Wireshark when I need to understand what’s really happening at protocol level.\nIn more structured environments, I’ve used IBM DOORS to manage requirements, versions, and traceability, which helped me understand how design, implementation, and verification fit together in real industrial projects. I also work regularly with Vivado, Linux/WSL, and MATLAB as part of my day-to-day workflow.",
+    desc: "Over time, I’ve become comfortable working with a variety of engineering tools that support both development and collaboration. I use Git daily for version control, Jira to organize and track work, and Wireshark when I need to understand what’s really happening at protocol level.\nIn more structured environments, I’ve used IBM DOORS to manage requirements, versions, and traceability, which helped me understand how design, implementation, and verification fit together in real industrial projects. I also work regularly with Vivado, Linux/WSL, and MATLAB.",
     icons: [ICONS.git, ICONS.docker, ICONS.ubuntu]
   },
   {
@@ -235,4 +243,25 @@ export const myAbilities = [
     desc: "Beyond technical skills, I see myself as a curious and proactive person who genuinely enjoys working with others. I feel comfortable in Agile teams, sharing ideas, asking questions, and communicating technical topics in a clear and approachable way.\nI like learning continuously, tackling problems step by step, and staying organized even in fast-paced environments. Adapting to multidisciplinary and international teams comes naturally to me, and I value collaboration as much as technical excellence.",
     icons: [ICONS.partners, ICONS.proactivity, ICONS.agile]
   },
+];
+
+export const myHobbies = [
+  {
+    id: 1,
+    name: 'Personal Projects',
+    desc: 'I enjoy having small personal projects on the go, where I can explore new ideas, experiment with technologies, and learn by building things from scratch. These projects allow me to apply what I’ve learned in a low-pressure environment, and they often lead to interesting discoveries and skills that I can bring back to my professional work.',
+    img: 'https://i.pinimg.com/736x/64/25/d9/6425d9533e83434d24d667db3dbe79bf.jpg'
+  },
+  {
+    id: 2,
+    name: 'Sports & physical activity',
+    desc: 'I regularly practice sports such as hiking, calisthenics, and running, which help me stay disciplined, focused, and mentally balanced. I find that physical activity not only improves my well-being but also enhances my productivity and creativity when I return to work.',
+    img: 'https://i.pinimg.com/736x/82/0f/a7/820fa7d61221505a529323b7d54e0ad4.jpg'
+  },
+  {
+    id: 3,
+    name: 'Traveling & culture',
+    desc: 'I enjoy traveling as a way to discover new places and cultures, step out of my comfort zone, and gain new perspectives. Experiencing different ways of life broadens my horizons and enriches my understanding of the world, which I believe is valuable both personally and professionally.',
+    img: 'https://i.pinimg.com/736x/78/cc/5e/78cc5e7dcbff23c68229bdda00a999a8.jpg'
+  }
 ];

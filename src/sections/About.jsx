@@ -1,7 +1,7 @@
 import { useState, useRef } from "react"
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { AboutMe, ICONS, myAbilities } from "../constants";
+import { AboutMe, myAbilities, myHobbies } from "../constants";
 import AbilitiesCard from "../components/AbilitiesCard.jsx";
 import IconBox from "../components/FloatingIcon3D.jsx";
 
@@ -54,8 +54,52 @@ const About = () => {
     <div className="z-10 absolute inset-x-0 lg:top-[15%] md:top-[7%] top-[15%] bottom-28 flex-grow fade-in overflow-hidden">
       <ul className="relative min-h-screen py-10 perspective-1200 preserve-3d">
           {/* My Hobbies */}
-          <li className={`card ${cardPositions[cardStates[cardItems.HOBBIES]]}`} onClick={(e) => rotate(e, cardStates[cardItems.HOBBIES] > cardStates[cardItems.ABOUT], cardItems.HOBBIES)}>
-            <p className="card_tag text-gray">My Hobbies </p>
+          <li className={`grid grid-rows-7 card ${cardPositions[cardStates[cardItems.HOBBIES]]}`} onClick={(e) => rotate(e, cardStates[cardItems.HOBBIES] > cardStates[cardItems.ABOUT], cardItems.HOBBIES)}>
+            <p className="card_tag text-gray row-span-1">My Hobbies </p>
+            {/* Hobbies: projects */}
+            <div className="hobby-section">
+              <div className="hobby-image">
+                <img src={myHobbies[0].img} alt="projects" />
+              </div>
+              <div className="hobby-card">
+                <p className="hobby-card_title">
+                  {myHobbies[0].name}
+                </p>
+                <p className="hobby-card_desc">
+                  {myHobbies[0].desc}
+                </p>
+              </div>
+            </div>
+
+            {/* Hobbies: sport */}
+            <div className="hobby-section">
+              <div className="hobby-card">
+                <p className="hobby-card_title">
+                  {myHobbies[1].name}
+                </p>
+                <p className="hobby-card_desc">
+                  {myHobbies[1].desc}
+                </p>
+              </div>
+              <div className="hobby-image">
+                <img src={myHobbies[1].img} alt="sport" />
+              </div>
+            </div>
+
+            {/* Hobbies: travel */}
+            <div className="hobby-section">
+              <div className="hobby-image">
+                <img src={myHobbies[2].img} alt="travel" />
+              </div>
+              <div className="hobby-card">
+                <p className="hobby-card_title">
+                  {myHobbies[2].name}
+                </p>
+                <p className="hobby-card_desc">
+                  {myHobbies[2].desc}
+                </p>
+              </div>
+            </div>
           </li>
 
           {/* About Me */}
@@ -90,7 +134,7 @@ const About = () => {
           <li className={`grid grid-rows-12 card ${cardPositions[cardStates[cardItems.ABILITIES]]}`} onClick={(e) => rotate(e, cardStates[cardItems.ABILITIES] > cardStates[cardItems.HOBBIES], cardItems.ABILITIES)}>
             <p className="card_tag text-gray row-span-2">My Abilities</p>
             <div className={`md:row-span-6 row-span-10 z-100 md:mr-8 md:ml-8 md:mb-0 mb-6 ${cardContent[cardStates[cardItems.ABILITIES]]}`} >
-              <AbilitiesCard closedAbilitiesTab={cardStates[cardItems.ABILITIES] != STATES.ACTIVE} openId={openId} setOpenId={setOpenId}/>
+              <AbilitiesCard openId={openId} setOpenId={setOpenId}/>
             </div>
             <div className="relative md:row-span-4 md:flex hidden z-50">
               <div className="w-full flex justify-center items-center overflow-hidden">
@@ -107,7 +151,7 @@ const About = () => {
                         iconSrc={icon.src}
                         isRandomMovement={openId == abilityTab.id ? false : true}
                         currentScale={cardStates[cardItems.ABILITIES] != STATES.ACTIVE ? 1 : 0.5}
-                        opacity={openId == 0 ? 1 : openId == abilityTab.id ? 1 : 0.15}
+                        opacity={openId == 0 ? 1 : openId == abilityTab.id ? 1 : 0.0}
                       />
                     ))
                   ))}

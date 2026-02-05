@@ -255,6 +255,39 @@ body {
     @apply w-2.5 h-2.5 object-contain invert brightness-0;
   }
 
+  /* hobbies section */
+  .hobby-section {
+    @apply relative grid md:grid-cols-3 grid-cols-4 row-span-2 rounded-md mx-10 my-1
+    opacity-80 md:scale-95 scale-90 transition-all ease-in-out duration-500
+    pointer-events-auto hover:scale-100 hover:opacity-100;
+  }
+
+  .hobby-card {
+    @apply relative col-span-2 rounded-md border
+          border-blue-500 items-center mx-1;
+  }
+
+  .hobby-card_title {
+    @apply md:text-base text-[10px] ml-2 my-2 font-semibold mb-1;
+  }
+
+  .hobby-card_desc {
+    @apply xl:text-[0.8125rem] lg:text-[10px] text-[6px] leading-tight
+    text-justify md:ml-4 md:mr-4 ml-1 mr-1 text-gray-300;
+  }
+
+  .hobby-image {
+    @apply relative md:col-span-1 col-span-2
+          md:h-36 h-32
+          rounded-md
+          mx-1 my-1 overflow-hidden;
+  }
+
+  .hobby-image img {
+    @apply w-full h-full object-cover;
+  }
+
+
   /*  footer */
   .social-icon {
     @apply w-12 h-12 rounded-full flex justify-center items-center bg-black-300 border border-black-200;

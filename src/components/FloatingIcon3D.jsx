@@ -55,12 +55,12 @@ const FloatingIcon3D = ({ boxRef, iconSrc, isRandomMovement, currentScale, opaci
         if (index === -1) return;
 
         // Compute a consistent gap and max columns that fit horizontally
-        const gap = Math.max(16, Math.round(size * 0.8));
+        const gap = Math.max(16, Math.round(size));
 
         // Map the index to grid coordinates and center the grid
         const col = index;
         const startX = W - ((size + gap) * icons.length - gap) / 2;
-        const startY = H;
+        const startY = H *0.7;
         const x = startX + col * (size + gap);
         const y = startY;
         // Apply a fixed transform for static positioning
@@ -116,7 +116,6 @@ const FloatingIcon3D = ({ boxRef, iconSrc, isRandomMovement, currentScale, opaci
       // Recalcular base por si resize cambió W/H
       base.x = (W - size);
       base.y = (H - size/2);
-      console.log(`FloatingIcon3D Random Movement: BASE x=${base.x}, y=${base.y}`);
 
       // Amplitud: ocupa gran parte del contenedor -> “todo el div”
       // (icono siempre dentro porque usamos W-size y H-size)
@@ -155,7 +154,7 @@ const FloatingIcon3D = ({ boxRef, iconSrc, isRandomMovement, currentScale, opaci
       src={iconSrc}
       alt="icon"
       data-floating-icon={`${isRandomMovement}`}
-      className="absolute left-0 top-0 rounded-xl select-none pointer-events-none will-change-transform"
+      className="absolute left-0 top-0 rounded-xl select-none pointer-events-none will-change-transform transition-opacity duration-1000 ease-in-out"
       draggable={false}
       style={{ opacity }}
     />
