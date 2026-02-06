@@ -1,4 +1,3 @@
-import React from 'react'
 import { partnerReviews } from '../constants/index.js'
 
 

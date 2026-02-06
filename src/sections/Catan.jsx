@@ -5,7 +5,7 @@ import { PerspectiveCamera } from "@react-three/drei";
 import { useResponsiveFlags } from "../constants/index.js";
 import CatanCamera from "../components/Catan/Camera.jsx"
 import CatanMap from "../components/Catan/Map.jsx";
-import { calculateSizes, calculateCameraPositions } from "../constants/index.js";
+import { calculateSizes } from "../constants/index.js";
 import { useAuth } from "../context/AuthContext.jsx"
 
 export default function Hero() {

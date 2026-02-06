@@ -1,12 +1,4 @@
-import { STATES } from "../constants/HeroRoutes.js"
-import React from "react";
 import { myProjects } from "../constants/index.js";
-import { useState } from "react";
-import { Canvas } from "@react-three/fiber";
-import { Center, OrbitControls } from "@react-three/drei";
-import CanvasLoader from "../components/CanvasLoader.jsx";
-import DemoComputer from "../components/DemoComputer.jsx";
-import { Suspense } from "react";
 import PdfViewer from "../components/PdfViewer.jsx";
 
 export default function Projects({ selectedProjectIndex, setSelectedProjectIndex }) {

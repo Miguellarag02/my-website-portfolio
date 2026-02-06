@@ -1,10 +1,4 @@
-import { STATES } from "../constants/HeroRoutes.js"
 import { workExperiences } from "../constants/index.js"
-import { Canvas } from "@react-three/fiber"
-import CanvasLoader from "../components/CanvasLoader.jsx"
-import Target from "../components/Target.jsx"
-import { OrbitControls } from "@react-three/drei";
-import { Suspense } from "react";
 
 export default function Work() {
 
