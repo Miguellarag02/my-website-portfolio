@@ -6,6 +6,7 @@ import Contact from "./sections/Contact.jsx"
 import Footer from "./sections/Footer.jsx"
 import Games from "./sections/Games.jsx"
 import Catan from "./sections/Catan.jsx"
+import Risk from "./sections/Risk.jsx"
 
 
 const App = () => {
@@ -33,6 +34,7 @@ const App = () => {
                     <Route path="/" element={<Home />} />
                     <Route path="/games" element={<GamesPage />} />
                     <Route path="/catan" element={<Catan />} />
+                    <Route path="/risk" element={<Risk />} />
                 </Routes>
             </main>
         </BrowserRouter>

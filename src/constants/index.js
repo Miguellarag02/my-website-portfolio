@@ -274,3 +274,18 @@ export const myHobbies = [
     img: 'https://i.pinimg.com/736x/78/cc/5e/78cc5e7dcbff23c68229bdda00a999a8.jpg'
   }
 ];
+
+export const myGames = [
+  {
+    id: 1,
+    name: 'Catan',
+    href: '/catan',
+    background: 'assets/catan_background.gif'
+  },
+  {
+    id: 2,
+    name: 'Risk',
+    href: '/risk',
+    background: 'assets/risk_background.gif'
+  }
+];

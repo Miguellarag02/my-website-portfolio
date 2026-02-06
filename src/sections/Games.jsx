@@ -1,78 +1,236 @@
-import React from "react"
+import React, { useState } from "react"
+import { useAuth } from "../context/AuthContext.jsx"
+import {myGames} from "../constants/index.js"
 
 const Games = () => {
+  const { username, userImage, isLoggedIn, login, logout } = useAuth()
+  const [loginUsername, setLoginUsername] = useState("")
+  const [password, setPassword] = useState("")
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [status, setStatus] = useState({ type: "", message: "" })
+
+  const handleLogin = async (e) => {
+    e.preventDefault()
+    if (!loginUsername || !password || isSubmitting) return
+
+    setIsSubmitting(true)
+    setStatus({ type: "", message: "" })
+
+    try {
+      const res = await fetch("/api/auth/login.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username: loginUsername, password }),
+      })
+
+      let payload = null
+      try {
+        payload = await res.json()
+      } catch {
+        payload = null
+      }
+
+      if (res.ok && payload?.ok) {
+        setStatus({ type: "success", message: "Login successful." })
+        login({
+          username: payload.user?.username || loginUsername,
+          userImage: payload.user?.user_image || null,
+        })
+        setPassword("")
+      } else {
+        const message = payload?.message || "Login failed. Check credentials."
+        setStatus({ type: "error", message })
+      }
+    } catch (error) {
+      setStatus({ type: "error", message: "Network error. Try again." })
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
+  const handlePlayClick = (href) => {
+    if (!isLoggedIn) {
+      setStatus({ type: "error", message: "Debes iniciar sesión para jugar." })
+      return
+    }
+
+    window.location.href = href
+  }
+
+  const handleSpectateClick = (href) => {
+    if (isLoggedIn) {
+      setStatus({ type: "error", message: "Debes cerrar sesión para entrar como espectador." })
+      return
+    }
+
+    window.location.href = href
+  }
+
   return (
     <section id="games" className="pt-28 pb-20">
       <div className="c-space">
         <div className="flex flex-col gap-6">
-          <div>
-            <p className="text-neutral-400 text-sm uppercase tracking-[0.25em]">
-              New space in progress
-            </p>
-            <h1 className="text-white text-4xl md:text-5xl font-bold mt-2">
-              Games
-            </h1>
-          </div>
+          <div className="flex flex-row gap-3">
+            <div className="flex flex-col gap-3">
+              <div>
+                <p className="text-neutral-400 text-sm uppercase tracking-[0.25em]">
+                  New space in progress
+                </p>
+                <h1 className="text-white text-4xl md:text-5xl font-bold mt-2">
+                  Games
+                </h1>
+              </div>
 
-          <p className="text-neutral-300 max-w-2xl">
-            In this section you can find the games I have developed as a hobby. Among them you can find board games like Catan or Risk.
-          </p>
+              <p className="text-neutral-300 max-w-2xl">
+                In this section you can find the games I have developed as a hobby. Among them you can find board games like Catan or Risk.
+              </p> 
+            </div>
 
-          <div className="group w-fit cursor-pointer transform transition-all duration-500 hover:scale-105 hover:-rotate-1" onClick={() => window.location.href = "/catan"}>
-            <div className="text-white rounded-3xl border border-white/10 bg-gradient-to-br from-[#010101] via-[#090909] to-[#010101] shadow-2xl duration-700 z-10 relative backdrop-blur-xl hover:border-white/25 overflow-hidden hover:shadow-white/5 hover:shadow-3xl w-full max-w-[350px] grid">
-              <img
-                src="/assets/catan_background.gif"
-                alt=""
-                className="block w-full h-auto opacity-0 pointer-events-none select-none col-start-1 row-start-1"
-              />
-              <div className="col-start-1 row-start-1 relative w-full h-full">
-                <img
-                  src="/assets/catan_background.gif"
-                  alt=""
-                  className="absolute inset-0 z-0 w-full h-full object-contain opacity-65 pointer-events-none select-none"
-                />
-                <div className="absolute inset-0 z-0 overflow-hidden">
-                  <div className="absolute inset-0 bg-gradient-to-tr from-white/5 to-white/10 opacity-40 group-hover:opacity-60 transition-opacity duration-500"/>
-                  <div style={{ animationDelay: "0.5s" }} className="absolute -bottom-20 -left-20 w-48 h-48 rounded-full bg-gradient-to-tr from-white/10 to-transparent blur-3xl opacity-30 group-hover:opacity-50 transform group-hover:scale-110 transition-all duration-700 animate-bounce"/>
-                  <div className="absolute top-10 left-10 w-16 h-16 rounded-full bg-white/5 blur-xl animate-ping"/>
-                  <div style={{ animationDelay: "1s" }} className="absolute bottom-16 right-16 w-12 h-12 rounded-full bg-white/5 blur-lg animate-ping"/>
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent transform -skew-x-12 translate-x-full group-hover:translate-x-[-200%] transition-transform duration-1000"/>
-                </div>
-      
-                <div className="p-8 relative h-full z-10">
-                  <div className="flex flex-col items-center text-center h-full">
-                    <div className="flex flex-row gap-10">
-                      <div className="relative mb-6">
-                        <div className="absolute inset-0 rounded-full border-2 border-white/20 animate-ping"/>
-                        <div style={{ animationDelay: "0.5s" }} className="absolute inset-0 rounded-full border border-white/10 animate-pulse" />
-                        <div className="p-6 rounded-full backdrop-blur-lg border border-white/20 bg-gradient-to-br from-black/80 to-black/60 shadow-2xl transform group-hover:rotate-12 group-hover:scale-110 transition-all duration-500 hover:shadow-white/20" >
-                          <div className="transform group-hover:rotate-180 transition-transform duration-700" >
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              viewBox="0 0 24 24"
-                              className="w-8 h-8 fill-current text-white group-hover:text-gray-200 transition-colors duration-300 filter drop-shadow-lg"
-                            >
-                              <path
-                                d="M5.164 0L.16 18.928L18.836 24L23.84 5.072L5.164 0ZM14.023 15.208L8.792 13.469L10.436 8.152L15.667 9.891L14.023 15.208Z"
-                              />
-                            </svg>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="mb-4 py-4 transform group-hover:scale-105 transition-transform duration-300" >
-                        <p className="text-3xl font-bold bg-gradient-to-r from-white via-gray-100 to-white bg-clip-text text-transparent animate-pulse" >
-                          Catan
+              <div className="ml-auto min-w-[240px] max-w-[280px] w-full">
+                {isLoggedIn ? (
+                  <div className="flex flex-row rounded-2xl border border-white/10 bg-white/5 p-4">
+                    {userImage && (
+                      <img src={userImage ? userImage : "/assets/default-profile.png"} alt="User profile" className="mt-2 w-24 h-24 rounded-full object-cover" />
+                    )}
+                    <div className="flex flex-col w-full" >
+                        <p className="text-white text-md font-semibold tracking-wide mt-4 ml-4">
+                            Welcome, {username}!
+                          </p>
+                        <p className="text-xs text-emerald-300 mt-1 ml-4">
+                          Victories: 0
                         </p>
+                        <button
+                          onClick={() => {
+                            logout()
+                            setStatus({ type: "", message: "" })
+                            setPassword("")
+                          }}
+                          className="rounded-lg mt-2 bg-white text-black text-sm font-semibold py-2 transition disabled:opacity-50 disabled:cursor-not-allowed hover:bg-neutral-200"
+                        >
+                          Logout
+                        </button>
+                        {status.message ? (
+                          <p className={status.type === "success" ? "text-xs text-emerald-300" : "text-xs text-red-300"}>
+                            {status.message}
+                          </p>
+                        ) : null}
                       </div>
                     </div>
-                    <div className="absolute bottom-4 w-1/3 h-0.5 bg-gradient-to-r from-transparent via-white to-transparent rounded-full transform group-hover:w-2/3 group-hover:h-1 transition-all duration-500 animate-pulse"/>
+                ) : (
+                <form onSubmit={handleLogin} className="rounded-2xl border border-white/10 bg-white/5 p-4 flex flex-col gap-3">
+                  <p className="text-white text-sm font-semibold tracking-wide">Member Login</p>
+                  <label className="flex flex-col gap-1 text-xs text-neutral-400">
+                    Username
+                    <input
+                      type="text"
+                      value={loginUsername}
+                      onChange={(e) => setLoginUsername(e.target.value)}
+                      className="rounded-lg bg-black/40 border border-white/10 px-3 py-2 text-sm text-white outline-none focus:border-white/40"
+                      autoComplete="username"
+                    />
+                  </label>
+                  <label className="flex flex-col gap-1 text-xs text-neutral-400">
+                    Password
+                    <input
+                      type="password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      className="rounded-lg bg-black/40 border border-white/10 px-3 py-2 text-sm text-white outline-none focus:border-white/40"
+                      autoComplete="current-password"
+                    />
+                  </label>
+                  <button
+                    type="submit"
+                    disabled={isSubmitting || !loginUsername || !password}
+                    className="rounded-lg bg-white text-black text-sm font-semibold py-2 transition disabled:opacity-50 disabled:cursor-not-allowed hover:bg-neutral-200"
+                  >
+                    {isSubmitting ? "Logging in..." : "Login"}
+                  </button>
+                  {status.message ? (
+                    <p className={status.type === "success" ? "text-xs text-emerald-300" : "text-xs text-red-300"}>
+                      {status.message}
+                    </p>
+                  ) : null}
+                </form>
+              ) }
+            </div> 
+          </div>
+
+          <div className="flex flex-row gap-6">
+            {myGames.map(({id, href, name, background}) => (
+              <div className="group w-fit cursor-pointer transform transition-all duration-500 hover:scale-105 hover:-rotate-1" key={id}>
+                <div className="text-white rounded-3xl border border-white/10 bg-gradient-to-br from-[#010101] via-[#090909] to-[#010101] shadow-2xl duration-700 z-10 relative backdrop-blur-xl hover:border-white/25 overflow-hidden hover:shadow-white/5 hover:shadow-3xl w-full max-w-[350px] grid">
+                  <img
+                    src="/assets/catan_background.gif"
+                    alt=""
+                    className="block w-full h-auto opacity-0 pointer-events-none select-none col-start-1 row-start-1"
+                  />
+                  <div className="col-start-1 row-start-1 relative w-full h-full">
+                    <img
+                      src={background}
+                      alt={name + " background"}
+                      className="absolute inset-0 z-0 w-full h-full object-contain opacity-65 pointer-events-none select-none"
+                    />
+                    <div className="absolute inset-0 z-0 overflow-hidden">
+                      <div className="absolute inset-0 bg-gradient-to-tr from-white/5 to-white/10 opacity-40 group-hover:opacity-60 transition-opacity duration-500"/>
+                      <div style={{ animationDelay: "0.5s" }} className="absolute -bottom-20 -left-20 w-48 h-48 rounded-full bg-gradient-to-tr from-white/10 to-transparent blur-3xl opacity-30 group-hover:opacity-50 transform group-hover:scale-110 transition-all duration-700 animate-bounce"/>
+                      <div className="absolute top-10 left-10 w-16 h-16 rounded-full bg-white/5 blur-xl animate-ping"/>
+                      <div style={{ animationDelay: "1s" }} className="absolute bottom-16 right-16 w-12 h-12 rounded-full bg-white/5 blur-lg animate-ping"/>
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent transform -skew-x-12 translate-x-full group-hover:translate-x-[-200%] transition-transform duration-1000"/>
+                    </div>
+          
+                    <div className="p-8 relative h-full z-10">
+                      <div className="flex flex-col items-center text-center h-full">
+                        <div className="flex flex-row gap-10">
+                          <div className="relative mb-6">
+                            <div className="absolute inset-0 rounded-full border-2 border-white/20 animate-ping"/>
+                            <div style={{ animationDelay: "0.5s" }} className="absolute inset-0 rounded-full border border-white/10 animate-pulse" />
+                            <div className="p-4 rounded-full backdrop-blur-lg border border-white/20 bg-gradient-to-br from-black/80 to-black/60 shadow-2xl transform group-hover:rotate-12 group-hover:scale-110 transition-all duration-500 hover:shadow-white/20" >
+                              <div className="transform group-hover:rotate-180 transition-transform duration-700 scale-90" >
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  viewBox="0 0 24 24"
+                                  className="w-8 h-8 fill-current text-white group-hover:text-gray-200 transition-colors duration-300 filter drop-shadow-lg"
+                                >
+                                  <path
+                                    d="M5.164 0L.16 18.928L18.836 24L23.84 5.072L5.164 0ZM14.023 15.208L8.792 13.469L10.436 8.152L15.667 9.891L14.023 15.208Z"
+                                  />
+                                </svg>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="mb-4 py-4 transform group-hover:scale-105 transition-transform duration-300" >
+                            <p className="text-3xl font-bold bg-gradient-to-r from-white via-gray-100 to-white bg-clip-text text-transparent animate-pulse" >
+                              {name}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="flex flex-col mt-auto mb-2 gap-6"> 
+                          <button 
+                            onClick={() => handlePlayClick(href)}
+                            className="px-5 py-2 rounded-full border border-white/20 text-white hover:border-white/60 hover:bg-white/20 transition"
+                          >
+                            Jugar
+                          </button>
+                          <button 
+                            onClick={() => handleSpectateClick(href)}
+                            className="px-5 py-2 rounded-full border border-white/20 text-white hover:border-white/60 hover:bg-white/20 transition"
+                          >
+                            Espectador
+                          </button>
+                        </div>
+                        <div className="absolute bottom-4 w-1/3 h-0.5 bg-gradient-to-r from-transparent via-white to-transparent rounded-full transform group-hover:w-2/3 group-hover:h-1 transition-all duration-500 animate-pulse"/>
+                      </div>
+                    </div>
+                    <div className="absolute top-0 left-0 w-20 h-20 bg-gradient-to-br from-white/10 to-transparent rounded-br-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"/>
+                    <div className="absolute bottom-0 right-0 w-20 h-20 bg-gradient-to-tl from-white/10 to-transparent rounded-tl-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"/>
                   </div>
                 </div>
-                <div className="absolute top-0 left-0 w-20 h-20 bg-gradient-to-br from-white/10 to-transparent rounded-br-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"/>
-                <div className="absolute bottom-0 right-0 w-20 h-20 bg-gradient-to-tl from-white/10 to-transparent rounded-tl-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"/>
               </div>
-            </div>
+            ))}
           </div>
 
           <div className="flex flex-wrap gap-3">

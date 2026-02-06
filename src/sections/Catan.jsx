@@ -6,9 +6,12 @@ import { useResponsiveFlags } from "../constants/index.js";
 import CatanCamera from "../components/Catan/Camera.jsx"
 import CatanMap from "../components/Catan/Map.jsx";
 import { calculateSizes, calculateCameraPositions } from "../constants/index.js";
+import { useAuth } from "../context/AuthContext.jsx"
 
 export default function Hero() {
     const [cameraIsMoving, setCameraIsMoving] = useState(false)
+    const { isLoggedIn, username, userImage } = useAuth()
+
     // Sizing
     const { isSmall, isMobile, isTablet, isUltraWide } = useResponsiveFlags();
     const sizes = calculateSizes(isSmall, isMobile, isTablet, isUltraWide);
@@ -21,7 +24,7 @@ export default function Hero() {
         <section className="min-h-screen w-full flex flex-col">
             <div className="w-full h-full absolute inset-0">
                 <a href="/games" className="absolute top-4 left-4 z-20 px-4 py-2 rounded-full border border-white/30 bg-black/50 text-white text-sm font-semibold backdrop-blur-sm hover:border-white/70 hover:bg-black/70 transition" >
-                    Exit (Miguellara02)
+                    Exit ({username ? username : "Guest"})
                 </a>
                 <Canvas className="w-full h-full flex-grow">
                     <Suspense fallback={<CanvasLoader />}>
