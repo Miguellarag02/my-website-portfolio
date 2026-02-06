@@ -2,12 +2,16 @@ import { useEffect, useState } from "react"
 import { navLinks } from "../constants/index.js"
 
 
-const NavItems = ({ onItemClick }) => {
+const NavItems = ({ onItemClick, root, isGamePage }) => {
+    const visibleLinks = isGamePage
+        ? navLinks.filter(({ name }) => name === "Home" || name === "Games")
+        : navLinks
+
     return (
         <ul className="nav-ul">
-            {navLinks.map(({id, href, name}) => (
+            {visibleLinks.map(({id, href, name}) => (
                 <li key={id} className="nav-li">
-                    <a href={href} className="nav-li_a" onClick={onItemClick}>
+                    <a href={root + href} className="nav-li_a" onClick={onItemClick}>
                         {name}
                     </a>
                 </li>
@@ -52,7 +56,7 @@ const AliveCheck = () => {
     )
 }
 
-const Navbar = () => {
+const Navbar = ({root, isGamePage}) => {
     const [isOpen, setIsOpen] = useState(false);
     const toggleMenu = () => setIsOpen(prevIsOpen => !prevIsOpen);
 
@@ -72,7 +76,7 @@ const Navbar = () => {
                     </button>
 
                     <nav className="sm:flex hidden">
-                        <NavItems />
+                        <NavItems root={root} isGamePage={isGamePage} />
                     </nav>
                 </div>
             </div>

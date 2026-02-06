@@ -43,6 +43,11 @@ export default function Hero() {
         setOutlineEnable(false);
     };
 
+    const onGameClick = () => {
+        window.location.href = "/games";
+        setOutlineEnable(false);
+    }
+
     // Enable outliners
     useEffect(() => {
         const checkHash = () => {
@@ -105,11 +110,12 @@ export default function Hero() {
                         <MyDesktop
                             scale={sizes.deskScale}
                             position={sizes.deskPos}
-                            rotation={[0.39, 4.34, 0.0]}
+                            rotation={sizes.deskRot}
                             stateSection={stateSection}
                             onLaptopClick={onLaptopClick}
                             onMonitorClick={onMonitorClick}
                             onKeyboardClick={onKeyboardClick}
+                            onGameClick={onGameClick}
                             outlineEnable={outlineEnable}
                             selectedProjectIndex={selectedProjectIndex}
                         />

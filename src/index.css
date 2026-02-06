@@ -287,6 +287,14 @@ body {
     @apply w-full h-full object-cover;
   }
 
+  /* games section */
+  .game-card-text {
+    @apply text-gray-300 text-sm leading-relaxed transform group-hover:text-gray-200 transition-colors duration-300;
+  }
+
+  .game-card-text-strong {
+    @apply text-gray-300 text-sm font-semibold leading-relaxed transform group-hover:text-gray-200 transition-colors duration-300;
+  }
 
   /*  footer */
   .social-icon {

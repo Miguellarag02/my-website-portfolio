@@ -3,11 +3,12 @@ import { useGLTF, Outlines, useTexture } from '@react-three/drei'
 import { myProjects } from '../../constants/index.js'
 import { STATES } from '../../constants/HeroRoutes.js'
 
-const MyDesktop = ({stateSection, onLaptopClick, onMonitorClick, onKeyboardClick, outlineEnable, selectedProjectIndex, ...props }) => {
+const MyDesktop = ({stateSection, onLaptopClick, onMonitorClick, onKeyboardClick, onGameClick, outlineEnable, selectedProjectIndex, ...props }) => {
   const { nodes, materials } = useGLTF('/models/my_desktop.glb')
   const [hoverLaptop, setHoverLaptop] = useState(false)
   const [hoverMonitor, setHoverMonitor] = useState(false)
   const [hoverKeyboard, setHoverKeyboard] = useState(false)
+  const [hoverGame, setHoverGame] = useState(false)
   const currentProject = myProjects[selectedProjectIndex];
 
   const txt = useTexture('assets/spotlight1.png')
@@ -26,6 +27,12 @@ const MyDesktop = ({stateSection, onLaptopClick, onMonitorClick, onKeyboardClick
     e.stopPropagation()
     onKeyboardClick?.()
   }
+
+  const handleGameClick = (e) => {
+    e.stopPropagation()
+    onGameClick?.()
+  }
+
 
 
   return (
@@ -600,6 +607,56 @@ const MyDesktop = ({stateSection, onLaptopClick, onMonitorClick, onKeyboardClick
           receiveShadow
           geometry={nodes.Cube_Cube001_2.geometry}
           material={materials['Material.013']}
+        />
+      </group>
+
+      {/* Meshes from Xbox Controller and Stand */}
+       <group
+        name="xbox_controller"
+        position={[0.251, 2.896, 2.632]}
+        rotation={[-1.662, 0.11, 0.714]}
+        onClick={outlineEnable ? handleGameClick : null}
+        onPointerOver={(e) => {
+            e.stopPropagation()
+            setHoverGame(true)
+            document.body.style.cursor = "pointer"
+          }}
+          onPointerOut={(e) => {
+            e.stopPropagation()
+            setHoverGame(false)
+            document.body.style.cursor = "default"
+          }}
+        >
+        <group name="GLTF_SceneRootNode002" rotation={[Math.PI / 2, 0, 0]}>
+          <group name="node_id259_1" position={[-0.12, -0.252, 0.412]} scale={0.053}>
+            <mesh
+              name="Object_5"
+              castShadow
+              receiveShadow
+              geometry={nodes.Object_5.geometry}
+              material={materials['material.001']}
+              position={[-4.793, -0.796, -2.593]}
+              rotation={[0, -0.05, 0.046]}
+            >
+              { outlineEnable && hoverGame && <Outlines thickness={2.05} color="white"/>}
+            </mesh>
+          </group>
+        </group>
+      </group>
+      <group
+        name="xbox_stand"
+        position={[0.563, 2.585, 3.044]}
+        rotation={[-Math.PI / 2, 0, 2.164]}
+        scale={0.002}
+        >
+        <mesh
+          name="Object_2001"
+          castShadow
+          receiveShadow
+          geometry={nodes.Object_2001.geometry}
+          material={materials['Scene_-_Root']}
+          position={[93.018, 137.881, 0]}
+          scale={1.2}
         />
       </group>
     </group>
