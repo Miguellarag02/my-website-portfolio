@@ -49,12 +49,18 @@ export const HEXAGON_TEXTURES_MODELS = {
 }
 
 export const PLAYER_COLORS = {
-    "red":      "#FF0000",
-    "orange":   "#FFA500",
-    "purple":   "#800080",
-    "pink":     "#FFC0CB",
-    "white":    "#FFFFFF",
-    "blue":     "#0000FF",
-    "green":    "#008000",
-    "black":    "#000000"
+    red: "#BC0D16",
+    orange: "#E75C2E",
+    purple: "#AB0AEE",
+    pink: "#EEA3E1",
+    white: "#DCDCDC",
+    blue: "#16D6EE",
+    green: "#16BC28",
+    black: "#30302F",
+    yellow: "#DEE742"
 }
+
+export const PLAYER_COLOR_OPTIONS = Object.entries(PLAYER_COLORS).map(([name, color]) => ({
+    name,
+    color
+}))

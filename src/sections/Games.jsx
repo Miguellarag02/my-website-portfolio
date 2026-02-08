@@ -1,6 +1,7 @@
-import React, { useState } from "react"
+import React, { useState, useEffect, useMemo } from "react"
 import { useAuth } from "../context/AuthContext.jsx"
 import {myGames} from "../constants/index.js"
+import { PLAYER_COLOR_OPTIONS } from "../constants/CatanStates.js"
 
 const Games = () => {
   const { username, userImage, isLoggedIn, login, logout } = useAuth()
@@ -8,6 +9,8 @@ const Games = () => {
   const [password, setPassword] = useState("")
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [status, setStatus] = useState({ type: "", message: "" })
+  const [takenColors, setTakenColors] = useState(new Set()) 
+  const [selectedColor, setSelectedColor] = useState("") 
 
   const handleLogin = async (e) => {
     e.preventDefault()
@@ -50,6 +53,51 @@ const Games = () => {
     }
   }
 
+  useEffect(() => {
+    const getPlayerColors = async () => {
+      try {
+        const response = await fetch('/api/player/color.php')
+        if (!response.ok) {
+          throw new Error(`Failed to get player colors: ${response.status}`)
+        }
+        const data = await response.json()
+        const players = Array.isArray(data) ? data : []
+        const taken = new Set()
+        for (const entry of players) {
+          if (username === entry.username) {
+            setSelectedColor(entry.color)
+            continue
+          }
+          taken.add(String(entry.color).toLowerCase())
+        }
+        setSelectedColor((prev) => {
+          if (prev !== "") return prev
+          for (const option of PLAYER_COLOR_OPTIONS) {
+            if (!taken.has(String(option.name).toLowerCase())) {
+              return option.name
+            }
+          }
+          return prev
+        })
+        setTakenColors(taken)
+      } catch (error) {
+        console.error(error)
+        setTakenColors(new Set())
+      }
+    }
+
+    if (username) {
+      getPlayerColors()
+    }
+
+    const interval = setInterval(() => {
+      if (username) getPlayerColors()
+    }, 1000)
+
+    return () => clearInterval(interval)
+  }, [username])
+
+
   const handlePlayClick = (href) => {
     if (!isLoggedIn) {
       setStatus({ type: "error", message: "Debes iniciar sesión para jugar." })
@@ -66,6 +114,30 @@ const Games = () => {
     }
 
     window.location.href = href
+  }
+
+  const setSelectedColorInDatabase = async (colorName) => {
+    if (!username || !colorName) return
+
+    const previousColor = selectedColor
+    setSelectedColor(colorName)
+
+    try {
+      const response = await fetch("/api/player/set_color.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, color: colorName }),
+      })
+
+      const payload = await response.json().catch(() => null)
+      if (!response.ok || !payload?.ok) {
+        setSelectedColor(previousColor)
+      }
+    } catch (error) {
+      setSelectedColor(previousColor)
+    }
   }
 
   return (
@@ -88,7 +160,7 @@ const Games = () => {
               </p> 
             </div>
 
-              <div className="ml-auto min-w-[240px] max-w-[280px] w-full">
+              <div className="ml-auto min-w-[240px] w-fit">
                 {isLoggedIn ? (
                   <div className="flex flex-row rounded-2xl border border-white/10 bg-white/5 p-4">
                     {userImage && (
@@ -116,6 +188,30 @@ const Games = () => {
                             {status.message}
                           </p>
                         ) : null}
+                      </div>
+                      <div className="w-full ml-2">
+                        <div className="grid grid-cols-3 gap-1">
+                          {PLAYER_COLOR_OPTIONS.map((colors) => {
+                            const isDisabled = takenColors.has(String(colors.name).toLowerCase()) || colors.name === selectedColor;
+
+                            return (
+                              <div className={`relative border w-10 h-10 rounded-md ${colors.name === selectedColor ? "border-[3px] border-white" : "border border-white/20"}`}>
+                              <button
+                                key={colors.name}
+                                type="button"
+                                disabled={isDisabled}
+                                onClick={() => setSelectedColorInDatabase(colors.name)}
+                                className={`relative w-full h-full rounded-md  text-xs font-semibold uppercase transition disabled:opacity-35 disabled:cursor-not-allowed hover:opacity-85 hover:scale-110`}
+                                style={{ backgroundColor: colors.color }}
+                              >
+                                  {isDisabled && colors.name != selectedColor &&
+                                    <div className="relative rotate-45 border-t-2 border-black"/>
+                                  }
+                                </button>
+                              </div>
+                            )
+                          })}
+                        </div>
                       </div>
                     </div>
                 ) : (
