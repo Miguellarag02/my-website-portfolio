@@ -69,7 +69,7 @@ const Catan = () => {
                                 />
                             </CatanCamera>
                             <ambientLight intensity={1.0} />
-                            <directionalLight position={[1000, 1000, 4000]} intensity={2} />
+                            <directionalLight position={[4000, 1000, 4000]} intensity={2} />
                         </Suspense>
                     </Canvas>
                     <PlayersInfo open={openPlayerInfo} setOpen={setOpenPlayerInfo}/>
