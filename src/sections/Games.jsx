@@ -12,6 +12,30 @@ const Games = () => {
   const [takenColors, setTakenColors] = useState(new Set()) 
   const [selectedColor, setSelectedColor] = useState("") 
 
+  const addPlayer = async (playerUsername) => {
+    try {
+      const response = await fetch("/api/player/set_player.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username: playerUsername }),
+      })
+
+      const payload = await response.json().catch(() => null)
+      if (!response.ok || !payload?.ok) {
+        setStatus({ type: "error", message: payload?.message || "Could not add player to the game." })
+        logout()
+        return false
+      }
+      return true
+    } catch (error) {
+      setStatus({ type: "error", message: "Network error while adding player." })
+      logout()
+      return false
+    }
+  }
+
   const handleLogin = async (e) => {
     e.preventDefault()
     if (!loginUsername || !password || isSubmitting) return
@@ -36,12 +60,16 @@ const Games = () => {
       }
 
       if (res.ok && payload?.ok) {
-        setStatus({ type: "success", message: "Login successful." })
+        const loggedUsername = payload.user?.username || loginUsername
         login({
-          username: payload.user?.username || loginUsername,
+          username: loggedUsername,
           userImage: payload.user?.user_image || null,
         })
         setPassword("")
+        const playerAdded = await addPlayer(loggedUsername)
+        if (playerAdded) {
+          setStatus({ type: "success", message: "Login successful." })
+        }
       } else {
         const message = payload?.message || "Login failed. Check credentials."
         setStatus({ type: "error", message })
@@ -98,7 +126,7 @@ const Games = () => {
   }, [username])
 
 
-  const handlePlayClick = (href) => {
+  const handlePlayClick = async (href) => {
     if (!isLoggedIn) {
       setStatus({ type: "error", message: "Debes iniciar sesión para jugar." })
       return
