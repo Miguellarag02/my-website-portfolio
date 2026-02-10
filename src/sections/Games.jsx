@@ -84,9 +84,10 @@ const Games = () => {
   useEffect(() => {
     const getPlayerColors = async () => {
       try {
-        const response = await fetch('/api/player/color.php')
+        const response = await fetch(`/api/player/color.php?username=${encodeURIComponent(username)}`)
         if (!response.ok) {
-          throw new Error(`Failed to get player colors: ${response.status}`)
+          logout();
+          throw new Error(`Failed: ${response.status}`)
         }
         const data = await response.json()
         const players = Array.isArray(data) ? data : []
@@ -114,13 +115,9 @@ const Games = () => {
       }
     }
 
-    if (username) {
-      getPlayerColors()
-    }
-
     const interval = setInterval(() => {
-      if (username) getPlayerColors()
-    }, 1000)
+      if (username !== "") getPlayerColors()
+    }, 4000)
 
     return () => clearInterval(interval)
   }, [username])

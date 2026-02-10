@@ -64,3 +64,19 @@ export const PLAYER_COLOR_OPTIONS = Object.entries(PLAYER_COLORS).map(([name, co
     name,
     color
 }))
+
+export const RESOURCE_ICONS = {
+    1: '/assets/catan/resources/madera_icon.png',
+    2: '/assets/catan/resources/oveja_icon.png',
+    3: '/assets/catan/resources/piedra_icon.png',
+    4: '/assets/catan/resources/trigo_icon.png',
+    5: '/assets/catan/resources/arcilla_icon.png',
+}
+
+export const RESOURCE_CARDS = {
+    1: '/assets/catan/cards/madera_card.png',
+    2: '/assets/catan/cards/oveja_card.png',
+    3: '/assets/catan/cards/piedra_card.png',
+    4: '/assets/catan/cards/trigo_card.png',
+    5: '/assets/catan/cards/arcilla_card.png',
+}
