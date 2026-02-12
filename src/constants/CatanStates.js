@@ -80,3 +80,18 @@ export const RESOURCE_CARDS = {
     4: '/assets/catan/cards/trigo_card.png',
     5: '/assets/catan/cards/arcilla_card.png',
 }
+
+export const RANDOM_CARDS = {
+    1: '/assets/catan/cards/point_card.png',
+    2: '/assets/catan/cards/knight_card.png',
+    3: '/assets/catan/cards/monopoly_card.png',
+    4: '/assets/catan/cards/path_card.png',
+    5: '/assets/catan/cards/invention_card.png',
+}
+
+export const BUILD_COSTS = [
+    {id: 1, name:"Carretera",   resources: [{id:5, qty:1}, {id:1, qty:1}]},
+    {id: 2, name:"Poblado",     resources: [{id:5, qty:1}, {id:1, qty:1}, {id:2, qty:1}, {id:4, qty:1}]},
+    {id: 3, name:"Ciudad",      resources: [{id:4, qty:2}, {id:3, qty:3}]},
+    {id: 4, name:"Gamblear",    resources: [{id:2, qty:1}, {id:4, qty:1}, {id:3, qty:1}]}
+]

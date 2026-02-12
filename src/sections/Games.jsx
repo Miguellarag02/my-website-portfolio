@@ -92,13 +92,17 @@ const Games = () => {
         const data = await response.json()
         const players = Array.isArray(data) ? data : []
         const taken = new Set()
+        console.log(username)
         for (const entry of players) {
           if (username === entry.username) {
             setSelectedColor(entry.color)
             continue
           }
+          console.log(entry.color)
           taken.add(String(entry.color).toLowerCase())
         }
+        console.log(taken)
+        setTakenColors(taken)
         setSelectedColor((prev) => {
           if (prev !== "") return prev
           for (const option of PLAYER_COLOR_OPTIONS) {
@@ -108,12 +112,13 @@ const Games = () => {
           }
           return prev
         })
-        setTakenColors(taken)
       } catch (error) {
         console.error(error)
         setTakenColors(new Set())
       }
     }
+
+    if (username !== "") getPlayerColors()
 
     const interval = setInterval(() => {
       if (username !== "") getPlayerColors()

@@ -6,6 +6,7 @@ import { useResponsiveFlags } from "../constants/index.js";
 import CatanCamera from "../components/Catan/Camera.jsx"
 import CatanMap from "../components/Catan/Map.jsx";
 import PlayersInfo from "../components/Catan/PlayersInfo.jsx";
+import UserInfo from "../components/Catan/UserInfo.jsx"
 import { CAMERA_STATES, calculateCatanSizes, calculateCatanCameraPositions } from "../constants/CatanStates.js";
 import { useAuth } from "../context/AuthContext.jsx"
 
@@ -14,6 +15,7 @@ const Catan = () => {
 
     // Camera controls
     const [openPlayerInfo, setOpenPlayerInfo] = useState(false);
+    const [openBuildInfo, setOpenBuildInfo] = useState(false);
     const [frontCamera, setFrontCamera] = useState(false);
     const [cameraState, setCameraState] = useState(CAMERA_STATES.NORMAL);
 
@@ -73,6 +75,7 @@ const Catan = () => {
                         </Suspense>
                     </Canvas>
                     <PlayersInfo open={openPlayerInfo} setOpen={setOpenPlayerInfo}/>
+                    <UserInfo open={openBuildInfo} setOpen={setOpenBuildInfo}/>
                 </div>
             </div>
         </section>

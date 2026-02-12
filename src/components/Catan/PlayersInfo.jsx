@@ -34,7 +34,6 @@ const PlayersInfo = ({ open, setOpen }) => {
             throw new Error(`Failed to get other players information: ${response.status}`)
           }
           const data = await response.json()
-          console.log(data)
           setPlayersInfo(data)
         } catch (error) {
           console.error(error)
@@ -96,7 +95,7 @@ const PlayersInfo = ({ open, setOpen }) => {
                     <div className="flex flex-col">
                       <div className="flex-2">
                           {JSON.parse(playerInfo.resources).map((resource) => (
-                            <div className="inline-flex items-center gap-1 px-2 py-1 text-white">
+                            <div key={`${playerInfo.username}-${resource.id}`} className="inline-flex items-center gap-1 px-2 py-1 text-white">
                               <div className={`h-12 w-12 rounded-full bg-white/50 flex items-center justify-center ${resource.qty > 0 ? "opacity-100" : "bg-white/30 opacity-30 grayscale scale-75"}`}>
                                 <img
                                   src={RESOURCE_ICONS[resource.id]}
@@ -136,14 +135,14 @@ const PlayersInfo = ({ open, setOpen }) => {
         onClick={() => setOpen((v) => !v)}
         className={[
           "fixed top-1/3 z-[60] -translate-y-1/2",
-          "h-16 w-8 rounded-l-xl bg-white shadow rounded-lg",
+          "h-16 w-8 rounded-l-xl bg-white/90 shadow rounded-lg",
           "flex items-center justify-center text-lg font-semibold",
           "hover:bg-slate-50 active:scale-95 transition-all duration-700 ease-out",
           open ? "right-[28rem]" : "right-0",
         ].join(" ")}
         aria-label={open ? "Cerrar barra lateral" : "Abrir barra lateral"}
       >
-        {open ? ">" : "<"}
+        <img src="/assets/group.png" className="w-6 opacity-80"/>
       </button>
     </div>
   );
