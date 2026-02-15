@@ -7,11 +7,11 @@ import { BuildModel } from "../Catan/BuildModel.jsx";
 import ModelCamera from "../Catan/ModelCamera.jsx";
 import { RESOURCE_ICONS, BUILD_COSTS, RESOURCE_CARDS, RANDOM_CARDS } from "../../constants/CatanStates.js";
 
-const UserInfo = ({ open, setOpen, selectedBuildId, setSelectedBuildId,  ... props }) => {
+const UserInfo = ({ open, setOpen, selectedBuildId, setSelectedBuildId, userResources, setUserResources, ... props }) => {
   const { username } = useAuth();
   const [userInfo, setUserInfo] = useState({});
-  const [userResources, setUserResources] = useState([]);
   const [userRandom, setUserRandom] = useState([]);
+  const [availableBuilding, setAvailableBuilding] = useState([]);
 
   // Cerrar con ESC
   useEffect(() => {
@@ -23,8 +23,15 @@ const UserInfo = ({ open, setOpen, selectedBuildId, setSelectedBuildId,  ... pro
   }, []);
 
   // Add random card to user
-  const addRandomCard = () => {
-
+  const addRandomCard = async () => {
+    setSelectedBuildId(0)
+    const response = await fetch("/api/catan/set_random_card.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ username }),
+    })
   }
 
   // Check available buildings
@@ -33,15 +40,14 @@ const UserInfo = ({ open, setOpen, selectedBuildId, setSelectedBuildId,  ... pro
     const build = BUILD_COSTS.find(b => b.id === build_id);
     if (!build) return false;
 
+    // Check if enough buildings
+    if (availableBuilding[build_id] == 0) return false;
+
+    // Check if enough materials
     return build.resources.every(({ id, qty }) =>
       (userResources.find(r => r.id === id)?.qty ?? 0) >= qty
     );
   };
-
-
-  const debug = (userData) => {
-    console.log(userData.random_cards) // Bien
-  }
 
   useEffect(() => {
     const getUserInformation = async () => {
@@ -49,15 +55,17 @@ const UserInfo = ({ open, setOpen, selectedBuildId, setSelectedBuildId,  ... pro
 
       try {
         const response = await fetch(`/api/player/user_player.php?username=${encodeURIComponent(username)}`);
+
         if (!response.ok) {
-          throw new Error(`Failed to get user player information: ${response.status}`)
+          throw new Error(`Failed to get user player information: ${response.status}`);
         }
-        const data = await response.json()
-        const data0 = data?.[0] ?? {};
-        setUserInfo(data0);
-        setUserResources(JSON.parse(data0.resource_cards ?? "[]"));
-        setUserRandom(JSON.parse(data0.random_cards ?? "[]"));
-        debug(data?.[0])
+
+        const data = await response.json();
+
+        setUserInfo(data.player);
+        setUserResources(data.player.resource_cards);
+        setUserRandom(data.player.random_cards);
+        setAvailableBuilding(data.available);
       } catch (error) {
         console.error(error)
         setUserInfo({})
@@ -98,6 +106,7 @@ const UserInfo = ({ open, setOpen, selectedBuildId, setSelectedBuildId,  ... pro
           <div className="relative gap-2 grid grid-cols-4 justify-items-center">
             { BUILD_COSTS.map((build) => (
               <div key={build.id} className={`relative flex-row h-3/4 col-span-1 gap-1 transition-all justify-items-center ${selectedBuildId == build.id ? "bg-white/70 rounded-3xl" : ""} ${availableBuild(build.id) ? "hover:scale-110" : ""}`}>
+                <span className={`absolute -translate-x-1/2 -mt-2 -ml-2 font-serif text-nowrap opacity-50 text-lg font-bold z-50 ${availableBuilding[build.id] == 0 ? "text-red-700" : availableBuilding[build.id] < 3 ? "text-yellow-400" : "text-green-500" }`}>{availableBuilding[build.id]}</span>
                 {build.id != 4 &&
                   <div className={`w-14 h-14 rounded-full bg-white/70 overflow-hidden  ${availableBuild(build.id) ? "" : "pointer-events-none opacity-60 grayscale"}`} onClick={() =>{if (!availableBuild(build.id)) return; setSelectedBuildId(build.id)}}>
                     <Canvas className="w-full h-full">
@@ -116,13 +125,13 @@ const UserInfo = ({ open, setOpen, selectedBuildId, setSelectedBuildId,  ... pro
                   </div>
                 ||
                 <>
-                  <img src="/assets/catan/cards/random_card.png" className="relative w-10" onClick={() => setSelectedBuildId(build.id)}/>
+                  <img src="/assets/catan/cards/random_card.png" className={`relative w-10 ${availableBuild(build.id) ? "" : "pointer-events-none opacity-60 grayscale"}`} onClick={() => setSelectedBuildId(build.id)}/>
                   <div
                     className={`absolute bg-green-300 rounded-2xl text-sm w-full text-center border border-black hover:scale-110 transition-all duration-700 ease-in-out ${
                       selectedBuildId === build.id ? "opacity-80 hover:opacity-100" : "hidden"
                     }`}
                   >
-                    <button>Comprar</button>
+                    <button onClick={() => addRandomCard()}>Comprar</button>
                   </div>
                 </>
                 }
@@ -188,7 +197,7 @@ const UserInfo = ({ open, setOpen, selectedBuildId, setSelectedBuildId,  ... pro
                         alt={random.name}
                         className="absolute left-0 top-0 w-fit select-none"
                         style={{
-                          transform: `translate(${i * 6}px, ${i * -4}px)`,
+                          transform: `translate(${i * 0}px, ${i * -8}px)`,
                           zIndex: i,
                         }}
                       />
@@ -214,7 +223,7 @@ const UserInfo = ({ open, setOpen, selectedBuildId, setSelectedBuildId,  ... pro
                       alt={resource.name}
                       className="absolute left-0 top-0 w-20 select-none"
                       style={{
-                        transform: `translate(${i * 6}px, ${i * -4}px)`, 
+                        transform: `translate(${i * 0}px, ${i * -8}px)`, 
                         zIndex: i,
                       }}
                     />

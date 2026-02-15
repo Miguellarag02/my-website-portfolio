@@ -7,7 +7,7 @@ export const CAMERA_STATES = {
 
 export const calculateCatanSizes = (isSmall, isMobile, isTablet, isUltraWide) => {
     return {
-        mapScale:               isSmall ? 0.80                    : isMobile ? 0.80                     : isUltraWide ? 1.4 : 1.1,
+        mapScale:               isSmall ? 0.80                    : isMobile ? 0.80                     : isUltraWide ? 1.1 : 1.1,
         mapPos:                 [0.0, 0, 0.0],
         mapRot:                 [0, -0.97, 0.0],
         frontCameraPos:         [0, 19, 0],
@@ -16,7 +16,7 @@ export const calculateCatanSizes = (isSmall, isMobile, isTablet, isUltraWide) =>
         movedCameraRot:         [-Math.PI/2, 0, 0.6],
         movedFrontCameraPos:    [0, 21, 0],
         movedFrontCameraRot:    [-Math.PI/2, 0, 0.6],
-        cameraTarget:           [-0.31, -0.8, -0.45]
+        cameraTarget:           [-0.31, -0.6, -0.55]
     };
 };
 

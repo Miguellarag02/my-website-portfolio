@@ -1,12 +1,40 @@
 import React, { useEffect, useState } from 'react'
 import { useGLTF, useTexture } from '@react-three/drei'
 import { TRADE_PORTS_MODELS, HEXAGON_TEXTURES_MODELS, PLAYER_COLORS } from '../../constants/CatanStates.js'
+import { useAuth } from "../../context/AuthContext.jsx"
 
-const CatanMap = (props) => {
+const CatanMap = ({ buildId, setBuildId, ...props }) => {
+  const { username } = useAuth()
   const { nodes, materials } = useGLTF('/models/catan_tablero.glb')
   const [hexagons, setHexagons] = useState([])
   const [towns, setTowns] = useState([])
   const [paths, setPaths] = useState([])
+  const [townHovered, setTownHovered] = useState(0)
+  const [pathHovered, setPathHovered] = useState(0)
+
+  const createTown = async (buildId, level) => {
+    setBuildId(0);
+    setTownHovered(0);
+    const response = await fetch("/api/catan/set_town.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ username, buildId, level }),
+    })
+  }
+
+  const createPath = async (buildId) => {
+    setBuildId(0);
+    setPathHovered(0);
+    const response = await fetch("/api/catan/set_path.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ username, buildId }),
+    })
+  }
 
   useEffect(() => {
     const loadHexMap = async () => {
@@ -34,7 +62,6 @@ const CatanMap = (props) => {
 
         setTowns(Array.isArray(data.towns) ? data.towns : [])
         setPaths(Array.isArray(data.paths) ? data.paths : [])
-
       } catch (error) {
         console.error(error)
         setTowns([])
@@ -44,7 +71,14 @@ const CatanMap = (props) => {
 
     loadHexMap()
     loadTownMap()
-  }, []);
+
+    const interval = setInterval(() => {
+      loadHexMap()
+      loadTownMap()
+    }, 7000)
+
+    return () => clearInterval(interval)
+  }, [buildId]);
 
   // useEffect(() => {
   //   console.log("TOWNS:", towns)
@@ -159,56 +193,130 @@ const CatanMap = (props) => {
 
       {/* Render towns models  */}
       {towns.map((town) => (
+        (() => {
+        const canBuildTown = (!town.is_builded && buildId == 2) || (town.is_builded && buildId == 3 && town.username === username)
+        return (
         <group
           key={`town_${town.id}`}
           name={`town_${town.id}`}
           position={[town.pos_x, town.pos_y, town.pos_z]}
-          rotation={[-Math.PI / 2, 0, 1.048]}
-          scale={0.2}
+          visible={town.is_builded ? true : buildId > 1 ? true : false}
         >
-          <group
-            name="2fe4cec76b0042e7a31248fb0ad97abafbx001"
-            rotation={[Math.PI / 2, 0, 0]}
-          >
+          {/* HITBOX (más grande) */}
+          {canBuildTown && (
             <mesh
-              name="Island__0001"
-              castShadow
-              receiveShadow
-              geometry={nodes.Island__0001.geometry}
-              material={materials["Scene_-_Root.001"]}
-              position={[0, -0.167, 0]}
-              rotation={[0, -0.772, 0]}
-              scale={1.3}
+              onPointerEnter={(e) => (e.stopPropagation(), setTownHovered(town.id))}
+              onPointerLeave={(e) => (e.stopPropagation(), setTownHovered(0))}
+              onClick={() => createTown(town.id, buildId - 1)}
+              raycast={canBuildTown ? undefined : () => null}
             >
-              <meshStandardMaterial 
-                color={PLAYER_COLORS[town.color]}
-                roughness={0.6}
-                metalness={0.1}
-              />
+              {/* Elige una geometría sencilla que cubra el camino */}
+              <boxGeometry args={[0.9, 0.9, 0.9]} />
+              <meshBasicMaterial transparent opacity={0} depthWrite={false} />
             </mesh>
-          </group>
+          )}
+
+          {/* MESH REAL (visual) */}
+          <mesh
+            geometry={nodes.Island__0001.geometry}
+            rotation={[0, -0.772, 0]}
+            scale={0.26}
+          >
+            <meshStandardMaterial
+              color={PLAYER_COLORS[town.color]}
+              roughness={0.6}
+              metalness={0.1}
+              transparent
+              visible={
+                town.is_builded && town.level === 1
+                  ? true
+                  : townHovered == town.id && buildId == 2
+                    ? true
+                  : false
+              }
+              opacity={
+                town.is_builded && town.level === 1
+                  ? 1.0
+                  : townHovered == town.id && buildId == 2
+                    ? 0.9
+                  : 0.0
+              }
+            />
+          </mesh>
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.city.geometry}
+            position={[0, -0.2, 0]}
+            rotation={[-1.575, 0, 0]}
+            scale={0.03}
+          >
+            <meshStandardMaterial
+              color={PLAYER_COLORS[town.color]}
+              roughness={0.6}
+              metalness={0.1}
+              transparent
+              opacity={
+                town.is_builded && town.level === 2
+                  ? 1.0
+                  : townHovered == town.id && buildId == 3
+                    ? 0.9
+                  : 0.0
+              }
+            />
+          </mesh>
         </group>
+      )})()
       ))}
 
       {/* Render path models  */}
       {paths.map((path) => (
-        <mesh
-          key={`path_${path.from_town_id}_${path.to_town_id}`}
-          name={`path_${path.from_town_id}_${path.to_town_id}`}
-          castShadow
-          receiveShadow
-          geometry={nodes.camino_45_54.geometry}
-          material={nodes.camino_45_54.material}
+        (() => {
+        const canBuildPath = !path.is_builded && buildId == 1
+        return (
+        <group
+          key={`path_${path.id}`}
           position={[path.pos_x, path.pos_y, path.pos_z]}
           rotation={[path.rot_x, path.rot_y, path.rot_z]}
-          scale={[-0.09, -0.05, -0.627]}
+          visible={path.is_builded ? true : buildId == 1 ? true : false}
         >
-          <meshStandardMaterial 
-            color={PLAYER_COLORS[path.color]}
-            roughness={0.6}
-            metalness={0.1}
-          />
-        </mesh>
+          {/* HITBOX (más grande) */}
+          {canBuildPath && (
+            <mesh
+              onPointerEnter={(e) => (e.stopPropagation(), setPathHovered(path.id))}
+              onPointerLeave={(e) => (e.stopPropagation(), setPathHovered(0))}
+              onClick={() => createPath(path.id)}
+              raycast={canBuildPath ? undefined : () => null}
+            >
+              {/* Elige una geometría sencilla que cubra el camino */}
+              <boxGeometry args={[1.0, 1.0, 1.2]} />
+              <meshBasicMaterial transparent opacity={0} depthWrite={false} />
+            </mesh>
+          )}
+
+          {/* MESH REAL (visual) */}
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.camino_45_54.geometry}
+            scale={[-0.09, -0.05, -0.8]}
+          >
+            <meshStandardMaterial
+              color={PLAYER_COLORS[path.color]}
+              roughness={0.6}
+              metalness={0.1}
+              transparent
+              opacity={
+                path.is_builded
+                  ? 1.0
+                  : pathHovered == path.id
+                    ? 0.9
+                  : 0.0
+              }
+            />
+          </mesh>
+        </group>
+      )})()
       ))}
 
       {/* Render trade ports models  */}

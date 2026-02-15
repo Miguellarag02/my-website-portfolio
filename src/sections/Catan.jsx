@@ -8,16 +8,16 @@ import CatanMap from "../components/Catan/Map.jsx";
 import PlayersInfo from "../components/Catan/PlayersInfo.jsx";
 import UserInfo from "../components/Catan/UserInfo.jsx"
 import { CAMERA_STATES, calculateCatanSizes, calculateCatanCameraPositions } from "../constants/CatanStates.js";
-import { useAuth } from "../context/AuthContext.jsx"
 
 const Catan = () => {
-    const { isLoggedIn, username, userImage } = useAuth()
+    const [selectedBuildId, setSelectedBuildId] = useState(0);
 
     // Camera controls
     const [openPlayerInfo, setOpenPlayerInfo] = useState(false);
     const [openBuildInfo, setOpenBuildInfo] = useState(false);
     const [frontCamera, setFrontCamera] = useState(false);
     const [cameraState, setCameraState] = useState(CAMERA_STATES.NORMAL);
+    const [userResources, setUserResources] = useState([]);
 
     // Sizing
     const { isSmall, isMobile, isTablet, isUltraWide } = useResponsiveFlags();
@@ -40,7 +40,6 @@ const Catan = () => {
         }
     }, [openPlayerInfo, frontCamera]);
 
-
     return (
         <section className="min-h-screen w-full flex flex-col">
             <div className="w-full h-full absolute inset-0">
@@ -59,7 +58,7 @@ const Catan = () => {
                         />
                     </button>
                 </div>
-                <div className="absolute inset-0 w-full h-full">
+                <div className="absolute inset-0 w-full h-[90%]">
                     <Canvas className="w-full h-full flex-grow">
                         <Suspense fallback={<CanvasLoader />}>
                             <PerspectiveCamera makeDefault position={[8, 11, 12]} />
@@ -68,14 +67,16 @@ const Catan = () => {
                                     scale={sizes.mapScale}
                                     position={sizes.mapPos}
                                     rotation={sizes.mapRot}
+                                    buildId={selectedBuildId}
+                                    setBuildId={setSelectedBuildId}
                                 />
                             </CatanCamera>
                             <ambientLight intensity={1.0} />
                             <directionalLight position={[4000, 1000, 4000]} intensity={2} />
                         </Suspense>
                     </Canvas>
-                    <PlayersInfo open={openPlayerInfo} setOpen={setOpenPlayerInfo}/>
-                    <UserInfo open={openBuildInfo} setOpen={setOpenBuildInfo}/>
+                    <PlayersInfo open={openPlayerInfo} setOpen={setOpenPlayerInfo} userResources={userResources}/>
+                    <UserInfo open={openBuildInfo} setOpen={setOpenBuildInfo} selectedBuildId={selectedBuildId} setSelectedBuildId={setSelectedBuildId} userResources={userResources} setUserResources={setUserResources}/>
                 </div>
             </div>
         </section>
