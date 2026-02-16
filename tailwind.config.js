@@ -6,6 +6,7 @@ export default {
       fontFamily: {
         generalsans: ['General Sans', 'sans-serif'],
         sans: ['Inter', 'ui-sans-serif', 'system-ui'],
+        minecraft: ['Minecraftia', 'sans-serif'],
         title: ['Poppins', 'ui-sans-serif', 'system-ui']
       },
       colors: {
@@ -27,6 +28,21 @@ export default {
       },
       backgroundImage: {
         terminal: "url('/assets/terminal.png')",
+      },
+      keyframes: {
+        breatheBg: {
+          "0%, 100%": { backgroundColor: "rgba(255,255,255,0.1)" },
+          "50%": { backgroundColor: "rgba(255,255,255,0.6)" },
+        },
+        breatheScale: {
+          "0%, 100%": { transform: "scale(1)" },
+          "50%": { transform: "scale(1.25)" },
+        },
+      },
+      animation: {
+        "breathe-bg": "breatheBg 2.6s ease-in-out infinite",
+        "breathe-scale": "breatheScale 2.6s ease-in-out infinite",
+        "breathe-both": "breatheBg 2.6s ease-in-out infinite, breatheScale 2.6s ease-in-out infinite"
       },
     },
   },

@@ -16,7 +16,7 @@ export const calculateCatanSizes = (isSmall, isMobile, isTablet, isUltraWide) =>
         movedCameraRot:         [-Math.PI/2, 0, 0.6],
         movedFrontCameraPos:    [0, 21, 0],
         movedFrontCameraRot:    [-Math.PI/2, 0, 0.6],
-        cameraTarget:           [-0.31, -0.6, -0.55]
+        cameraTarget:           [-0.31, -0.9, -0.45]
     };
 };
 

@@ -5,7 +5,7 @@ import { CAMERA_STATES } from "../../constants/CatanStates.js"
 import { easing } from "maath"
 import * as THREE from "three"
 
-const EPSILON = 0.05
+const EPSILON = 0.01
 
 const CatanCamera = ({ children, cameraState, cameraPos, cameraTarget }) => {
   const controls = useRef()

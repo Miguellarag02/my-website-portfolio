@@ -18,6 +18,9 @@ const Catan = () => {
     const [frontCamera, setFrontCamera] = useState(false);
     const [cameraState, setCameraState] = useState(CAMERA_STATES.NORMAL);
     const [userResources, setUserResources] = useState([]);
+    const [tradeNotification, setTradeNotification] = useState([])
+    const [playersInfo, setPlayersInfo] = useState([]);
+    const [pendingTrades, setPendingTrades] = useState([]);
 
     // Sizing
     const { isSmall, isMobile, isTablet, isUltraWide } = useResponsiveFlags();
@@ -75,8 +78,26 @@ const Catan = () => {
                             <directionalLight position={[4000, 1000, 4000]} intensity={2} />
                         </Suspense>
                     </Canvas>
-                    <PlayersInfo open={openPlayerInfo} setOpen={setOpenPlayerInfo} userResources={userResources}/>
-                    <UserInfo open={openBuildInfo} setOpen={setOpenBuildInfo} selectedBuildId={selectedBuildId} setSelectedBuildId={setSelectedBuildId} userResources={userResources} setUserResources={setUserResources}/>
+                    <PlayersInfo 
+                        open={openPlayerInfo} 
+                        setOpen={setOpenPlayerInfo} 
+                        userResources={userResources}
+                        playersInfo={playersInfo}
+                        setPlayersInfo={setPlayersInfo}
+                        pendingTrades={pendingTrades}
+                    />
+                    <UserInfo
+                        open={openBuildInfo} 
+                        setOpen={setOpenBuildInfo} 
+                        selectedBuildId={selectedBuildId} 
+                        setSelectedBuildId={setSelectedBuildId} 
+                        userResources={userResources} 
+                        setUserResources={setUserResources} 
+                        tradeNotification={tradeNotification}
+                        setTradeNotification={setTradeNotification}
+                        playersInfo={playersInfo}
+                        setPendingTrades={setPendingTrades}
+                    />
                 </div>
             </div>
         </section>

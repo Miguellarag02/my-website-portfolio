@@ -5,13 +5,21 @@ import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
 import { useAuth } from "../../context/AuthContext.jsx";
 import { BuildModel } from "../Catan/BuildModel.jsx";
 import ModelCamera from "../Catan/ModelCamera.jsx";
-import { RESOURCE_ICONS, BUILD_COSTS, RESOURCE_CARDS, RANDOM_CARDS } from "../../constants/CatanStates.js";
+import { RESOURCE_ICONS, BUILD_COSTS, RESOURCE_CARDS, RANDOM_CARDS, PLAYER_COLORS } from "../../constants/CatanStates.js";
 
-const UserInfo = ({ open, setOpen, selectedBuildId, setSelectedBuildId, userResources, setUserResources, ... props }) => {
+const UserInfo = ({ open, setOpen, selectedBuildId, setSelectedBuildId, userResources, setUserResources, tradeNotification, setTradeNotification, playersInfo, setPendingTrades, ... props }) => {
   const { username } = useAuth();
   const [userInfo, setUserInfo] = useState({});
   const [userRandom, setUserRandom] = useState([]);
   const [availableBuilding, setAvailableBuilding] = useState([]);
+
+  // Memorize playeInfo
+  const playerById = useMemo(() => {
+    const m = new Map();
+    for (const p of playersInfo ?? []) m.set(Number(p.id), p);
+    return m;
+  }, [playersInfo]);
+
 
   // Cerrar con ESC
   useEffect(() => {
@@ -32,6 +40,23 @@ const UserInfo = ({ open, setOpen, selectedBuildId, setSelectedBuildId, userReso
       },
       body: JSON.stringify({ username }),
     })
+  }
+
+  // Resolve Trade Notification
+  const resolveTradeNotification = async (tradeId, playerId, acceptTrade) => {
+    const response = await fetch("/api/catan/resolve_trade_notification.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ tradeId, playerId, acceptTrade }),
+    });
+    const data = await response.json();
+    if (!response.ok || !data.ok) {
+      console.error("Delete failed:", data);
+      return;
+    }
+    setTradeNotification(prev => prev.filter(tn => tn.id !== tradeId));
   }
 
   // Check available buildings
@@ -66,6 +91,11 @@ const UserInfo = ({ open, setOpen, selectedBuildId, setSelectedBuildId, userReso
         setUserResources(data.player.resource_cards);
         setUserRandom(data.player.random_cards);
         setAvailableBuilding(data.available);
+        setTradeNotification(data.trade_notification);
+        setPendingTrades(data.trade_notification.filter(
+          item => item.to_id_player === data.player.id
+            || item.from_id_player === data.player.id   
+        ))
       } catch (error) {
         console.error(error)
         setUserInfo({})
@@ -176,8 +206,217 @@ const UserInfo = ({ open, setOpen, selectedBuildId, setSelectedBuildId, userReso
       <div className="fixed inset-0 mt-auto w-full h-[15%]">
         <div className="grid grid-cols-6 h-full">
           {/** Información de solicitudes de comercio  */}
-          <div className="relative col-span-2 border-2 rounded-xl border-white">
+          <div className="relative col-span-2 m-1">
+            {tradeNotification.map((tradeNot, i) => {
+              const fromPlayerInfo = playerById.get(Number(tradeNot.from_id_player));
+              const toPlayerInfo = playerById.get( Number(tradeNot.to_id_player));
+              if(!tradeNot.from_resource_ids) return(<></>)
+              return (
+                <div
+                  key={`notificacion_${tradeNot.id}`}
+                  className="absolute flex flex-col w-full rounded-lg bottom-0 h-full animate-breathe-bg transition-all duration-1000"
+                  style={{ transform: `translateY(-${i * 14}vh)` }}
+                >
+                  <div className="relative flex w-full items-start justify-between px-4">
+                    {/* From player */}
+                    <div className="flex flex-col items-center">
+                      <img
+                        src={fromPlayerInfo?.user_image || "/assets/default-profile.png"}
+                        onError={(e) => (e.currentTarget.src = "/assets/default-profile.png")}
+                        alt="User profile"
+                        className="mt-2 h-24 w-24 rounded-full object-cover"
+                        style={{ border: `3px solid ${PLAYER_COLORS[fromPlayerInfo?.color] ?? "#ccc"}` }}
+                      />
+                      <span className="mt-2 text-center text-sm font-semibold tracking-tight text-slate-800">
+                        {fromPlayerInfo?.username ?? "Desconocido"}
+                      </span>
+                    </div>
 
+                    <div className="flex items-center p-1 justify-items-center w-2/3 h-full gap-2">
+                      
+                      {/* Proposed player resources */}
+                      <div className="flex flex-rows flex-col w-1/3 items-center grid-flow-col">
+                        {(() => {
+                          const arr = Array.isArray(tradeNot.from_resource_ids)
+                            ? tradeNot.from_resource_ids
+                            : JSON.parse(tradeNot.from_resource_ids || "[]");
+
+                          return arr.map((resource_qty, idx) => {
+                            const resource_id = idx + 1;
+                            if (!resource_qty) return null;
+
+                            return (
+                              <div key={`${tradeNot.id}-from-${resource_id}`} className="flex items-center">
+                                {Array.from({ length: resource_qty }).map((_, i) => (
+                                  <img
+                                    key={i}
+                                    src={RESOURCE_ICONS[resource_id]}
+                                    className="w-10"
+                                    alt=""
+                                  />
+                                ))}
+                              </div>
+                            );
+                          });
+                        })()}
+                      </div>
+
+                      {/* 🔹 Arrow */}
+                      <div className="flex items-center justify-center scale-150 w-1/3">
+                        <span className="text-3xl font-bold text-black">→</span>
+                      </div>
+
+                      {/* Response player resources */}
+                      <div className="flex flex-rows flex-col w-1/3 grid-flow-col items-center ">
+                        {(() => {
+                          const arr = Array.isArray(tradeNot.to_resource_ids)
+                            ? tradeNot.to_resource_ids
+                            : JSON.parse(tradeNot.to_resource_ids || "[]");
+                          
+                          if (!tradeNot.to_resource_ids)
+                            return(
+                              <div key={`${tradeNot.id}`} className="relative col-span-2 row-span-2 p-1 w-full h-full items-center text-center">
+                                <span className="absolute font-minecraft text-3xl top-1/3 left-1/3">?</span>
+                                <img src="/assets/catan/cards/random_card.png" className="relative w-[80%] opacity-30"></img>
+                              </div>
+                          );
+
+                          return arr.map((resource_qty, idx) => {
+                            const resource_id = idx + 1;
+                            if (!resource_qty) return null;
+
+                            return (
+                              <div key={`${tradeNot.id}-to-${resource_id}`} className="flex items-center">
+                                {Array.from({ length: resource_qty }).map((_, i) => (
+                                  <img
+                                    key={i}
+                                    src={RESOURCE_ICONS[resource_id]}
+                                    className="w-10"
+                                    alt=""
+                                  />
+                                ))}
+                              </div>
+                            );
+                          });
+                        })()}
+                      </div>
+                    </div>
+
+                    {/* To player */}
+                    <div className="flex flex-col items-center">
+                      <img
+                        src={toPlayerInfo?.user_image || "/assets/default-profile.png"}
+                        onError={(e) => (e.currentTarget.src = "/assets/default-profile.png")}
+                        alt="User profile"
+                        className="mt-2 h-24 w-24 rounded-full object-cover"
+                        style={{ border: `3px solid ${PLAYER_COLORS[toPlayerInfo?.color] ?? "#ccc"}` }}
+                      />
+                      <span className="mt-2 text-center text-sm font-semibold tracking-tight text-slate-800">
+                        {toPlayerInfo?.username ?? "Desconocido"}
+                      </span>
+                    </div>
+
+                    {/* Accept/Reject buttons */}
+                    { (tradeNot.from_id_player == userInfo.id || tradeNot.to_id_player == userInfo.id ) &&
+                      <div className="relative flex flex-row w-fit h-[90%]">
+                        <button
+                          className="
+                            relative w-10 h-full ml-2 mt-2 rounded-xl select-none
+                            bg-gradient-to-b from-red-500 via-red-600 to-red-800
+                            border border-red-900/60
+                            shadow-[0_8px_0_rgba(120,10,10,0.9),0_12px_20px_rgba(0,0,0,0.35)]
+                            transition-all duration-150 ease-out
+                            hover:-translate-y-1 hover:brightness-110
+                            active:translate-y-2
+                            active:shadow-[0_2px_0_rgba(120,10,10,0.9),0_6px_12px_rgba(0,0,0,0.35)]
+                            focus:outline-none focus-visible:ring-2 focus-visible:ring-red-300/80
+                          "
+                          onClick={() => resolveTradeNotification(tradeNot.id, userInfo.id, false)}
+                          aria-label="Cerrar"
+                        >
+                          {/* brillo superior */}
+                          <span
+                            className="
+                              pointer-events-none absolute inset-0 rounded-xl
+                              bg-gradient-to-b from-white/25 to-transparent
+                              opacity-70
+                            "
+                          />
+
+                          {/* borde interno para “plástico” */}
+                          <span
+                            className="
+                              pointer-events-none absolute inset-[2px] rounded-[0.65rem]
+                              ring-1 ring-white/15
+                            "
+                          />
+
+                          {/* X */}
+                          <span
+                            className="
+                              relative z-10 font-minecraft text-xl leading-none
+                              text-white drop-shadow-[0_2px_0_rgba(0,0,0,0.55)]
+                              transition-transform duration-150
+                              hover:scale-105
+                              active:scale-95
+                            "
+                          >
+                            ✕
+                          </span>
+                        </button>
+                        { (tradeNot.to_resource_ids !== null && tradeNot.from_id_player == userInfo.id) &&
+                          <button
+                            className="
+                              relative w-10 h-full ml-2 mt-2 rounded-xl select-none
+                              bg-gradient-to-b from-green-500 via-green-600 to-green-800
+                              border border-green-900/60
+                              shadow-[0_8px_0_rgba(10,80,10,0.9),0_12px_20px_rgba(0,0,0,0.35)]
+                              transition-all duration-150 ease-out
+                              hover:-translate-y-1 hover:brightness-110
+                              active:translate-y-2
+                              active:shadow-[0_2px_0_rgba(10,80,10,0.9),0_6px_12px_rgba(0,0,0,0.35)]
+                              focus:outline-none focus-visible:ring-2 focus-visible:ring-green-300/80
+                            "
+                            onClick={() => resolveTradeNotification(tradeNot.id, userInfo.id, true)}
+                            aria-label="Cerrar"
+                          >
+                            {/* brillo superior */}
+                            <span
+                              className="
+                                pointer-events-none absolute inset-0 rounded-xl
+                                bg-gradient-to-b from-white/25 to-transparent
+                                opacity-70
+                              "
+                            />
+
+                            {/* borde interno para “plástico” */}
+                            <span
+                              className="
+                                pointer-events-none absolute inset-[2px] rounded-[0.65rem]
+                                ring-1 ring-white/15
+                              "
+                            />
+
+                            {/* ✓ */}
+                            <span
+                              className="
+                                relative z-10 font-minecraft text-xl leading-none
+                                text-white drop-shadow-[0_2px_0_rgba(0,0,0,0.55)]
+                                transition-transform duration-150
+                                hover:scale-105
+                                active:scale-95
+                              "
+                            >
+                              ✓
+                            </span>
+                          </button>
+                        }
+                      </div>
+                    }
+                  </div>
+                </div>
+              );
+            })}
           </div>
           {/** Información de turnos / movimiento del ladron  */}
           <div className="relative border-2 rounded-xl border-red-700">
