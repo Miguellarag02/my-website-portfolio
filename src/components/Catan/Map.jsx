@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { useGLTF, useTexture } from '@react-three/drei'
+import { useGLTF } from '@react-three/drei'
+import { Physics, RigidBody } from "@react-three/rapier"
 import { TRADE_PORTS_MODELS, HEXAGON_TEXTURES_MODELS, PLAYER_COLORS } from '../../constants/CatanStates.js'
 import { useAuth } from "../../context/AuthContext.jsx"
 
@@ -90,7 +91,6 @@ const CatanMap = ({ buildId, setBuildId, ...props }) => {
     <group {...props} dispose={null}>
       {hexagons.map((hex) => (
         <React.Fragment key={hex.letter}>
-
           {/* Render hexagon models  */}
           <group
             name={`hexagon_${hex.letter}`}

@@ -1,4 +1,4 @@
-import { useState, Suspense, useEffect } from "react";
+import { useState, Suspense, useRef, useEffect } from "react";
 import { Canvas } from "@react-three/fiber";
 import CanvasLoader from "../components/CanvasLoader.jsx";
 import { PerspectiveCamera} from "@react-three/drei";
@@ -8,6 +8,7 @@ import CatanMap from "../components/Catan/Map.jsx";
 import PlayersInfo from "../components/Catan/PlayersInfo.jsx";
 import UserInfo from "../components/Catan/UserInfo.jsx"
 import { CAMERA_STATES, calculateCatanSizes, calculateCatanCameraPositions } from "../constants/CatanStates.js";
+import DiceWorld from "../components/Catan/Dice.jsx";
 
 const Catan = () => {
     const [selectedBuildId, setSelectedBuildId] = useState(0);
@@ -17,14 +18,46 @@ const Catan = () => {
     const [openBuildInfo, setOpenBuildInfo] = useState(false);
     const [frontCamera, setFrontCamera] = useState(false);
     const [cameraState, setCameraState] = useState(CAMERA_STATES.NORMAL);
+
+    // User information
     const [userResources, setUserResources] = useState([]);
     const [tradeNotification, setTradeNotification] = useState([])
     const [playersInfo, setPlayersInfo] = useState([]);
     const [pendingTrades, setPendingTrades] = useState([]);
 
+    // Dice controls
+    const [throwDice, setThrowDice ] = useState(false)
+    const [dice1Number, setDice1Number] = useState(0)
+    const [dice2Number, setDice2Number] = useState(0)
+    const dice1NumberRef = useRef(0)
+    const dice2NumberRef = useRef(0)
+
+    useEffect(() => {
+        dice1NumberRef.current = dice1Number
+    }, [dice1Number])
+
+    useEffect(() => {
+        dice2NumberRef.current = dice2Number
+    }, [dice2Number])
+
     // Sizing
     const { isSmall, isMobile, isTablet, isUltraWide } = useResponsiveFlags();
     const sizes = calculateCatanSizes(isSmall, isMobile, isTablet, isUltraWide);
+
+    // Delete Dice
+    useEffect(() => {
+        if (!throwDice) return;
+
+        const timeout = setTimeout(() => {
+            setThrowDice(false)
+
+            // Check result number
+            console.log(`${dice1NumberRef.current} y ${dice2NumberRef.current} `)
+
+        }, 6000)
+
+        return () => clearTimeout(timeout)
+    }, [throwDice])
 
     // Change camera position
     useEffect(() => {
@@ -73,6 +106,22 @@ const Catan = () => {
                                     buildId={selectedBuildId}
                                     setBuildId={setSelectedBuildId}
                                 />
+                                <DiceWorld
+                                  renderDice={throwDice}
+                                  diceKeyNumber={1}
+                                  dicePosition={[7, 4, 8]}
+                                  onRotationChange={(number) => {
+                                    setDice1Number(number)
+                                  }}
+                                />
+                                <DiceWorld
+                                  renderDice={throwDice}
+                                  diceKeyNumber={2}
+                                  dicePosition={[9, 4, 2]}
+                                  onRotationChange={(number) => {
+                                    setDice2Number(number)
+                                  }}
+                                />
                             </CatanCamera>
                             <ambientLight intensity={1.0} />
                             <directionalLight position={[4000, 1000, 4000]} intensity={2} />
@@ -97,6 +146,8 @@ const Catan = () => {
                         setTradeNotification={setTradeNotification}
                         playersInfo={playersInfo}
                         setPendingTrades={setPendingTrades}
+                        throwDice={throwDice}
+                        setThrowDice={setThrowDice}
                     />
                 </div>
             </div>

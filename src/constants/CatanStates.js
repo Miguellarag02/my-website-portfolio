@@ -1,3 +1,5 @@
+import * as THREE from "three"
+
 export const CAMERA_STATES = {
     NORMAL: 'NORMAL',
     FRONT: 'FRONT',
@@ -94,4 +96,13 @@ export const BUILD_COSTS = [
     {id: 2, name:"Poblado",     resources: [{id:5, qty:1}, {id:1, qty:1}, {id:2, qty:1}, {id:4, qty:1}]},
     {id: 3, name:"Ciudad",      resources: [{id:4, qty:2}, {id:3, qty:3}]},
     {id: 4, name:"Gamblear",    resources: [{id:2, qty:1}, {id:4, qty:1}, {id:3, qty:1}]}
+]
+
+export const DICE_FACES = [
+  { normal: new THREE.Vector3(0, 1, 0), value: 1 },
+  { normal: new THREE.Vector3(0, -1, 0), value: 6 },
+  { normal: new THREE.Vector3(0, 0, 1), value: 2 },
+  { normal: new THREE.Vector3(0, 0, -1), value: 4 },
+  { normal: new THREE.Vector3(1, 0, 0), value: 3 },
+  { normal: new THREE.Vector3(-1, 0, 0), value: 5 },
 ]

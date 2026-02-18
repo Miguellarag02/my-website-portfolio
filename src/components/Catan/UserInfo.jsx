@@ -5,9 +5,10 @@ import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
 import { useAuth } from "../../context/AuthContext.jsx";
 import { BuildModel } from "../Catan/BuildModel.jsx";
 import ModelCamera from "../Catan/ModelCamera.jsx";
+import SpecialButton from "../SpecialButton.jsx"
 import { RESOURCE_ICONS, BUILD_COSTS, RESOURCE_CARDS, RANDOM_CARDS, PLAYER_COLORS } from "../../constants/CatanStates.js";
 
-const UserInfo = ({ open, setOpen, selectedBuildId, setSelectedBuildId, userResources, setUserResources, tradeNotification, setTradeNotification, playersInfo, setPendingTrades, ... props }) => {
+const UserInfo = ({ open, setOpen, selectedBuildId, setSelectedBuildId, userResources, setUserResources, tradeNotification, setTradeNotification, playersInfo, setPendingTrades, throwDice, setThrowDice, ... props }) => {
   const { username } = useAuth();
   const [userInfo, setUserInfo] = useState({});
   const [userRandom, setUserRandom] = useState([]);
@@ -319,97 +320,19 @@ const UserInfo = ({ open, setOpen, selectedBuildId, setSelectedBuildId, userReso
                     {/* Accept/Reject buttons */}
                     { (tradeNot.from_id_player == userInfo.id || tradeNot.to_id_player == userInfo.id ) &&
                       <div className="relative flex flex-row w-fit h-[90%]">
-                        <button
-                          className="
-                            relative w-10 h-full ml-2 mt-2 rounded-xl select-none
-                            bg-gradient-to-b from-red-500 via-red-600 to-red-800
-                            border border-red-900/60
-                            shadow-[0_8px_0_rgba(120,10,10,0.9),0_12px_20px_rgba(0,0,0,0.35)]
-                            transition-all duration-150 ease-out
-                            hover:-translate-y-1 hover:brightness-110
-                            active:translate-y-2
-                            active:shadow-[0_2px_0_rgba(120,10,10,0.9),0_6px_12px_rgba(0,0,0,0.35)]
-                            focus:outline-none focus-visible:ring-2 focus-visible:ring-red-300/80
-                          "
+                        <SpecialButton
+                          color="red"
+                          width="w-10"
+                          text="✕"
                           onClick={() => resolveTradeNotification(tradeNot.id, userInfo.id, false)}
-                          aria-label="Cerrar"
-                        >
-                          {/* brillo superior */}
-                          <span
-                            className="
-                              pointer-events-none absolute inset-0 rounded-xl
-                              bg-gradient-to-b from-white/25 to-transparent
-                              opacity-70
-                            "
-                          />
-
-                          {/* borde interno para “plástico” */}
-                          <span
-                            className="
-                              pointer-events-none absolute inset-[2px] rounded-[0.65rem]
-                              ring-1 ring-white/15
-                            "
-                          />
-
-                          {/* X */}
-                          <span
-                            className="
-                              relative z-10 font-minecraft text-xl leading-none
-                              text-white drop-shadow-[0_2px_0_rgba(0,0,0,0.55)]
-                              transition-transform duration-150
-                              hover:scale-105
-                              active:scale-95
-                            "
-                          >
-                            ✕
-                          </span>
-                        </button>
+                        />
                         { (tradeNot.to_resource_ids !== null && tradeNot.from_id_player == userInfo.id) &&
-                          <button
-                            className="
-                              relative w-10 h-full ml-2 mt-2 rounded-xl select-none
-                              bg-gradient-to-b from-green-500 via-green-600 to-green-800
-                              border border-green-900/60
-                              shadow-[0_8px_0_rgba(10,80,10,0.9),0_12px_20px_rgba(0,0,0,0.35)]
-                              transition-all duration-150 ease-out
-                              hover:-translate-y-1 hover:brightness-110
-                              active:translate-y-2
-                              active:shadow-[0_2px_0_rgba(10,80,10,0.9),0_6px_12px_rgba(0,0,0,0.35)]
-                              focus:outline-none focus-visible:ring-2 focus-visible:ring-green-300/80
-                            "
-                            onClick={() => resolveTradeNotification(tradeNot.id, userInfo.id, true)}
-                            aria-label="Cerrar"
-                          >
-                            {/* brillo superior */}
-                            <span
-                              className="
-                                pointer-events-none absolute inset-0 rounded-xl
-                                bg-gradient-to-b from-white/25 to-transparent
-                                opacity-70
-                              "
-                            />
-
-                            {/* borde interno para “plástico” */}
-                            <span
-                              className="
-                                pointer-events-none absolute inset-[2px] rounded-[0.65rem]
-                                ring-1 ring-white/15
-                              "
-                            />
-
-                            {/* ✓ */}
-                            <span
-                              className="
-                                relative z-10 font-minecraft text-xl leading-none
-                                text-white drop-shadow-[0_2px_0_rgba(0,0,0,0.55)]
-                                transition-transform duration-150
-                                hover:scale-105
-                                active:scale-95
-                              "
-                            >
-                              ✓
-                            </span>
-                          </button>
+                          <SpecialButton
+                            color="green"
+                            width="w-10"
+                            text="✓"
+                            onClick={() => resolveTradeNotification(tradeNot.id, userInfo.id, false)}
+                          />
                         }
                       </div>
                     }
@@ -419,8 +342,13 @@ const UserInfo = ({ open, setOpen, selectedBuildId, setSelectedBuildId, userReso
             })}
           </div>
           {/** Información de turnos / movimiento del ladron  */}
-          <div className="relative border-2 rounded-xl border-red-700">
-
+          <div className="relative m-4">
+            <SpecialButton
+              color="blue"
+              width="w-24"
+              text="throw"
+              onClick={() => setThrowDice(true)}
+            />
           </div>
           {/** Información de tus cartas disponibles  */}
           <div className="relative col-span-3">
