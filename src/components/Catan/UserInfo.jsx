@@ -8,11 +8,37 @@ import ModelCamera from "../Catan/ModelCamera.jsx";
 import SpecialButton from "../SpecialButton.jsx"
 import { RESOURCE_ICONS, BUILD_COSTS, RESOURCE_CARDS, RANDOM_CARDS, PLAYER_COLORS } from "../../constants/CatanStates.js";
 
-const UserInfo = ({ open, setOpen, selectedBuildId, setSelectedBuildId, userResources, setUserResources, tradeNotification, setTradeNotification, playersInfo, setPendingTrades, throwDice, setThrowDice, ... props }) => {
+const UserInfo = ({ 
+    open, 
+    setOpen, 
+    selectedBuildId, 
+    setSelectedBuildId, 
+    userResources, 
+    setUserResources, 
+    tradeNotification, 
+    setTradeNotification, 
+    playersInfo, 
+    setPendingTrades, 
+    throwDice, 
+    setThrowDice, 
+    setMoveThief,
+    allowThief,
+    gameMatch,
+    setGameMatch,
+    ... props 
+  }) => {
+
   const { username } = useAuth();
   const [userInfo, setUserInfo] = useState({});
   const [userRandom, setUserRandom] = useState([]);
   const [availableBuilding, setAvailableBuilding] = useState([]);
+  const availableThrowDice = !throwDice;
+  const emptyBanckTrade = {
+    from_id: 0,
+    from_qty: 0,
+    to_id: 0,
+  }
+  const [banckTrade, setBanckTrade] = useState(emptyBanckTrade)
 
   // Memorize playeInfo
   const playerById = useMemo(() => {
@@ -40,6 +66,18 @@ const UserInfo = ({ open, setOpen, selectedBuildId, setSelectedBuildId, userReso
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ username }),
+    })
+  }
+
+  // Send the banck trade request
+  const sendBanckTrade = async (banck_trade) => {
+    setSelectedBuildId(0)
+    const response = await fetch("/api/catan/set_banck_trade.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({username, ...banck_trade}),
     })
   }
 
@@ -97,6 +135,7 @@ const UserInfo = ({ open, setOpen, selectedBuildId, setSelectedBuildId, userReso
           item => item.to_id_player === data.player.id
             || item.from_id_player === data.player.id   
         ))
+        setGameMatch(data.game_match);
       } catch (error) {
         console.error(error)
         setUserInfo({})
@@ -134,6 +173,7 @@ const UserInfo = ({ open, setOpen, selectedBuildId, setSelectedBuildId, userReso
         aria-label="Barra de herramientas"
       >
         <div className="p-2 h-full w-full mt-2">
+          {banckTrade.from_id == 0 &&
           <div className="relative gap-2 grid grid-cols-4 justify-items-center">
             { BUILD_COSTS.map((build) => (
               <div key={build.id} className={`relative flex-row h-3/4 col-span-1 gap-1 transition-all justify-items-center ${selectedBuildId == build.id ? "bg-white/70 rounded-3xl" : ""} ${availableBuild(build.id) ? "hover:scale-110" : ""}`}>
@@ -187,6 +227,61 @@ const UserInfo = ({ open, setOpen, selectedBuildId, setSelectedBuildId, userReso
               </div>
             ))}
           </div>
+          ||
+            <div className="relative gap-2 grid grid-cols-4 grid-rows-3 justify-items-center">
+              <span className="text-lg font-serif font-bold col-span-4 row-span-1">Select a resource for exchange</span>
+              <div className="flex w-full col-span-3 row-span-2 gap-2 justify-items-center ">
+                {userResources.map(resource => (
+                    <button 
+                      key={`banck_resource_${resource.id}`}
+                      className={
+                        `relative border-2 border-black/70 
+                        rounded-xl hover:bg-white/80 
+                        hover:scale-110 transition-all duration-500 ease-in-out 
+                        ${resource.id == banckTrade.to_id ? "bg-green-500/60" : resource.id == banckTrade.from_id ? "bg-red-500/60 pointer-events-none" : "bg-white/30"}`
+                      }
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setBanckTrade({
+                          ...banckTrade,
+                          to_id: resource.id,
+                        });
+                      }}
+                    >
+                      <img 
+                        src={RESOURCE_ICONS[resource.id]} 
+                        className="w-14"
+                      />
+                      {(resource.id == banckTrade.from_id &&
+                        <span>{`-${resource.trade_qty}`}</span>
+                      ) || (resource.id == banckTrade.to_id &&
+                        <span>+1</span>
+                      )}
+                    </button>
+                ))}
+              </div>
+              <SpecialButton 
+                color="green"
+                width="w-20"
+                text="✓​"
+                onClick={() =>{
+                  sendBanckTrade(banckTrade);
+                  setBanckTrade(emptyBanckTrade);
+                  setOpen(false);
+                }}
+                visibility={banckTrade.to_id > 0}
+              />
+              <SpecialButton 
+                color="red"
+                width="w-20"
+                text="✕"
+                onClick={() =>{
+                  setBanckTrade(emptyBanckTrade);
+                  setOpen(false);
+                }}
+              />
+            </div>
+          }
         </div>
       </aside>
 
@@ -342,12 +437,28 @@ const UserInfo = ({ open, setOpen, selectedBuildId, setSelectedBuildId, userReso
             })}
           </div>
           {/** Información de turnos / movimiento del ladron  */}
-          <div className="relative m-4">
+          <div className={`relative h-[80%] w-full flex flex-nowrap`}>
             <SpecialButton
               color="blue"
-              width="w-24"
-              text="throw"
+              width="w-20"
+              text="Throw 🎲​🎲​"
               onClick={() => setThrowDice(true)}
+              visibility= {availableThrowDice && gameMatch.current_order == userInfo.order}
+            />
+            <SpecialButton
+              color="green"
+              width="w-20"
+              text="Next ➡️"
+              onClick={() => setThrowDice(true)}
+              visibility= {gameMatch.current_order == userInfo.order}
+            />
+            <SpecialButton
+              color="red"
+              width="w-20"
+              text="​Thief 🥷💰​"
+              onClick={() => setMoveThief(prev => !prev)}
+              visibility={allowThief && gameMatch.current_order == userInfo.order}
+              isToggle ={true}
             />
           </div>
           {/** Información de tus cartas disponibles  */}
@@ -356,7 +467,10 @@ const UserInfo = ({ open, setOpen, selectedBuildId, setSelectedBuildId, userReso
               {/** Random Cards */}
               {userRandom.map((random) =>
                 random.qty > 0 && (
-                  <div key={random.id} className="relative w-20 h-28 transition-full ease-in-out duration-700 hover:-translate-y-8 hover:scale-150 hover:z-50">
+                  <div 
+                    key={random.id} 
+                    className="relative w-20 h-28 transition-full ease-in-out duration-700 hover:-translate-y-8 hover:scale-150 hover:z-50"
+                    >
                     {Array.from({ length: random.qty }).map((_, i) => (
                       <img
                         key={i}
@@ -375,8 +489,13 @@ const UserInfo = ({ open, setOpen, selectedBuildId, setSelectedBuildId, userReso
                   </div>
                 )
               )}
+
+              {/** Resources Cards */}
               {userResources.map((resource) => (
-                <div key={resource.id} className="relative w-20 h-28">
+                <div 
+                  key={resource.id} 
+                  className="relative w-20 h-28"
+                  >
                   <img
                       key={`grayscale_${resource.name}`}
                       src={RESOURCE_CARDS[resource.id]}
@@ -398,6 +517,28 @@ const UserInfo = ({ open, setOpen, selectedBuildId, setSelectedBuildId, userReso
                 <span className={`absolute left-1/2 -translate-x-1/2 mt-28  bg-white/70 rounded-2xl w-20 text-center font-serif text-nowrap text-sm font-bold z-50 ${resource.qty > 0 ? "" : "opacity-0"}`}>
                   {`${resource.name}${resource.qty > 1 ? ` x ${resource.qty}` : ""}`}
                 </span>
+                { (resource.qty - resource.trade_qty) >= 0 &&
+                  <button
+                    className={`
+                      relative left-1/2 mt-16 -translate-x-1/2 h-10 w-10 rounded-full z-50
+                      transition-all duration-700 ease-out
+                      hover:bg-white/80 hover:scale-150
+                      hover:opacity-100 opacity-0
+                    `}
+                    onClick={() => {
+                      setBanckTrade({
+                        from_id: resource.id,
+                        from_qty: resource.trade_qty
+                      });
+                      setOpen(true);
+                    }}
+                  >
+                    <img
+                      src="/assets/catan/resources/trading_button.png"
+                      className="object-contain"
+                    />
+                  </button>
+                }
                 </div>
               ))}
             </div>

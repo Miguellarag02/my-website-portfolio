@@ -1,4 +1,14 @@
-export default function SpecialButton({ color = "red", width = "w-10", text = "", onClick }) {
+import { useState } from "react"
+
+export default function SpecialButton({
+  color = "red",
+  width = "w-10",
+  text = "",
+  visibility = true,
+  isToggle = false,
+  onClick
+}) {
+  const [isPressed, setIsPressed] = useState(false)
 
   const colorMap = {
     red: {
@@ -11,8 +21,8 @@ export default function SpecialButton({ color = "red", width = "w-10", text = ""
     green: {
       gradient: "from-green-500 via-green-600 to-green-800",
       border: "border-green-900/60",
-      shadow: "shadow-[0_8px_0_rgba(10,120,10,0.9),0_12px_20px_rgba(0,0,0,0.35)]",
-      activeShadow: "active:shadow-[0_2px_0_rgba(10,120,10,0.9),0_6px_12px_rgba(0,0,0,0.35)]",
+      shadow: "shadow-[0_8px_0_rgba(10,80,10,0.9),0_12px_20px_rgba(0,0,0,0.35)]",
+      activeShadow: "active:shadow-[0_2px_0_rgba(10,80,10,0.9),0_6px_12px_rgba(0,0,0,0.35)]",
       focus: "focus-visible:ring-green-300/80"
     },
     blue: {
@@ -25,20 +35,32 @@ export default function SpecialButton({ color = "red", width = "w-10", text = ""
   }
 
   const styles = colorMap[color] || colorMap.red
+  const toggleClasses = isToggle && isPressed
+    ? "translate-y-2 hover:translate-y-2 brightness-95 hover:brightness-95"
+    : "hover:-translate-y-1 hover:brightness-110 active:translate-y-2"
+
+  const shadowClasses = isToggle && isPressed ? styles.activeShadow.replace("active:", "") : styles.shadow
+  const textScaleClasses = isToggle && isPressed ? "scale-95 hover:scale-95" : "hover:scale-105 active:scale-95"
+
+  const handleClick = (event) => {
+    if (isToggle) setIsPressed((prev) => !prev)
+    if (onClick) onClick(event)
+  }
 
   return (
     <button
-      onClick={onClick}
+      onClick={handleClick}
+      aria-pressed={isToggle ? isPressed : undefined}
       className={`
         relative ${width} h-full ml-2 mt-2 rounded-xl select-none
         bg-gradient-to-b ${styles.gradient}
         border ${styles.border}
-        ${styles.shadow}
+        ${shadowClasses}
         transition-all duration-150 ease-out
-        hover:-translate-y-1 hover:brightness-110
-        active:translate-y-2
+        ${toggleClasses}
         ${styles.activeShadow}
         focus:outline-none focus-visible:ring-2 ${styles.focus}
+        ${visibility ? "opacity-100" : "opacity-0 duration-[3s] pointer-events-none"}
       `}
     >
       {/* brillo superior */}
@@ -61,11 +83,10 @@ export default function SpecialButton({ color = "red", width = "w-10", text = ""
       {/* texto */}
       <span
         className="
-          relative z-10 font-minecraft text-xl leading-none
+          relative z-10 font-minecraft text-lg leading-none
           text-white drop-shadow-[0_2px_0_rgba(0,0,0,0.55)]
           transition-transform duration-150
-          hover:scale-105
-          active:scale-95
+          ${textScaleClasses}
         "
       >
         {text}

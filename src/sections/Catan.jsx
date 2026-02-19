@@ -32,6 +32,13 @@ const Catan = () => {
     const dice1NumberRef = useRef(0)
     const dice2NumberRef = useRef(0)
 
+    // Thief controls
+    const [moveThief, setMoveThief] = useState(false);
+    const [allowThief, setAllowThief] = useState(true);
+
+    // Match controls
+    const [gameMatch, setGameMatch] = useState({})
+
     useEffect(() => {
         dice1NumberRef.current = dice1Number
     }, [dice1Number])
@@ -94,7 +101,7 @@ const Catan = () => {
                         />
                     </button>
                 </div>
-                <div className="absolute inset-0 w-full h-[90%]">
+                <div className="absolute inset-0 w-full h-full">
                     <Canvas className="w-full h-full flex-grow">
                         <Suspense fallback={<CanvasLoader />}>
                             <PerspectiveCamera makeDefault position={[8, 11, 12]} />
@@ -105,6 +112,9 @@ const Catan = () => {
                                     rotation={sizes.mapRot}
                                     buildId={selectedBuildId}
                                     setBuildId={setSelectedBuildId}
+                                    moveThief={moveThief}
+                                    setAllowThief={setAllowThief}
+                                    setMoveThief={setMoveThief}
                                 />
                                 <DiceWorld
                                   renderDice={throwDice}
@@ -134,6 +144,7 @@ const Catan = () => {
                         playersInfo={playersInfo}
                         setPlayersInfo={setPlayersInfo}
                         pendingTrades={pendingTrades}
+                        gameMatch={gameMatch}
                     />
                     <UserInfo
                         open={openBuildInfo} 
@@ -148,6 +159,10 @@ const Catan = () => {
                         setPendingTrades={setPendingTrades}
                         throwDice={throwDice}
                         setThrowDice={setThrowDice}
+                        setMoveThief={setMoveThief}
+                        allowThief={allowThief}
+                        gameMatch={gameMatch}
+                        setGameMatch={setGameMatch}
                     />
                 </div>
             </div>

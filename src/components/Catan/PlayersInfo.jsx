@@ -21,7 +21,7 @@ const parseResources = (rawResources) => {
   }
 };
 
-const PlayersInfo = ({ open, setOpen, userResources, playersInfo, setPlayersInfo, pendingTrades }) => {
+const PlayersInfo = ({ open, setOpen, userResources, playersInfo, setPlayersInfo, pendingTrades, gameMatch }) => {
   const { username } = useAuth();
   const [tradingOpen, setTradingOpen] = useState(0);
   const [selectedResources, setSelectedResources] = useState(EMPTY_RESOURCES);
@@ -128,6 +128,9 @@ const PlayersInfo = ({ open, setOpen, userResources, playersInfo, setPlayersInfo
                     <div className="flex gap-3">
                       {/* Player main information */}
                       <div className="flex flex-col mt-4">
+                        <div className={`absolute h-8 w-8 rounded-full bg-white-600 border-2 border-black-100 flex justify-center ${playerInfo.current_order == gameMatch.turn ? "opacity-100" : "opacity-30"}`}>
+                          <span className="relative font-minecraft text-lg">{playerInfo.current_order}</span>
+                        </div>
                         <img
                           src={playerInfo.user_image || "/assets/default-profile.png"}
                           onError={(e) => {

@@ -4,14 +4,15 @@ import { Physics, RigidBody } from "@react-three/rapier"
 import { TRADE_PORTS_MODELS, HEXAGON_TEXTURES_MODELS, PLAYER_COLORS } from '../../constants/CatanStates.js'
 import { useAuth } from "../../context/AuthContext.jsx"
 
-const CatanMap = ({ buildId, setBuildId, ...props }) => {
-  const { username } = useAuth()
-  const { nodes, materials } = useGLTF('/models/catan_tablero.glb')
-  const [hexagons, setHexagons] = useState([])
-  const [towns, setTowns] = useState([])
-  const [paths, setPaths] = useState([])
-  const [townHovered, setTownHovered] = useState(0)
-  const [pathHovered, setPathHovered] = useState(0)
+const CatanMap = ({ buildId, setBuildId, moveThief, setAllowThief, setMoveThief, ...props }) => {
+  const { username } = useAuth();
+  const { nodes, materials } = useGLTF('/models/catan_tablero.glb');
+  const [hexagons, setHexagons] = useState([]);
+  const [towns, setTowns] = useState([]);
+  const [paths, setPaths] = useState([]);
+  const [townHovered, setTownHovered] = useState(0);
+  const [pathHovered, setPathHovered] = useState(0);
+  const [thiefHovered, setThiefHovered] = useState(0);
 
   const createTown = async (buildId, level) => {
     setBuildId(0);
@@ -35,6 +36,22 @@ const CatanMap = ({ buildId, setBuildId, ...props }) => {
       },
       body: JSON.stringify({ username, buildId }),
     })
+  }
+
+  const createThief = async (hexId) => {
+    setMoveThief(false)
+    setAllowThief(false);
+    const response = await fetch("/api/catan/set_thief.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ username, hexId}),
+    })
+    const data = await response.json()
+    if (!data.ok){
+      setAllowThief(true);
+    }
   }
 
   useEffect(() => {
@@ -81,12 +98,6 @@ const CatanMap = ({ buildId, setBuildId, ...props }) => {
     return () => clearInterval(interval)
   }, [buildId]);
 
-  // useEffect(() => {
-  //   console.log("TOWNS:", towns)
-  //   console.log("PATHS:", paths)
-  // }, [towns, paths])
-
-
   return (
     <group {...props} dispose={null}>
       {hexagons.map((hex) => (
@@ -96,7 +107,25 @@ const CatanMap = ({ buildId, setBuildId, ...props }) => {
             name={`hexagon_${hex.letter}`}
             position={[hex.pos_x, hex.pos_y, hex.pos_z]}
             rotation={[-Math.PI, -1.048, 0]}
-            scale={[0.043, 0.034, 0.043]}>
+            scale={[0.043, 0.034, 0.043]}
+            onPointerEnter={(e) => {
+              if (moveThief) {
+                e.stopPropagation()
+                setThiefHovered(hex.id)
+              }
+            }}
+
+            onPointerLeave={(e) => {
+              if (moveThief){
+                e.stopPropagation()
+                setThiefHovered(0)
+              }
+            }}
+            onClick={() => {
+              if (moveThief) createThief(hex.id)
+            }}
+            raycast={moveThief ? undefined : () => null}
+            >
             <mesh
               name={`hexagon_${hex.letter}_1`}
               castShadow
@@ -144,12 +173,12 @@ const CatanMap = ({ buildId, setBuildId, ...props }) => {
           ): null}
 
           {/* Render thiefs models  */}
-          {hex.is_thief ? (
             <group
               name={`thief_${hex.letter}`}
               position={[hex.thief_pos_x, hex.thief_pos_y, hex.thief_pos_z]}
               rotation={[-Math.PI / 2, 0, hex.thief_rot_z]}
               scale={25}
+              visible={hex.is_thief ? true : moveThief ? true : false}
             >
               <mesh
                 name={`thief_${hex.letter}_1`}
@@ -157,37 +186,81 @@ const CatanMap = ({ buildId, setBuildId, ...props }) => {
                 receiveShadow
                 geometry={nodes.Object_2001.geometry}
                 material={materials["None.001"]}
-              />
+              >
+                <meshStandardMaterial
+                  color={"#353535"}
+                  roughness={0.6}
+                  metalness={0.1}
+                  transparent
+                  visible={hex.is_thief ? true : moveThief ? true : false}
+                  opacity={ hex.is_thief ? 1.0 : thiefHovered == hex.id ? 0.8 : 0.0 }
+                />
+              </mesh>
               <mesh
                 name={`thief_${hex.letter}_2`}
                 castShadow
                 receiveShadow
                 geometry={nodes.Object_3001.geometry}
                 material={materials["None.001"]}
-              />
+              >
+                <meshStandardMaterial
+                  color={"#353535"}
+                  roughness={0.6}
+                  metalness={0.1}
+                  transparent
+                  visible={hex.is_thief ? true : moveThief ? true : false}
+                  opacity={ hex.is_thief ? 1.0 : thiefHovered == hex.id ? 0.8 : 0.0 }
+                />
+              </mesh>
               <mesh
                 name={`thief_${hex.letter}_3`}
                 castShadow
                 receiveShadow
                 geometry={nodes.Object_4001.geometry}
                 material={materials["None.001"]}
-              />
+              >
+                <meshStandardMaterial
+                  color={"#353535"}
+                  roughness={0.6}
+                  metalness={0.1}
+                  transparent
+                  visible={hex.is_thief ? true : moveThief ? true : false}
+                  opacity={ hex.is_thief ? 1.0 : thiefHovered == hex.id ? 0.8 : 0.0 }
+                />
+              </mesh>
               <mesh
                 name={`thief_${hex.letter}_4`}
                 castShadow
                 receiveShadow
                 geometry={nodes.Object_5001.geometry}
                 material={materials["None.001"]}
-              />
+              >
+                <meshStandardMaterial
+                  color={"#353535"}
+                  roughness={0.6}
+                  metalness={0.1}
+                  transparent
+                  visible={hex.is_thief ? true : moveThief ? true : false}
+                  opacity={ hex.is_thief ? 1.0 : thiefHovered == hex.id ? 0.8 : 0.0 }
+                />
+              </mesh>
               <mesh
                 name={`thief_${hex.letter}_5`}
                 castShadow
                 receiveShadow
                 geometry={nodes.Object_6001.geometry}
                 material={materials["None.001"]}
-              />
+              >
+                <meshStandardMaterial
+                  color={"#353535"}
+                  roughness={0.6}
+                  metalness={0.1}
+                  transparent
+                  visible={hex.is_thief ? true : moveThief ? true : false}
+                  opacity={ hex.is_thief ? 1.0 : thiefHovered == hex.id ? 0.8 : 0.0 }
+                />
+              </mesh>
             </group>
-          ) : null}
         </React.Fragment>
       ))}
 

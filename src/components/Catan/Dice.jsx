@@ -43,7 +43,7 @@ const isSleepingEnough = (rb) => {
 function Ground({ size = 20 }) {
   return (
     <RigidBody type="fixed">
-        <CuboidCollider args={[size / 2, 0.05, size / 2]} position={[0, 0.4, 0]} />
+        <CuboidCollider args={[size, 0.05, size]} position={[0, 0.4, 0]} />
     </RigidBody>
   )
 }
