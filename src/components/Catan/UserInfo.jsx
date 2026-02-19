@@ -25,6 +25,7 @@ const UserInfo = ({
     allowThief,
     gameMatch,
     setGameMatch,
+    setIsPlayerMatch,
     ... props 
   }) => {
 
@@ -136,6 +137,7 @@ const UserInfo = ({
             || item.from_id_player === data.player.id   
         ))
         setGameMatch(data.game_match);
+        setIsPlayerMatch(data.game_match.turn == data.player.order)
       } catch (error) {
         console.error(error)
         setUserInfo({})
@@ -331,7 +333,7 @@ const UserInfo = ({
                     <div className="flex items-center p-1 justify-items-center w-2/3 h-full gap-2">
                       
                       {/* Proposed player resources */}
-                      <div className="flex flex-rows flex-col w-1/3 items-center grid-flow-col">
+                      <div className="flex flex-row w-1/3 items-center grid-flow-col">
                         {(() => {
                           const arr = Array.isArray(tradeNot.from_resource_ids)
                             ? tradeNot.from_resource_ids
@@ -342,7 +344,7 @@ const UserInfo = ({
                             if (!resource_qty) return null;
 
                             return (
-                              <div key={`${tradeNot.id}-from-${resource_id}`} className="flex items-center">
+                              <div key={`${tradeNot.id}-from-${resource_id}`} className="flex flex-col items-center">
                                 {Array.from({ length: resource_qty }).map((_, i) => (
                                   <img
                                     key={i}
@@ -363,7 +365,7 @@ const UserInfo = ({
                       </div>
 
                       {/* Response player resources */}
-                      <div className="flex flex-rows flex-col w-1/3 grid-flow-col items-center ">
+                      <div className="flex flex-row w-1/3 grid-flow-col items-center ">
                         {(() => {
                           const arr = Array.isArray(tradeNot.to_resource_ids)
                             ? tradeNot.to_resource_ids
@@ -382,7 +384,7 @@ const UserInfo = ({
                             if (!resource_qty) return null;
 
                             return (
-                              <div key={`${tradeNot.id}-to-${resource_id}`} className="flex items-center">
+                              <div key={`${tradeNot.id}-to-${resource_id}`} className="flex flex-col items-center">
                                 {Array.from({ length: resource_qty }).map((_, i) => (
                                   <img
                                     key={i}
@@ -426,7 +428,7 @@ const UserInfo = ({
                             color="green"
                             width="w-10"
                             text="✓"
-                            onClick={() => resolveTradeNotification(tradeNot.id, userInfo.id, false)}
+                            onClick={() => resolveTradeNotification(tradeNot.id, userInfo.id, true)}
                           />
                         }
                       </div>
@@ -443,21 +445,21 @@ const UserInfo = ({
               width="w-20"
               text="Throw 🎲​🎲​"
               onClick={() => setThrowDice(true)}
-              visibility= {availableThrowDice && gameMatch.current_order == userInfo.order}
+              visibility= {availableThrowDice && gameMatch.turn == userInfo.order}
             />
             <SpecialButton
               color="green"
               width="w-20"
               text="Next ➡️"
               onClick={() => setThrowDice(true)}
-              visibility= {gameMatch.current_order == userInfo.order}
+              visibility= {gameMatch.turn == userInfo.order}
             />
             <SpecialButton
               color="red"
               width="w-20"
               text="​Thief 🥷💰​"
               onClick={() => setMoveThief(prev => !prev)}
-              visibility={allowThief && gameMatch.current_order == userInfo.order}
+              visibility={allowThief && gameMatch.turn == userInfo.order}
               isToggle ={true}
             />
           </div>

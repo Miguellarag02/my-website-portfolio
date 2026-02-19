@@ -38,6 +38,7 @@ const Catan = () => {
 
     // Match controls
     const [gameMatch, setGameMatch] = useState({})
+    const [isPlayerTurn, setIsPlayerMatch] = useState(false)
 
     useEffect(() => {
         dice1NumberRef.current = dice1Number
@@ -145,6 +146,7 @@ const Catan = () => {
                         setPlayersInfo={setPlayersInfo}
                         pendingTrades={pendingTrades}
                         gameMatch={gameMatch}
+                        isPlayerTurn={isPlayerTurn}
                     />
                     <UserInfo
                         open={openBuildInfo} 
@@ -163,6 +165,7 @@ const Catan = () => {
                         allowThief={allowThief}
                         gameMatch={gameMatch}
                         setGameMatch={setGameMatch}
+                        setIsPlayerMatch={setIsPlayerMatch}
                     />
                 </div>
             </div>

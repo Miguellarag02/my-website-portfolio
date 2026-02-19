@@ -21,7 +21,7 @@ const parseResources = (rawResources) => {
   }
 };
 
-const PlayersInfo = ({ open, setOpen, userResources, playersInfo, setPlayersInfo, pendingTrades, gameMatch }) => {
+const PlayersInfo = ({ open, setOpen, userResources, playersInfo, setPlayersInfo, pendingTrades, gameMatch, isPlayerTurn }) => {
   const { username } = useAuth();
   const [tradingOpen, setTradingOpen] = useState(0);
   const [selectedResources, setSelectedResources] = useState(EMPTY_RESOURCES);
@@ -48,6 +48,12 @@ const PlayersInfo = ({ open, setOpen, userResources, playersInfo, setPlayersInfo
       body: JSON.stringify({ username, toPlayerId, selectedResourcesByUser }),
     });
   };
+
+  // Close open trades during changes match
+  useEffect(() =>{
+      setTradingOpen(false);
+      setSelectedResources(EMPTY_RESOURCES);
+  }, [gameMatch.turn]);
 
   // Close with ESC
   useEffect(() => {
@@ -128,7 +134,10 @@ const PlayersInfo = ({ open, setOpen, userResources, playersInfo, setPlayersInfo
                     <div className="flex gap-3">
                       {/* Player main information */}
                       <div className="flex flex-col mt-4">
-                        <div className={`absolute h-8 w-8 rounded-full bg-white-600 border-2 border-black-100 flex justify-center ${playerInfo.current_order == gameMatch.turn ? "opacity-100" : "opacity-30"}`}>
+                        <div 
+                          className={`absolute h-8 w-8 rounded-full border-2 border-black-100 flex justify-center 
+                            ${playerInfo.current_order == gameMatch.turn ? "opacity-100 bg-green-600/70 animate-breathe-scale" : "opacity-30 bg-white-600"}`}
+                          >
                           <span className="relative font-minecraft text-lg">{playerInfo.current_order}</span>
                         </div>
                         <img
@@ -188,7 +197,7 @@ const PlayersInfo = ({ open, setOpen, userResources, playersInfo, setPlayersInfo
                                   ml-10 h-14 w-14 rounded-full px-1 py-1
                                   transition-all duration-700 ease-out
                                   hover:bg-white/80 hover:scale-125
-                                  ${isDisabled ? "grayscale pointer-events-none" : ""}
+                                  ${(isDisabled || !(playerInfo.current_order == gameMatch.turn || isPlayerTurn))? "grayscale pointer-events-none" : ""}
                                   ${shouldBreathe ? "animate-breathe-both" : ""}
                                 `}
                                 onClick={() => {
