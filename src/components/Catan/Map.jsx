@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import { useGLTF } from '@react-three/drei'
 import { Physics, RigidBody } from "@react-three/rapier"
-import { TRADE_PORTS_MODELS, HEXAGON_TEXTURES_MODELS, PLAYER_COLORS } from '../../constants/CatanStates.js'
+import { TRADE_PORTS_MODELS, HEXAGON_TEXTURES_MODELS, PLAYER_COLORS, HEXAGON_TEXTURES_GRAYSCALE_MODELS } from '../../constants/CatanStates.js'
 import { useAuth } from "../../context/AuthContext.jsx"
 
-const CatanMap = ({ buildId, setBuildId, moveThief, setAllowThief, setMoveThief, ...props }) => {
+const CatanMap = ({ buildId, setBuildId, moveThief, setAllowThief, setMoveThief, gameMatch, ...props }) => {
   const { username } = useAuth();
-  const { nodes, materials } = useGLTF('/models/catan_tablero.glb');
+  const { nodes, materials } = useGLTF('/models/catan_tablero_optimized.glb');
   const [hexagons, setHexagons] = useState([]);
   const [towns, setTowns] = useState([]);
   const [paths, setPaths] = useState([]);
   const [townHovered, setTownHovered] = useState(0);
   const [pathHovered, setPathHovered] = useState(0);
   const [thiefHovered, setThiefHovered] = useState(0);
+  const freeBuild = (gameMatch.round == 1 || gameMatch.round == 2);
 
   const createTown = async (buildId, level) => {
     setBuildId(0);
@@ -55,9 +56,10 @@ const CatanMap = ({ buildId, setBuildId, moveThief, setAllowThief, setMoveThief,
   }
 
   useEffect(() => {
+    if (!username) return;
     const loadHexMap = async () => {
       try {
-        const response = await fetch('/api/catan/hex_map.php')
+        const response = await fetch(`/api/catan/hex_map.php`);
         if (!response.ok) {
           throw new Error(`Failed to load map: ${response.status}`)
         }
@@ -71,7 +73,8 @@ const CatanMap = ({ buildId, setBuildId, moveThief, setAllowThief, setMoveThief,
 
     const loadTownMap = async () => {
       try {
-        const response = await fetch('/api/catan/town_map.php')
+        const response = await fetch(`/api/catan/town_map.php?username=${encodeURIComponent(username)}`);
+
         if (!response.ok) {
           throw new Error(`Failed to load map: ${response.status}`)
         }
@@ -96,7 +99,7 @@ const CatanMap = ({ buildId, setBuildId, moveThief, setAllowThief, setMoveThief,
     }, 7000)
 
     return () => clearInterval(interval)
-  }, [buildId]);
+  }, [username, buildId]);
 
   return (
     <group {...props} dispose={null}>
@@ -131,14 +134,14 @@ const CatanMap = ({ buildId, setBuildId, moveThief, setAllowThief, setMoveThief,
               castShadow
               receiveShadow
               geometry={nodes.hexagono001.geometry}
-              material={materials['Material.007']}
+              material={materials['hex_base']}
             />
             <mesh
               name={`hexagon_${hex.letter}_2`}
               castShadow
               receiveShadow
               geometry={nodes.hexagono001_1.geometry}
-              material={materials[HEXAGON_TEXTURES_MODELS[hex.resource_id]]}
+              material={materials[`${hex.is_thief ? HEXAGON_TEXTURES_GRAYSCALE_MODELS[hex.resource_id] : HEXAGON_TEXTURES_MODELS[hex.resource_id]}`]}
             />
           </group>
 
@@ -149,7 +152,7 @@ const CatanMap = ({ buildId, setBuildId, moveThief, setAllowThief, setMoveThief,
               castShadow
               receiveShadow
               geometry={nodes[`letra_${hex.letter}`].geometry}
-              material={materials['Material.061']}
+              material={materials['letter']}
               position={[hex.letter_pos_x, hex.letter_pos_y, hex.letter_pos_z]}
               rotation={[-Math.PI, 1.554, -Math.PI]}
               scale={[0.507, 0.107, 0.507]}>
@@ -159,14 +162,14 @@ const CatanMap = ({ buildId, setBuildId, moveThief, setAllowThief, setMoveThief,
                   castShadow
                   receiveShadow
                   geometry={nodes.Cilindro003_1.geometry}
-                  material={materials['Material.059']}
+                  material={materials[`${hex.is_thief ? 'letter_border_thief' : gameMatch.last_dice == hex.dice_number ? "letter_border_dice" : 'letter_border'}`]}
                 />
                 <mesh
                   name={`letter__cil_${hex.letter}_2`}
                   castShadow
                   receiveShadow
                   geometry={nodes.Cilindro003_2.geometry}
-                  material={materials['Material.060']}
+                  material={materials[`${hex.is_thief ? 'letter_base_thief' : gameMatch.last_dice == hex.dice_number ? "letter_base_dice" : 'letter_base'}`]}
                 />
               </group>
             </mesh>
@@ -185,7 +188,7 @@ const CatanMap = ({ buildId, setBuildId, moveThief, setAllowThief, setMoveThief,
                 castShadow
                 receiveShadow
                 geometry={nodes.Object_2001.geometry}
-                material={materials["None.001"]}
+                material={materials["thief"]}
               >
                 <meshStandardMaterial
                   color={"#353535"}
@@ -201,7 +204,7 @@ const CatanMap = ({ buildId, setBuildId, moveThief, setAllowThief, setMoveThief,
                 castShadow
                 receiveShadow
                 geometry={nodes.Object_3001.geometry}
-                material={materials["None.001"]}
+                material={materials["thief"]}
               >
                 <meshStandardMaterial
                   color={"#353535"}
@@ -217,7 +220,7 @@ const CatanMap = ({ buildId, setBuildId, moveThief, setAllowThief, setMoveThief,
                 castShadow
                 receiveShadow
                 geometry={nodes.Object_4001.geometry}
-                material={materials["None.001"]}
+                material={materials["thief"]}
               >
                 <meshStandardMaterial
                   color={"#353535"}
@@ -233,7 +236,7 @@ const CatanMap = ({ buildId, setBuildId, moveThief, setAllowThief, setMoveThief,
                 castShadow
                 receiveShadow
                 geometry={nodes.Object_5001.geometry}
-                material={materials["None.001"]}
+                material={materials["thief"]}
               >
                 <meshStandardMaterial
                   color={"#353535"}
@@ -249,7 +252,7 @@ const CatanMap = ({ buildId, setBuildId, moveThief, setAllowThief, setMoveThief,
                 castShadow
                 receiveShadow
                 geometry={nodes.Object_6001.geometry}
-                material={materials["None.001"]}
+                material={materials["thief"]}
               >
                 <meshStandardMaterial
                   color={"#353535"}
@@ -267,7 +270,7 @@ const CatanMap = ({ buildId, setBuildId, moveThief, setAllowThief, setMoveThief,
       {/* Render towns models  */}
       {towns.map((town) => (
         (() => {
-        const canBuildTown = (!town.is_builded && buildId == 2) || (town.is_builded && buildId == 3 && town.username === username)
+        const canBuildTown = (!town.is_builded && buildId == 2 && !town.near_to_town && (freeBuild || town.near_to_path) ) || (town.is_builded && buildId == 3 && town.username === username)
         return (
         <group
           key={`town_${town.id}`}
@@ -345,7 +348,7 @@ const CatanMap = ({ buildId, setBuildId, moveThief, setAllowThief, setMoveThief,
       {/* Render path models  */}
       {paths.map((path) => (
         (() => {
-        const canBuildPath = !path.is_builded && buildId == 1
+        const canBuildPath = !path.is_builded && buildId == 1 && (path.near_to_path || path.near_to_town)
         return (
         <group
           key={`path_${path.id}`}
@@ -405,7 +408,7 @@ const CatanMap = ({ buildId, setBuildId, moveThief, setAllowThief, setMoveThief,
             castShadow
             receiveShadow
             geometry={nodes.puerto007.geometry}
-            material={materials['Material.043']}
+            material={materials['port_base_1']}
           />
           <mesh
             name={`trade_port_${trade_port.id}_2`}
@@ -419,21 +422,21 @@ const CatanMap = ({ buildId, setBuildId, moveThief, setAllowThief, setMoveThief,
             castShadow
             receiveShadow
             geometry={nodes.puerto007_2.geometry}
-            material={materials['Material.045']}
+            material={materials['water_1']}
           />
           <mesh
             name={`trade_port_${trade_port.id}_4`}
             castShadow
             receiveShadow
             geometry={nodes.puerto007_3.geometry}
-            material={materials['Material.046']}
+            material={materials['water_2']}
           />
           <mesh
             name={`trade_port_${trade_port.id}_5`}
             castShadow
             receiveShadow
             geometry={nodes.puerto007_4.geometry}
-            material={materials['Material.002']}
+            material={materials['port_base_2']}
           />
         </group>
       ))}
@@ -442,6 +445,6 @@ const CatanMap = ({ buildId, setBuildId, moveThief, setAllowThief, setMoveThief,
   )
 }
 
-useGLTF.preload('/models/catan_tablero.glb')
+useGLTF.preload('/models/catan_tablero_optimized.glb')
 
 export default CatanMap

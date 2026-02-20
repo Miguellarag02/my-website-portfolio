@@ -215,11 +215,11 @@ const PlayersInfo = ({ open, setOpen, userResources, playersInfo, setPlayersInfo
                               <div className="flex flex-row ml-1 mt-2 gap-4 w-full">
                                 <img
                                   src="/assets/catan/cards/ruta_comercial.png"
-                                  className="w-20 grayscale opacity-60"
+                                  className={`w-20 ${playerInfo.largest_path ? "opacity-100" : "grayscale opacity-60"}`}
                                 />
                                 <img
                                   src="/assets/catan/cards/mayor_ejercito.png"
-                                  className="w-20 grayscale opacity-60"
+                                  className={`w-20 ${playerInfo.biggest_army ? "opacity-100" : "grayscale opacity-60"}`}
                                 />
                                 <div className="relative flex items-center scale-75 gap-2 rounded-full opacity-75 border-2 border-red-700 w-14 hover:scale-100 hover:opacity-100 hover:w-full h-14 bg-red-700/20 overflow-hidden transition-all duration-1000 ease-out">
                                   <img
@@ -227,7 +227,7 @@ const PlayersInfo = ({ open, setOpen, userResources, playersInfo, setPlayersInfo
                                     className="left-0 h-full w-14 shrink-0 object-contain"
                                   />
                                   <span className="text-3xl font-black text-red-600 animate-pulse drop-shadow-xl">
-                                    4
+                                    {playerInfo.points}
                                   </span>
                                 </div>
                               </div>

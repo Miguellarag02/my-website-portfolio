@@ -26,6 +26,8 @@ const UserInfo = ({
     gameMatch,
     setGameMatch,
     setIsPlayerMatch,
+    userBonus,
+    setUserBonus,
     ... props 
   }) => {
 
@@ -33,7 +35,7 @@ const UserInfo = ({
   const [userInfo, setUserInfo] = useState({});
   const [userRandom, setUserRandom] = useState([]);
   const [availableBuilding, setAvailableBuilding] = useState([]);
-  const availableThrowDice = !throwDice;
+  const availableThrowDice = !throwDice && gameMatch.last_dice == 0;
   const emptyBanckTrade = {
     from_id: 0,
     from_qty: 0,
@@ -62,6 +64,26 @@ const UserInfo = ({
   const addRandomCard = async () => {
     setSelectedBuildId(0)
     const response = await fetch("/api/catan/set_random_card.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ username }),
+    })
+  }
+
+  const playGame = async () => {
+    const response = await fetch("/api/player/change_player_status.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ username }),
+    })
+  }
+  
+  const nextTurn = async () => {
+    const response = await fetch("/api/catan/set_turn.php", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -105,6 +127,21 @@ const UserInfo = ({
     const build = BUILD_COSTS.find(b => b.id === build_id);
     if (!build) return false;
 
+    // Check if we are on our turn
+    if(userInfo.order != gameMatch.turn) return false;
+
+    // Check if first / second round
+    if ((build_id == 1 || build_id == 2) && (gameMatch.round == 1 || gameMatch.round == 2)){
+      // If he is the last one in this round, he can build 2 path and 2 towns
+      if(userInfo.order == gameMatch.max_player){
+        if(build_id == 1 && userInfo.paths > 1) return false;
+        if(build_id == 2 && userInfo.towns > 1) return false;
+        return true;
+      }
+      if(build_id == 1 && userInfo.paths >= gameMatch.round ) return false;
+      if(build_id == 2 && userInfo.towns >= gameMatch.round ) return false;
+      return true;
+    }
     // Check if enough buildings
     if (availableBuilding[build_id] == 0) return false;
 
@@ -127,7 +164,8 @@ const UserInfo = ({
 
         const data = await response.json();
 
-        setUserInfo(data.player);
+        setUserInfo({...data.player, towns: data.towns, paths: data.paths});
+        setUserBonus(data.bonus)
         setUserResources(data.player.resource_cards);
         setUserRandom(data.player.random_cards);
         setAvailableBuilding(data.available);
@@ -136,7 +174,7 @@ const UserInfo = ({
           item => item.to_id_player === data.player.id
             || item.from_id_player === data.player.id   
         ))
-        setGameMatch(data.game_match);
+        setGameMatch({...data.n_players ,...data.game_match});
         setIsPlayerMatch(data.game_match.turn == data.player.order)
       } catch (error) {
         console.error(error)
@@ -440,28 +478,43 @@ const UserInfo = ({
           </div>
           {/** Información de turnos / movimiento del ladron  */}
           <div className={`relative h-[80%] w-full flex flex-nowrap`}>
-            <SpecialButton
-              color="blue"
-              width="w-20"
-              text="Throw 🎲​🎲​"
-              onClick={() => setThrowDice(true)}
-              visibility= {availableThrowDice && gameMatch.turn == userInfo.order}
-            />
-            <SpecialButton
-              color="green"
-              width="w-20"
-              text="Next ➡️"
-              onClick={() => setThrowDice(true)}
-              visibility= {gameMatch.turn == userInfo.order}
-            />
-            <SpecialButton
-              color="red"
-              width="w-20"
-              text="​Thief 🥷💰​"
-              onClick={() => setMoveThief(prev => !prev)}
-              visibility={allowThief && gameMatch.turn == userInfo.order}
-              isToggle ={true}
-            />
+            {(gameMatch.round == 0 && gameMatch.turn == 0) &&
+              <div>
+                <SpecialButton
+                  color="green"
+                  width="w-32"
+                  text={`Play​ ${gameMatch.n_players}/${gameMatch.max_player}`}
+                  onClick={() => playGame()}
+                  visibility= {true}
+                  isToggle={true}
+                />
+              </div>
+            ||
+              <div>
+                <SpecialButton
+                  color="blue"
+                  width="w-20"
+                  text="Throw 🎲​🎲​"
+                  onClick={() => setThrowDice(true)}
+                  visibility= {availableThrowDice && gameMatch.turn == userInfo.order && (gameMatch.round != 1 && gameMatch.round != 2)}
+                />
+                <SpecialButton
+                  color="green"
+                  width="w-20"
+                  text="Next ➡️"
+                  onClick={() => nextTurn()}
+                  visibility= {gameMatch.turn == userInfo.order || (gameMatch.turn == userInfo.order && (gameMatch.round == 1 || gameMatch.round == 2) && !availableBuild(1) && !availableBuild(2))}
+                />
+                <SpecialButton
+                  color="red"
+                  width="w-20"
+                  text="​Thief 🥷💰​"
+                  onClick={() => setMoveThief(prev => !prev)}
+                  visibility={allowThief && gameMatch.turn == userInfo.order}
+                  isToggle ={true}
+                />
+              </div>
+            }
           </div>
           {/** Información de tus cartas disponibles  */}
           <div className="relative col-span-3">
@@ -488,6 +541,9 @@ const UserInfo = ({
                     <span className={`absolute left-1/2 -translate-x-1/2 mt-28  bg-white/70 rounded-2xl w-20 text-center font-serif text-nowrap text-sm font-bold z-50 ${random.qty > 0 ? "" : "opacity-0"}`}>
                       {`${random.qty > 1 ? ` x ${random.qty}` : ""}`}
                     </span>
+                    <button className={`absolute left-1/2 -translate-x-1/2 mt-28 opacity-0 bg-green-700/70 border-2 border-black-100 rounded-2xl w-20 text-center font-serif text-sm font-bold z-50 hover:opacity-100`}>
+                      Utilizar
+                    </button>
                   </div>
                 )
               )}

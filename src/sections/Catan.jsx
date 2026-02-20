@@ -1,5 +1,6 @@
 import { useState, Suspense, useRef, useEffect } from "react";
 import { Canvas } from "@react-three/fiber";
+import { useAuth } from "../context/AuthContext.jsx";
 import CanvasLoader from "../components/CanvasLoader.jsx";
 import { PerspectiveCamera} from "@react-three/drei";
 import { useResponsiveFlags } from "../constants/index.js";
@@ -11,6 +12,7 @@ import { CAMERA_STATES, calculateCatanSizes, calculateCatanCameraPositions } fro
 import DiceWorld from "../components/Catan/Dice.jsx";
 
 const Catan = () => {
+    const { username } = useAuth();
     const [selectedBuildId, setSelectedBuildId] = useState(0);
 
     // Camera controls
@@ -24,6 +26,7 @@ const Catan = () => {
     const [tradeNotification, setTradeNotification] = useState([])
     const [playersInfo, setPlayersInfo] = useState([]);
     const [pendingTrades, setPendingTrades] = useState([]);
+    const [userBonus, setUserBonus] = useState([]);
 
     // Dice controls
     const [throwDice, setThrowDice ] = useState(false)
@@ -34,7 +37,7 @@ const Catan = () => {
 
     // Thief controls
     const [moveThief, setMoveThief] = useState(false);
-    const [allowThief, setAllowThief] = useState(true);
+    const [allowThief, setAllowThief] = useState(false);
 
     // Match controls
     const [gameMatch, setGameMatch] = useState({})
@@ -51,16 +54,42 @@ const Catan = () => {
     // Sizing
     const { isSmall, isMobile, isTablet, isUltraWide } = useResponsiveFlags();
     const sizes = calculateCatanSizes(isSmall, isMobile, isTablet, isUltraWide);
+    
+    const setDiceResult = async (diceResult) => {
+        const response = await fetch("/api/catan/set_dice_results.php", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ username, diceResult }),
+        })
+        const data = await response.json();
+        setThrowDice(false)
+        if (!response.ok || !data.ok) {
+            console.error("Set dice result failed:", data);
+            return;
+        }
+    }
 
     // Delete Dice
     useEffect(() => {
         if (!throwDice) return;
 
         const timeout = setTimeout(() => {
-            setThrowDice(false)
-
             // Check result number
             console.log(`${dice1NumberRef.current} y ${dice2NumberRef.current} `)
+            if (dice1NumberRef.current < 1 || dice1NumberRef.current > 6){
+                console.log(`Dice 1 cannot be readed, retry `)
+                setThrowDice(false)
+            } else if (dice2NumberRef.current < 1 || dice2NumberRef.current > 6){
+                console.log(`Dice 2 cannot be readed, retry `)
+                setThrowDice(false)
+            }
+            else {
+                // The dices have been readed, so we ask to the database to add the resources
+                const diceResult = dice1NumberRef.current + dice2NumberRef.current;
+                setDiceResult(diceResult);
+            }
 
         }, 6000)
 
@@ -101,6 +130,26 @@ const Catan = () => {
                             alt="Toggle camera view"
                         />
                     </button>
+                    <div className="flex flex-row ml-1 mt-2 gap-4 w-full">
+                        <img
+                            src="/assets/catan/cards/ruta_comercial.png"
+                            className={`w-28 ${userBonus.largest_path ? "opacity-100" : "grayscale opacity-60"}`}
+                        />
+                        <img
+                            src="/assets/catan/cards/mayor_ejercito.png"
+                            className={`w-28 ${userBonus.biggest_army ? "opacity-100" : "grayscale opacity-60"}`}
+
+                        />
+                    </div>
+                    <div className="relative mt-4 flex items-center gap-2 rounded-full border-2 border-red-700 w-28 scale-100 opacity-100 h-14 bg-red-700/20 overflow-hidden transition-all duration-1000 ease-out">
+                        <img
+                        src="/assets/catan/cards/punto.png"
+                        className="left-0 h-full w-14 shrink-0 object-contain"
+                        />
+                        <span className="text-3xl font-black text-red-600 animate-pulse drop-shadow-xl">
+                        {userBonus.points}
+                        </span>
+                    </div>
                 </div>
                 <div className="absolute inset-0 w-full h-full">
                     <Canvas className="w-full h-full flex-grow">
@@ -116,6 +165,7 @@ const Catan = () => {
                                     moveThief={moveThief}
                                     setAllowThief={setAllowThief}
                                     setMoveThief={setMoveThief}
+                                    gameMatch={gameMatch}
                                 />
                                 <DiceWorld
                                   renderDice={throwDice}
@@ -166,6 +216,8 @@ const Catan = () => {
                         gameMatch={gameMatch}
                         setGameMatch={setGameMatch}
                         setIsPlayerMatch={setIsPlayerMatch}
+                        userBonus={userBonus}
+                        setUserBonus={setUserBonus}
                     />
                 </div>
             </div>

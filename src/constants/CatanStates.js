@@ -33,21 +33,30 @@ export const calculateCatanCameraPositions = (stateState, isSmall, isMobile, isT
 };
 
 export const TRADE_PORTS_MODELS = [
-    {id: 1, pos: [5.321, -0.273, 3.026],    rot: [0, 1.048, 0],               tex: 'Material.024'},
-    {id: 2, pos: [0.024, -0.273, 6.116],    rot: [0, 0.003, 0],               tex: 'Material.028'},
-    {id: 3, pos: [-5.307, -0.273, 3.07],    rot: [0, -1.042, 0],              tex: 'Material.032'},
-    {id: 4, pos: [-5.324, -0.273, -3.071],  rot: [Math.PI, -1.052, Math.PI],  tex: 'Material.036'},
-    {id: 5, pos: [5.292, -0.273, -3.111],   rot: [-Math.PI, 1.046, -Math.PI], tex: 'Material.040'},
-    {id: 6, pos: [-0.017, -0.273, -6.167],  rot: [Math.PI, -0.004, Math.PI],  tex: 'Material.044'}
+    {id: 1, pos: [5.321, -0.273, 3.026],    rot: [0, 1.048, 0],               tex: 'wheat_port'},
+    {id: 2, pos: [0.024, -0.273, 6.116],    rot: [0, 0.003, 0],               tex: 'normal_port'},
+    {id: 3, pos: [-5.307, -0.273, 3.07],    rot: [0, -1.042, 0],              tex: 'sheep_port'},
+    {id: 4, pos: [-5.324, -0.273, -3.071],  rot: [Math.PI, -1.052, Math.PI],  tex: 'wood_port'},
+    {id: 5, pos: [5.292, -0.273, -3.111],   rot: [-Math.PI, 1.046, -Math.PI], tex: 'rock_port'},
+    {id: 6, pos: [-0.017, -0.273, -6.167],  rot: [Math.PI, -0.004, Math.PI],  tex: 'clay_port'}
 ]
 
 export const HEXAGON_TEXTURES_MODELS = {
-    1: 'Terreno.001',
-    2: 'Terreno.013',
-    3: 'Terreno.001',
-    4: 'Terreno.003',
-    5: 'Terreno.002',
-    6: 'Terreno',
+    1: 'wood_hex',
+    2: 'sheep_hex',
+    3: 'rock_hex',
+    4: 'wheat_hex',
+    5: 'clay_hex',
+    6: 'dessert_hex',
+}
+
+export const HEXAGON_TEXTURES_GRAYSCALE_MODELS = {
+    1: 'wood_hex_grayscale',
+    2: 'sheep_hex_grayscale',
+    3: 'rock_hex_grayscale',
+    4: 'wheat_hex_grayscale',
+    5: 'clay_hex_grayscale',
+    6: 'dessert_hex',
 }
 
 export const PLAYER_COLORS = {
