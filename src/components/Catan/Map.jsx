@@ -4,7 +4,7 @@ import { Physics, RigidBody } from "@react-three/rapier"
 import { TRADE_PORTS_MODELS, HEXAGON_TEXTURES_MODELS, PLAYER_COLORS, HEXAGON_TEXTURES_GRAYSCALE_MODELS } from '../../constants/CatanStates.js'
 import { useAuth } from "../../context/AuthContext.jsx"
 
-const CatanMap = ({ buildId, setBuildId, moveThief, setAllowThief, setMoveThief, gameMatch, ...props }) => {
+const CatanMap = ({ buildId, setBuildId, moveThief, setAllowThief, setMoveThief, gameMatch, setThiefPlayers, buildRoads, setBuildRoads, ...props }) => {
   const { username } = useAuth();
   const { nodes, materials } = useGLTF('/models/catan_tablero_optimized.glb');
   const [hexagons, setHexagons] = useState([]);
@@ -14,6 +14,7 @@ const CatanMap = ({ buildId, setBuildId, moveThief, setAllowThief, setMoveThief,
   const [pathHovered, setPathHovered] = useState(0);
   const [thiefHovered, setThiefHovered] = useState(0);
   const freeBuild = (gameMatch.round == 1 || gameMatch.round == 2);
+  const [extraBuild, setExtraBuild] = useState(0);
 
   const createTown = async (buildId, level) => {
     setBuildId(0);
@@ -28,15 +29,21 @@ const CatanMap = ({ buildId, setBuildId, moveThief, setAllowThief, setMoveThief,
   }
 
   const createPath = async (buildId) => {
-    setBuildId(0);
+    if(extraBuild - 1 <= 0 ) {
+      setBuildId(0)
+      setBuildRoads(false)
+    }
     setPathHovered(0);
     const response = await fetch("/api/catan/set_path.php", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ username, buildId }),
+      body: JSON.stringify({ username, buildId, extraBuild }),
     })
+    if (response.ok && extraBuild > 0) {
+      setExtraBuild(extraBuild - 1)
+    }
   }
 
   const createThief = async (hexId) => {
@@ -52,6 +59,10 @@ const CatanMap = ({ buildId, setBuildId, moveThief, setAllowThief, setMoveThief,
     const data = await response.json()
     if (!data.ok){
       setAllowThief(true);
+    }
+    else{
+      // Store affected player ids so the parent can open the steal modal
+      setThiefPlayers(Array.isArray(data.id_players) ? data.id_players : [])
     }
   }
 
@@ -100,6 +111,14 @@ const CatanMap = ({ buildId, setBuildId, moveThief, setAllowThief, setMoveThief,
 
     return () => clearInterval(interval)
   }, [username, buildId]);
+
+
+  useEffect(() => {
+    if(buildRoads) {
+      setBuildId(1);
+      setExtraBuild(2);
+    }
+  }, [buildRoads])
 
   return (
     <group {...props} dispose={null}>

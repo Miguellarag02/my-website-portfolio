@@ -41,6 +41,23 @@ export const TRADE_PORTS_MODELS = [
     {id: 6, pos: [-0.017, -0.273, -6.167],  rot: [Math.PI, -0.004, Math.PI],  tex: 'clay_port'}
 ]
 
+export const toVeryLightColor = (color) => {
+  const hex = color.replace("#", "");
+  const r = parseInt(hex.slice(0, 2), 16);
+  const g = parseInt(hex.slice(2, 4), 16);
+  const b = parseInt(hex.slice(4, 6), 16);
+  return `rgba(${r}, ${g}, ${b}, 0.4)`;
+};
+
+export const parseResources = (rawResources) => {
+  try {
+    return JSON.parse(rawResources);
+  } catch (error) {
+    console.error("Failed to parse player resources:", error);
+    return [];
+  }
+};
+
 export const HEXAGON_TEXTURES_MODELS = {
     1: 'wood_hex',
     2: 'sheep_hex',

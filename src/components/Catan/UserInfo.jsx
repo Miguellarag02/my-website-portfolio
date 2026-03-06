@@ -1,7 +1,7 @@
 import { useState, Suspense, useEffect, useMemo } from "react";
 import { Canvas } from "@react-three/fiber";
 import CanvasLoader from "../CanvasLoader.jsx";
-import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
+import { OrbitControls, PerspectiveCamera, useFaceLandmarker } from "@react-three/drei";
 import { useAuth } from "../../context/AuthContext.jsx";
 import { BuildModel } from "../Catan/BuildModel.jsx";
 import ModelCamera from "../Catan/ModelCamera.jsx";
@@ -28,7 +28,9 @@ const UserInfo = ({
     setIsPlayerMatch,
     userBonus,
     setUserBonus,
-    ... props 
+    setRandomCard,
+    usedRandomCard,
+    buildRoads
   }) => {
 
   const { username } = useAuth();
@@ -326,7 +328,7 @@ const UserInfo = ({
       </aside>
 
       <button
-        onClick={() => {setSelectedBuildId(0); setOpen((v) => !v)}}
+        onClick={() => {setSelectedBuildId(0); if(!buildRoads) setOpen((v) => !v)}}
         className={[
           "fixed top-[75%] z-[60] -translate-y-1/2",
           "h-16 w-8 rounded-l-xl bg-white/90 shadow rounded-lg",
@@ -503,7 +505,7 @@ const UserInfo = ({
                   width="w-20"
                   text="Next ➡️"
                   onClick={() => nextTurn()}
-                  visibility= {gameMatch.turn == userInfo.order || (gameMatch.turn == userInfo.order && (gameMatch.round == 1 || gameMatch.round == 2) && !availableBuild(1) && !availableBuild(2))}
+                  visibility= {(gameMatch.turn == userInfo.order && !allowThief) || (gameMatch.turn == userInfo.order && (gameMatch.round == 1 || gameMatch.round == 2) && !availableBuild(1) && !availableBuild(2))}
                 />
                 <SpecialButton
                   color="red"
@@ -524,7 +526,7 @@ const UserInfo = ({
                 random.qty > 0 && (
                   <div 
                     key={random.id} 
-                    className="relative w-20 h-28 transition-full ease-in-out duration-700 hover:-translate-y-8 hover:scale-150 hover:z-50"
+                    className="group relative w-20 h-28 transition-full ease-in-out duration-700 hover:-translate-y-8 hover:scale-150 hover:z-50"
                     >
                     {Array.from({ length: random.qty }).map((_, i) => (
                       <img
@@ -534,16 +536,20 @@ const UserInfo = ({
                         className="absolute left-0 top-0 w-fit select-none"
                         style={{
                           transform: `translate(${i * 0}px, ${i * -8}px)`,
-                          zIndex: i,
+                          zIndex: i
                         }}
                       />
                     ))}
                     <span className={`absolute left-1/2 -translate-x-1/2 mt-28  bg-white/70 rounded-2xl w-20 text-center font-serif text-nowrap text-sm font-bold z-50 ${random.qty > 0 ? "" : "opacity-0"}`}>
                       {`${random.qty > 1 ? ` x ${random.qty}` : ""}`}
                     </span>
-                    <button className={`absolute left-1/2 -translate-x-1/2 mt-28 opacity-0 bg-green-700/70 border-2 border-black-100 rounded-2xl w-20 text-center font-serif text-sm font-bold z-50 hover:opacity-100`}>
-                      Utilizar
-                    </button>
+                    { !usedRandomCard && !buildRoads && userInfo.order == gameMatch.turn && random.id > 1 && !allowThief &&
+                      <button 
+                        className={`absolute left-1/2 -translate-x-1/2 mt-24 opacity-0 scale-50 bg-green-700 border-2 border-black-100 rounded-2xl w-20 text-center font-serif text-sm font-bold z-50 transition-all group-hover:opacity-100 group-hover:scale-100`}
+                        onClick={() => setRandomCard(random.id)}>
+                        Utilizar
+                      </button>
+                    }
                   </div>
                 )
               )}

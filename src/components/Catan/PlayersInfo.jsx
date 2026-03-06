@@ -1,25 +1,8 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthContext.jsx";
-import { PLAYER_COLORS, RESOURCE_ICONS } from "../../constants/CatanStates.js";
-
-const toVeryLightColor = (color) => {
-  const hex = color.replace("#", "");
-  const r = parseInt(hex.slice(0, 2), 16);
-  const g = parseInt(hex.slice(2, 4), 16);
-  const b = parseInt(hex.slice(4, 6), 16);
-  return `rgba(${r}, ${g}, ${b}, 0.4)`;
-};
+import { PLAYER_COLORS, RESOURCE_ICONS, toVeryLightColor, parseResources } from "../../constants/CatanStates.js";
 
 const EMPTY_RESOURCES = [0, 0, 0, 0, 0];
-
-const parseResources = (rawResources) => {
-  try {
-    return JSON.parse(rawResources);
-  } catch (error) {
-    console.error("Failed to parse player resources:", error);
-    return [];
-  }
-};
 
 const PlayersInfo = ({ open, setOpen, userResources, playersInfo, setPlayersInfo, pendingTrades, gameMatch, isPlayerTurn }) => {
   const { username } = useAuth();
