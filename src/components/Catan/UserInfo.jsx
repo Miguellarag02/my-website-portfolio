@@ -480,7 +480,7 @@ const UserInfo = ({
             })}
           </div>
           {/** Información de turnos / movimiento del ladron  */}
-          <div className={`relative h-[80%] w-full flex flex-nowrap`}>
+          <div className={`relative h-[80%] w-full flex`}>
             {(gameMatch.round == 0 && gameMatch.turn == 0) &&
               <div>
                 <SpecialButton
@@ -499,23 +499,26 @@ const UserInfo = ({
                   width="w-20"
                   text="Throw 🎲​🎲​"
                   onClick={() => setThrowDice(true)}
-                  visibility= {availableThrowDice && gameMatch.turn == userInfo.order && (gameMatch.round != 1 && gameMatch.round != 2)}
+                  visibility={availableThrowDice && gameMatch.turn == userInfo.order && (gameMatch.round != 1 && gameMatch.round != 2)}
                 />
-                <SpecialButton
-                  color="green"
-                  width="w-20"
-                  text="Next ➡️"
-                  onClick={() => nextTurn()}
-                  visibility= {(gameMatch.turn == userInfo.order && !allowThief) || (gameMatch.turn == userInfo.order && (gameMatch.round == 1 || gameMatch.round == 2) && !availableBuild(1) && !availableBuild(2))}
-                />
-                <SpecialButton
-                  color="red"
-                  width="w-20"
-                  text="​Thief 🥷💰​"
-                  onClick={() => setMoveThief(prev => !prev)}
-                  visibility={allowThief && gameMatch.turn == userInfo.order}
-                  isToggle ={true}
-                />
+                { (allowThief && gameMatch.turn == userInfo.order) &&
+                  <SpecialButton
+                    color="red"
+                    width="w-20"
+                    text="​Thief 🥷💰​"
+                    onClick={() => setMoveThief(prev => !prev)}
+                    visibility={true}
+                    isToggle ={true}
+                  />
+                ||
+                  <SpecialButton
+                    color="green"
+                    width="w-20"
+                    text="Next ➡️"
+                    onClick={() => nextTurn()}
+                    visibility= {(gameMatch.turn == userInfo.order && !allowThief) || (gameMatch.turn == userInfo.order && (gameMatch.round == 1 || gameMatch.round == 2) && !availableBuild(1) && !availableBuild(2))}
+                  />
+                }
               </div>
             }
           </div>
