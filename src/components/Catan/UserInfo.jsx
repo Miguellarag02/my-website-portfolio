@@ -26,7 +26,7 @@ const UserInfo = ({
     gameMatch,
     setGameMatch,
     setIsPlayerMatch,
-    userBonus,
+    setVictoryPlayer,
     setUserBonus,
     setRandomCard,
     usedRandomCard,
@@ -178,6 +178,7 @@ const UserInfo = ({
         ))
         setGameMatch({...data.n_players ,...data.game_match});
         setIsPlayerMatch(data.game_match.turn == data.player.order)
+        setVictoryPlayer(data.victory)
       } catch (error) {
         console.error(error)
         setUserInfo({})
@@ -187,7 +188,7 @@ const UserInfo = ({
 
     const interval = setInterval(() => {
       getUserInformation()
-    }, 3000)
+    }, 1500)
 
     return () => clearInterval(interval)
   }, [username, selectedBuildId])

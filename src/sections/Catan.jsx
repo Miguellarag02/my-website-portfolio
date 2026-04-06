@@ -11,12 +11,14 @@ import UserInfo from "../components/Catan/UserInfo.jsx"
 import ThiefPlayerModal from "../components/Catan/ThiefPlayerModal.jsx";
 import InventorCardModal from "../components/Catan/InventorCardModal.jsx";
 import MonopolyCardModal from "../components/Catan/MonopolyCardModal.jsx";
+import VictoryPanel from "../components/Catan/VictoryPanel.jsx"
 import { CAMERA_STATES, calculateCatanSizes, calculateCatanCameraPositions } from "../constants/CatanStates.js";
 import DiceWorld from "../components/Catan/Dice.jsx";
 
 const Catan = () => {
     const { username } = useAuth();
     const [selectedBuildId, setSelectedBuildId] = useState(0);
+    const [victoryPlayer, setVictoryPlayer] = useState([]);
 
     // Camera controls
     const [openPlayerInfo, setOpenPlayerInfo] = useState(false);
@@ -187,6 +189,9 @@ const Catan = () => {
 
     return (
         <section className="min-h-screen w-full flex flex-col">
+             {victoryPlayer.id > 0 && (
+                <VictoryPanel victoryPlayer={victoryPlayer}/>
+            )}
             {thiefCandidateIds.length > 0 && (
                 <ThiefPlayerModal
                     username={username}
@@ -331,7 +336,7 @@ const Catan = () => {
                         gameMatch={gameMatch}
                         setGameMatch={setGameMatch}
                         setIsPlayerMatch={setIsPlayerMatch}
-                        userBonus={userBonus}
+                        setVictoryPlayer={setVictoryPlayer}
                         setUserBonus={setUserBonus}
                         setRandomCard={setRandomCard}
                         buildRoads={buildRoads}
