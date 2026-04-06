@@ -2,6 +2,7 @@ import { useState  } from 'react'
 import { useGLTF, Outlines, useTexture } from '@react-three/drei'
 import { myProjects } from '../../constants/index.js'
 import { STATES } from '../../constants/HeroRoutes.js'
+import CoffeeSteam from './CoffeeSteam.jsx'
 
 const MyDesktop = ({stateSection, onLaptopClick, onMonitorClick, onKeyboardClick, onGameClick, outlineEnable, selectedProjectIndex, ...props }) => {
   const { nodes, materials } = useGLTF('/models/my_desktop.glb')
@@ -303,6 +304,13 @@ const MyDesktop = ({stateSection, onLaptopClick, onMonitorClick, onKeyboardClick
             </group>
           </group>
         </group>
+          {/* DEBUG EN COORDENADAS DEL CAFÉ, NO DEL GLB */}
+          {/* <mesh position={[-0.1, 0.1, 2]}>
+            <boxGeometry args={[2.08, 2.08, 2.08]} />
+            <meshBasicMaterial color="blue" />
+          </mesh> */}
+          {/* Humo */}
+          <CoffeeSteam position={[0.05, 0, 2.4]} size={2.5} />
       </group>
 
       {/* Meshes from Desktop Plant */}
