@@ -25,7 +25,7 @@ export default function Hero() {
     const sizes = calculateSizes(isSmall, isMobile, isTablet, isUltraWide);
     const cameraState = calculateCameraPositions(stateSection, isSmall, isMobile, isTablet, isUltraWide);
 
-    // ESC -> IDLE; si sigue IDLE 3s -> outline true
+    // ESC -> IDLE; if it stays IDLE for 3s -> outline true
     useKeyboardControls({ stateSection, setStateSection, setOutlineEnable, delayMs: 3000 });
 
     const onLaptopClick = () => {
@@ -58,10 +58,10 @@ export default function Hero() {
             }
         };
 
-        // Comprobación inicial
+        // Initial check
         checkHash();
 
-        // Escuchar cambios en el hash
+        // Listen for hash changes
         window.addEventListener("hashchange", checkHash);
 
         return () => {

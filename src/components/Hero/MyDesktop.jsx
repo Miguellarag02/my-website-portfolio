@@ -304,11 +304,6 @@ const MyDesktop = ({stateSection, onLaptopClick, onMonitorClick, onKeyboardClick
             </group>
           </group>
         </group>
-          {/* DEBUG EN COORDENADAS DEL CAFÉ, NO DEL GLB */}
-          {/* <mesh position={[-0.1, 0.1, 2]}>
-            <boxGeometry args={[2.08, 2.08, 2.08]} />
-            <meshBasicMaterial color="blue" />
-          </mesh> */}
           {/* Humo */}
           <CoffeeSteam position={[0.05, 0, 2.4]} size={2.5} />
       </group>

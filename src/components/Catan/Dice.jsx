@@ -80,7 +80,7 @@ function DiceBody({ position = [6, 4, 3], scale = 0.5, onRotationChange }) {
     rb.current.setLinvel({ x: 0, y: 0, z: 0 }, true)
     rb.current.setAngvel({ x: 0, y: 0, z: 0 }, true)
 
-    // Menos empuje lineal y más giro para que no parezca un simple deslizamiento.
+    // Less linear push and more spin so it does not look like a simple slide.
     rb.current.setLinvel({ x: -7.5, y: -0.8, z: -3.5 }, true)
     rb.current.setAngvel({ x: randomSpin(), y: randomSpin(), z: randomSpin() }, true)
     rb.current.applyTorqueImpulse(

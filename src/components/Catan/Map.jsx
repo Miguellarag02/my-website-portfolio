@@ -297,7 +297,7 @@ const CatanMap = ({ buildId, setBuildId, moveThief, setAllowThief, setMoveThief,
           position={[town.pos_x, town.pos_y, town.pos_z]}
           visible={town.is_builded ? true : buildId > 1 ? true : false}
         >
-          {/* HITBOX (más grande) */}
+          {/* HITBOX (larger) */}
           {canBuildTown && (
             <mesh
               onPointerEnter={(e) => (e.stopPropagation(), setTownHovered(town.id))}
@@ -305,13 +305,13 @@ const CatanMap = ({ buildId, setBuildId, moveThief, setAllowThief, setMoveThief,
               onClick={() => createTown(town.id, buildId - 1)}
               raycast={canBuildTown ? undefined : () => null}
             >
-              {/* Elige una geometría sencilla que cubra el camino */}
+              {/* Choose a simple geometry that covers the path */}
               <boxGeometry args={[0.9, 0.9, 0.9]} />
               <meshBasicMaterial transparent opacity={0} depthWrite={false} />
             </mesh>
           )}
 
-          {/* MESH REAL (visual) */}
+          {/* REAL MESH (visual) */}
           <mesh
             geometry={nodes.Island__0001.geometry}
             rotation={[0, -0.772, 0]}
@@ -375,7 +375,7 @@ const CatanMap = ({ buildId, setBuildId, moveThief, setAllowThief, setMoveThief,
           rotation={[path.rot_x, path.rot_y, path.rot_z]}
           visible={path.is_builded ? true : buildId == 1 ? true : false}
         >
-          {/* HITBOX (más grande) */}
+          {/* HITBOX (larger) */}
           {canBuildPath && (
             <mesh
               onPointerEnter={(e) => (e.stopPropagation(), setPathHovered(path.id))}
@@ -383,13 +383,13 @@ const CatanMap = ({ buildId, setBuildId, moveThief, setAllowThief, setMoveThief,
               onClick={() => createPath(path.id)}
               raycast={canBuildPath ? undefined : () => null}
             >
-              {/* Elige una geometría sencilla que cubra el camino */}
+              {/* Choose a simple geometry that covers the path */}
               <boxGeometry args={[1.0, 1.0, 1.2]} />
               <meshBasicMaterial transparent opacity={0} depthWrite={false} />
             </mesh>
           )}
 
-          {/* MESH REAL (visual) */}
+          {/* REAL MESH (visual) */}
           <mesh
             castShadow
             receiveShadow

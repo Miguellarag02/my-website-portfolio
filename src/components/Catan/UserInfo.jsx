@@ -53,7 +53,7 @@ const UserInfo = ({
   }, [playersInfo]);
 
 
-  // Cerrar con ESC
+  // Close with ESC
   useEffect(() => {
     const onKeyDown = (e) => {
       if (e.key === "Escape") setOpen(false);
@@ -344,7 +344,7 @@ const UserInfo = ({
 
       <div className="fixed inset-0 mt-auto w-full h-[15%]">
         <div className="grid grid-cols-6 h-full">
-          {/** Información de solicitudes de comercio  */}
+          {/** Trade request information */}
           <div className="relative col-span-2 m-1">
             {tradeNotification.map((tradeNot, i) => {
               const fromPlayerInfo = playerById.get(Number(tradeNot.from_id_player));
@@ -479,7 +479,7 @@ const UserInfo = ({
               );
             })}
           </div>
-          {/** Información de turnos / movimiento del ladron  */}
+          {/** Turn information / thief movement */}
           <div className={`relative h-[80%] w-full flex`}>
             {(gameMatch.round == 0 && gameMatch.turn == 0) &&
               <div>
@@ -522,7 +522,7 @@ const UserInfo = ({
               </div>
             }
           </div>
-          {/** Información de tus cartas disponibles  */}
+          {/** Information about your available cards */}
           <div className="relative col-span-3">
             <div className="flex flex-row mt-2 justify-end mr-8 gap-2">
               {/** Random Cards */}

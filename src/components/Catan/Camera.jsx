@@ -23,12 +23,12 @@ const CatanCamera = ({ children, cameraState, cameraPos, cameraTarget }) => {
     desiredPos.current.set(...cameraPos)
     desiredTarget.current.set(...cameraTarget)
 
-    // Detecta cambio de estado
+    // Detect state change
     if (lastStateRef.current !== cameraState) {
       movingRef.current = true
     }
 
-    // Distancias de convergencia
+    // Convergence distances
     const posDone = cam.position.distanceTo(desiredPos.current) < EPSILON
 
     const targetDone = ctrls.target.distanceTo(desiredTarget.current) < EPSILON
@@ -37,12 +37,12 @@ const CatanCamera = ({ children, cameraState, cameraPos, cameraTarget }) => {
       movingRef.current = false
     }
 
-    // Refleja solo cuando cambia
+    // Reflect only when it changes
     if (cameraIsMoving !== movingRef.current) {
       setCameraIsMoving(movingRef.current)
     }
 
-    // Animación
+    // Animation
     if (movingRef.current) {
       easing.damp3(cam.position, cameraPos, 0.4, delta)
       easing.damp3(ctrls.target, cameraTarget, 0.2, delta)

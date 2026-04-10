@@ -63,7 +63,7 @@ export default function SpecialButton({
         ${visibility ? "opacity-100" : "opacity-0 duration-[3s] pointer-events-none"}
       `}
     >
-      {/* brillo superior */}
+      {/* top shine */}
       <span
         className="
           pointer-events-none absolute inset-0 rounded-xl
@@ -72,7 +72,7 @@ export default function SpecialButton({
         "
       />
 
-      {/* borde interno */}
+      {/* inner border */}
       <span
         className="
           pointer-events-none absolute inset-[2px] rounded-[0.65rem]
@@ -80,7 +80,7 @@ export default function SpecialButton({
         "
       />
 
-      {/* texto */}
+      {/* text */}
       <span
         className="
           relative z-10 font-minecraft text-lg leading-none

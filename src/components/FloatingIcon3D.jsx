@@ -17,7 +17,7 @@ const FloatingIcon3D = ({ boxRef, iconSrc, isRandomMovement, currentScale, opaci
     let raf = 0;
     let W = 0, H = 0, size = 64;
 
-    // Medimos contenedor y ajustamos tamaño del icono
+    // Measure container and adjust icon size
     const measure = () => {
       const r = box.getBoundingClientRect();
       W = r.width * scaleRef.current;
@@ -93,17 +93,17 @@ const FloatingIcon3D = ({ boxRef, iconSrc, isRandomMovement, currentScale, opaci
 
     window.addEventListener("resize", measure);
 
-    // Centro base (para que use TODO el div sin salirse)
+    // Base center (so it uses the whole div without going out of bounds)
     const base = { x: (W - size), y: (H - size/2)};
 
-    // Fases aleatorias para que no parezca “robot”
+    // Random phases so it does not look robotic
     const phase = {
       x: Math.random() * Math.PI * 2,
       y: Math.random() * Math.PI * 2,
       z: Math.random() * Math.PI * 2,
     };
 
-    // Estado para suavizado (lerp)
+    // State for smoothing (lerp)
     const pos = { x: base.x, y: base.y, z: 0 };
     const smooth = (current, target, k) => current + (target - current) * k;
 
@@ -113,22 +113,22 @@ const FloatingIcon3D = ({ boxRef, iconSrc, isRandomMovement, currentScale, opaci
       const t = (now - start) / 1000;
       measure();
 
-      // Recalcular base por si resize cambió W/H
+      // Recalculate base in case resize changed W/H
       base.x = (W - size);
       base.y = (H - size/2);
 
-      // Amplitud: ocupa gran parte del contenedor -> “todo el div”
-      // (icono siempre dentro porque usamos W-size y H-size)
+      // Amplitude: covers a large part of the container -> "whole div"
+      // (icon always inside because we use W-size and H-size)
       const ax = Math.max(0, (W - size) * 0.7);
-      const ay = Math.max(0, (H - size) * 0.7); // menos en vertical para sensación “flotar”
-      const az = 120; // profundidad
+      const ay = Math.max(0, (H - size) * 0.7); // less vertical movement for a "floating" feel
+      const az = 120; // depth
 
-      // Objetivo: sinusoidal suave (sin saltos)
+      // Target: smooth sinusoidal movement (no jumps)
       const targetX = base.x + ax * Math.sin(t * 0.35 + phase.x);
       const targetY = base.y + ay * Math.sin(t * 0.55 + phase.y);
       const targetZ = az * Math.sin(t * 0.45 + phase.z);
 
-      // Suavizado (cuanto más bajo, más “flota”)
+      // Smoothing (the lower it is, the more it "floats")
       pos.x = smooth(pos.x, targetX, 0.03);
       pos.y = smooth(pos.y, targetY, 0.03);
       pos.z = smooth(pos.z, targetZ, 0.03);

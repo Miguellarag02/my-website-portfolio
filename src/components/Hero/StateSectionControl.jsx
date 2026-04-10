@@ -4,7 +4,7 @@ import { DEFAULT_HASH, hashToState, stateToHash, STATES } from "../../constants/
 export function useStateSectionControl() {
   const [stateSection, setStateSection] = useState(STATES.HOME);
 
-  // Inicializa hash si no existe
+  // Initialize hash if it does not exist
   useEffect(() => {
     if (!window.location.hash) window.location.hash = DEFAULT_HASH;
   }, []);
@@ -18,7 +18,7 @@ export function useStateSectionControl() {
     };
 
     window.addEventListener("hashchange", onHashChange);
-    onHashChange(); // sync inicial
+    onHashChange(); // initial sync
     return () => window.removeEventListener("hashchange", onHashChange);
   }, []);
 
