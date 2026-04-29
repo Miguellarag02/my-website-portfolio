@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react"
-import { navLinks } from "../constants/index.js"
+import { useLanguage } from "../context/LanguageContext.jsx";
 
 
 const NavItems = ({ onItemClick, root, isGamePage }) => {
+    const { navLinks } = useLanguage();
     const visibleLinks = isGamePage
-        ? navLinks.filter(({ name }) => name === "Home" || name === "Games")
+        ? navLinks.filter(({ href }) => href === "#home" || href === "/games")
         : navLinks
 
     return (
@@ -57,6 +58,7 @@ const AliveCheck = () => {
 }
 
 const Navbar = ({root, isGamePage}) => {
+    const { UI_TEXTS, language, setLanguage } = useLanguage();
     const [isOpen, setIsOpen] = useState(false);
     const toggleMenu = () => setIsOpen(prevIsOpen => !prevIsOpen);
 
@@ -67,22 +69,38 @@ const Navbar = ({root, isGamePage}) => {
                     <div className="flex items-center gap-3 whitespace-nowrap flex-row">
                         <AliveCheck />
                         <div className="text-white font-bold text-xl">
-                            <p>Backend</p>
+                            <p>{UI_TEXTS.navbar.backendLabel}</p>
                         </div>
                     </div>
                     
-                    <button onClick={toggleMenu} className="text-neutral-400 hover:text-white focus:outline-none sm:hidden flex" aria-label="Toggle menu">
+                    <button onClick={toggleMenu} className="text-neutral-400 hover:text-white focus:outline-none sm:hidden flex" aria-label={UI_TEXTS.navbar.toggleMenuAria}>
                         <img src={isOpen ? "assets/close.svg" : "assets/menu.svg"} alt="toggle" className="w-6 h-6"/>
                     </button>
 
                     <nav className="sm:flex hidden">
                         <NavItems root={root} isGamePage={isGamePage} />
                     </nav>
+                    <div className="hidden sm:flex items-center gap-1 ml-4">
+                        <button
+                            type="button"
+                            onClick={() => setLanguage("es")}
+                            className={`px-2 py-1 rounded text-xs border ${language === "es" ? "bg-white text-black border-white" : "text-white border-white/40"}`}
+                        >
+                            ES
+                        </button>
+                        <button
+                            type="button"
+                            onClick={() => setLanguage("en")}
+                            className={`px-2 py-1 rounded text-xs border ${language === "en" ? "bg-white text-black border-white" : "text-white border-white/40"}`}
+                        >
+                            EN
+                        </button>
+                    </div>
                 </div>
             </div>
             <div className={`nav-sidebar ${isOpen ? 'max-h-screen' : 'max-h-0'}`}>
                 <nav className="p-5">
-                    <NavItems onItemClick={() => setIsOpen(false)} />
+                    <NavItems onItemClick={() => setIsOpen(false)} root={root} isGamePage={isGamePage} />
                 </nav>
             </div>
         </header>

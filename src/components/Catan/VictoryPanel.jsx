@@ -1,5 +1,7 @@
+import { useLanguage } from "../../context/LanguageContext.jsx";
 
 const VictoryPanel = ({victoryPlayer}) => {
+    const { UI_TEXTS } = useLanguage();
     const stats = [
         { icon: "/assets/catan/town_icon.png", value: victoryPlayer.townPoints },
         { icon: "/assets/catan/city_icon.png", value: victoryPlayer.cityPoints },
@@ -14,7 +16,7 @@ const VictoryPanel = ({victoryPlayer}) => {
         <div className="absolute inset-0 bg-black/50 backdrop-blur-sm pointer-events-auto" />
         <div className="relative z-10 flex max-h-[90vh] w-full max-w-6xl flex-col gap-4 overflow-hidden rounded-3xl border border-white/40 bg-white/95 p-4 shadow-2xl backdrop-blur-sm sm:p-6 md:p-8 animate-fadeIn">
             <h2 className="text-center text-lg font-bold text-slate-900 sm:text-xl md:text-2xl">
-                {`Victoria para el jugador ${victoryPlayer.name}`}
+                {`${UI_TEXTS.catan.victoryPrefix} ${victoryPlayer.name}`}
             </h2>
             <div className="mx-16 grid grid-cols-7 gap-8">
             {stats.map((item, i) => {

@@ -1,7 +1,8 @@
-import { myProjects } from "../constants/index.js";
 import PdfViewer from "../components/PdfViewer.jsx";
+import { useLanguage } from "../context/LanguageContext.jsx";
 
 export default function Projects({ selectedProjectIndex, setSelectedProjectIndex }) {
+  const { myProjects, UI_TEXTS } = useLanguage();
   const projectsLength = myProjects.length;
 
   const handleNavigation = (direction) => {
@@ -19,12 +20,12 @@ export default function Projects({ selectedProjectIndex, setSelectedProjectIndex
   return (
     <section className= "c-space lg:ml-12 md:mt-48 mt-[15vh] z-10 fade-in">
       <div className= "flex">
-          <h3 className="head-text">My Projects</h3>
+          <h3 className="head-text">{UI_TEXTS.projects.title}</h3>
           <div className="ml-auto z-[9999]">
             <a href="#home" className="w-fit">
                 <button
                     className="close_button"
-                    aria-label="Close"
+                    aria-label={UI_TEXTS.common.close}
                 >
                 ✕
                 </button>
@@ -35,7 +36,7 @@ export default function Projects({ selectedProjectIndex, setSelectedProjectIndex
           <div className="flex flex-col gap-3 relative sm:p-10 md:py-10 py-4 px-3 shadow-black-200">
                 <div className="flex flex-row items-center gap-3">
                     <div className="p-3 backdrop-filter backdrop-blur-3xl rounded-lg" style={currentProject.logoStyle}>
-                        <img src={currentProject.logo} alt="logo" className="w-fit shadow-sm object-cover"/>
+                        <img src={currentProject.logo} alt={UI_TEXTS.projects.logoAlt} className="w-fit shadow-sm object-cover"/>
                     </div>
                     <p className="text-white md:text-xl sm:text-xl text-sm font-semibold animatedText">{currentProject.title}</p>
                 </div>
@@ -51,16 +52,16 @@ export default function Projects({ selectedProjectIndex, setSelectedProjectIndex
                         </div>
                         <a className="flex items-center gap-2 cursor-pointer text-white-600" href={currentProject.href} target="_blank" rel="noreferrer">
                             <p>{currentProject.checkLinkTxt}</p>
-                            <img src="/assets/arrow-up.png" className="w-3 h-3" alt="arrow"/>
+                            <img src="/assets/arrow-up.png" className="w-3 h-3" alt={UI_TEXTS.projects.linkArrowAlt}/>
                         </a>
                     </div>
                 </div>
                 <div className="flex justify-between items-center">
                     <button className="arrow-btn" onClick={() => {handleNavigation('previous')}}>
-                        <img src="/assets/left-arrow.png" alt="left-arrow" className="w-4 h-4"/>
+                        <img src="/assets/left-arrow.png" alt={UI_TEXTS.projects.previousAlt} className="w-4 h-4"/>
                     </button>
                     <button className="arrow-btn" onClick={() => {handleNavigation('next')}}>
-                        <img src="/assets/right-arrow.png" alt="right-arrow" className="w-4 h-4"/>
+                        <img src="/assets/right-arrow.png" alt={UI_TEXTS.projects.nextAlt} className="w-4 h-4"/>
                     </button>
                 </div>
             </div>

@@ -1,8 +1,9 @@
-import { myAbilities } from "../constants";
+import { useLanguage } from "../context/LanguageContext.jsx";
 
 const ANIM_MS = 220;
 
 const AbilitiesCard = ({ openId, setOpenId }) => {
+  const { myAbilities, UI_TEXTS } = useLanguage();
   const abilityCardClass = {
     1: "ability_card_1",
     2: "ability_card_2",
@@ -39,7 +40,7 @@ const AbilitiesCard = ({ openId, setOpenId }) => {
               <div className="absolute top-[1vh] right-[0.5vw] ">
                 <button
                   className="w-10 h-10 text-2xl flex justify-center text-white/60"
-                  aria-label="Close"
+                  aria-label={UI_TEXTS.common.close}
                   onClick={close}
                 >
                 ✕

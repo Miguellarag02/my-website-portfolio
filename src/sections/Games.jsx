@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useMemo } from "react"
 import { useAuth } from "../context/AuthContext.jsx"
-import {myGames} from "../constants/index.js"
 import { PLAYER_COLOR_OPTIONS } from "../constants/CatanStates.js"
+import { useLanguage } from "../context/LanguageContext.jsx";
 
 const Games = () => {
+  const { myGames, UI_TEXTS } = useLanguage();
   const { username, userImage, isLoggedIn, login, logout } = useAuth()
   const [loginUsername, setLoginUsername] = useState("")
   const [password, setPassword] = useState("")
@@ -24,13 +25,13 @@ const Games = () => {
 
       const payload = await response.json().catch(() => null)
       if (!response.ok || !payload?.ok) {
-        setStatus({ type: "error", message: payload?.message || "Could not add player to the game." })
+        setStatus({ type: "error", message: payload?.message || UI_TEXTS.games.cannotAddPlayer })
         logout()
         return false
       }
       return true
     } catch (error) {
-      setStatus({ type: "error", message: "Network error while adding player." })
+      setStatus({ type: "error", message: UI_TEXTS.games.addPlayerNetworkError })
       logout()
       return false
     }
@@ -68,14 +69,14 @@ const Games = () => {
         setPassword("")
         const playerAdded = await addPlayer(loggedUsername)
         if (playerAdded) {
-          setStatus({ type: "success", message: "Login successful." })
+          setStatus({ type: "success", message: UI_TEXTS.games.loginSuccess })
         }
       } else {
-        const message = payload?.message || "Login failed. Check credentials."
+        const message = payload?.message || UI_TEXTS.games.loginFailed
         setStatus({ type: "error", message })
       }
     } catch (error) {
-      setStatus({ type: "error", message: "Network error. Try again." })
+      setStatus({ type: "error", message: UI_TEXTS.games.networkTryAgain })
     } finally {
       setIsSubmitting(false)
     }
@@ -130,7 +131,7 @@ const Games = () => {
 
   const handlePlayClick = async (href) => {
     if (!isLoggedIn) {
-      setStatus({ type: "error", message: "Debes iniciar sesión para jugar." })
+      setStatus({ type: "error", message: UI_TEXTS.games.loginRequired })
       return
     }
 
@@ -139,7 +140,7 @@ const Games = () => {
 
   const handleSpectateClick = (href) => {
     if (isLoggedIn) {
-      setStatus({ type: "error", message: "Debes cerrar sesión para entrar como espectador." })
+      setStatus({ type: "error", message: UI_TEXTS.games.logoutRequired })
       return
     }
 
@@ -178,15 +179,15 @@ const Games = () => {
             <div className="flex flex-col gap-3">
               <div>
                 <p className="text-neutral-400 text-sm uppercase tracking-[0.25em]">
-                  New space in progress
+                  {UI_TEXTS.games.statusLabel}
                 </p>
                 <h1 className="text-white text-4xl md:text-5xl font-bold mt-2">
-                  Games
+                  {UI_TEXTS.games.heading}
                 </h1>
               </div>
 
               <p className="text-neutral-300 max-w-2xl">
-                In this section you can find the games I have developed as a hobby. Among them you can find board games like Catan or Risk.
+                {UI_TEXTS.games.description}
               </p> 
             </div>
 
@@ -198,10 +199,10 @@ const Games = () => {
                     )}
                     <div className="flex flex-col w-full" >
                         <p className="text-white text-md font-semibold tracking-wide mt-4 ml-4">
-                            Welcome, {username}!
+                            {UI_TEXTS.games.welcomePrefix} {username}!
                           </p>
                         <p className="text-xs text-emerald-300 mt-1 ml-4">
-                          Victories: 0
+                          {UI_TEXTS.games.victories}
                         </p>
                         <button
                           onClick={() => {
@@ -211,7 +212,7 @@ const Games = () => {
                           }}
                           className="rounded-lg mt-2 bg-white text-black text-sm font-semibold py-2 transition disabled:opacity-50 disabled:cursor-not-allowed hover:bg-neutral-200"
                         >
-                          Logout
+                          {UI_TEXTS.games.logout}
                         </button>
                         {status.message ? (
                           <p className={status.type === "success" ? "text-xs text-emerald-300" : "text-xs text-red-300"}>
@@ -246,9 +247,9 @@ const Games = () => {
                     </div>
                 ) : (
                 <form onSubmit={handleLogin} className="rounded-2xl border border-white/10 bg-white/5 p-4 flex flex-col gap-3">
-                  <p className="text-white text-sm font-semibold tracking-wide">Member Login</p>
+                  <p className="text-white text-sm font-semibold tracking-wide">{UI_TEXTS.games.memberLogin}</p>
                   <label className="flex flex-col gap-1 text-xs text-neutral-400">
-                    Username
+                    {UI_TEXTS.games.username}
                     <input
                       type="text"
                       value={loginUsername}
@@ -258,7 +259,7 @@ const Games = () => {
                     />
                   </label>
                   <label className="flex flex-col gap-1 text-xs text-neutral-400">
-                    Password
+                    {UI_TEXTS.games.password}
                     <input
                       type="password"
                       value={password}
@@ -272,7 +273,7 @@ const Games = () => {
                     disabled={isSubmitting || !loginUsername || !password}
                     className="rounded-lg bg-white text-black text-sm font-semibold py-2 transition disabled:opacity-50 disabled:cursor-not-allowed hover:bg-neutral-200"
                   >
-                    {isSubmitting ? "Logging in..." : "Login"}
+                    {isSubmitting ? UI_TEXTS.games.loggingIn : UI_TEXTS.games.login}
                   </button>
                   {status.message ? (
                     <p className={status.type === "success" ? "text-xs text-emerald-300" : "text-xs text-red-300"}>
@@ -339,13 +340,13 @@ const Games = () => {
                             onClick={() => handlePlayClick(href)}
                             className="px-5 py-2 rounded-full border border-white/20 text-white hover:border-white/60 hover:bg-white/20 transition"
                           >
-                            Jugar
+                            {UI_TEXTS.games.play}
                           </button>
                           <button 
                             onClick={() => handleSpectateClick(href)}
                             className="px-5 py-2 rounded-full border border-white/20 text-white hover:border-white/60 hover:bg-white/20 transition"
                           >
-                            Espectador
+                            {UI_TEXTS.games.spectate}
                           </button>
                         </div>
                         <div className="absolute bottom-4 w-1/3 h-0.5 bg-gradient-to-r from-transparent via-white to-transparent rounded-full transform group-hover:w-2/3 group-hover:h-1 transition-all duration-500 animate-pulse"/>
@@ -364,7 +365,7 @@ const Games = () => {
               href="/"
               className="px-5 py-2 rounded-full border border-white/20 text-white hover:border-white/60 transition"
             >
-              Volver al inicio
+              {UI_TEXTS.games.backToHome}
             </a>
           </div>
         </div>

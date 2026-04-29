@@ -2,12 +2,14 @@ import {
     RESOURCE_CARDS,
 } from "../../constants/CatanStates.js";
 import { useState } from "react";
+import { useLanguage } from "../../context/LanguageContext.jsx";
 
 const InventorCardModal = ({
     username,
     setRandomCard,
     setUsedRandomCard
 }) => {
+    const { UI_TEXTS } = useLanguage();
     const [selectedResources, setSelectedResources] = useState([0, 0])
 
     // Add two cards to user
@@ -33,7 +35,7 @@ const InventorCardModal = ({
 
             <div className="relative z-10 flex max-h-[90vh] w-full max-w-6xl flex-col gap-4 overflow-hidden rounded-3xl border border-white/40 bg-white/95 p-4 shadow-2xl backdrop-blur-sm sm:p-6 md:p-8 animate-fadeIn">
                 <h2 className="text-center text-lg font-bold text-slate-900 sm:text-xl md:text-2xl">
-                    Selecciona los recursos que deseas tomar
+                    {UI_TEXTS.catan.inventorTitle}
                 </h2>
 
                 <div className="grid grid-cols-5 gap-8">
@@ -56,7 +58,7 @@ const InventorCardModal = ({
                             onClick={() => addInventorResourcesCard(selectedResources)}
                             className="mt-2 self-center rounded-xl bg-green-600 px-6 py-2.5 font-semibold text-white transition hover:scale-105 hover:bg-green-700"
                         >
-                            Aceptar
+                            {UI_TEXTS.catan.accept}
                         </button>
                     )}
                     {(selectedResources[0] > 0 || selectedResources[1] > 0) && (
@@ -64,7 +66,7 @@ const InventorCardModal = ({
                             onClick={() => setSelectedResources([0,0])}
                             className="mt-2 self-center rounded-xl bg-red-600 px-6 py-2.5 font-semibold text-white transition hover:scale-105 hover:bg-red-700"
                         >
-                            Clear
+                            {UI_TEXTS.catan.clear}
                         </button>
                     )}
                 </div>

@@ -13,8 +13,10 @@ import AboutSection from "./About.jsx";
 import { useKeyboardControls } from "../components/Hero/KeyboardControls.jsx";
 import { useStateSectionControl } from "../components/Hero/StateSectionControl.jsx";
 import { calculateSizes, calculateCameraPositions } from "../constants/index.js";
+import { useLanguage } from "../context/LanguageContext.jsx";
 
 export default function Hero() {
+    const { UI_TEXTS } = useLanguage();
     const { stateSection, setStateSection } = useStateSectionControl();
     const [outlineEnable, setOutlineEnable] = useState(true);
     const [cameraIsMoving, setCameraIsMoving] = useState(false)
@@ -75,10 +77,10 @@ export default function Hero() {
             {stateSection === STATES.HOME && (
                 <div className="w-full mx-auto flex flex-col sm:mt-36 mt-32 c-space gap-3">
                     <p className={`sm:text-3xl text-2xl font-medium text-white text-center font-generalsans ${stateSection === STATES.HOME ? "fade-in-delay-2" : "fade-out"}`}>
-                        Hi I am Miguel Angel <span className="waving-hand">👋</span>
+                        {UI_TEXTS.hero.greeting} <span className="waving-hand">👋</span>
                     </p>
                     <p className={`hero_tag text-gray_gradient ${stateSection === STATES.HOME ? "fade-in-delay-3" : "fade-out"}`}>
-                        Software Engineer
+                        {UI_TEXTS.hero.role}
                     </p>
                 </div>
             )}
@@ -129,7 +131,7 @@ export default function Hero() {
 
             <div className="absolute bottom-7 left-0 right-0 w-full z-10 c-space">
                 <a href="#contact" className="w-fit">
-                <Button name="Let's work together" isBeam containerClass="sm:w-fit w-full sm:min-w-96" />
+                <Button name={UI_TEXTS.hero.cta} isBeam containerClass="sm:w-fit w-full sm:min-w-96" />
                 </a>
             </div>
         </section>

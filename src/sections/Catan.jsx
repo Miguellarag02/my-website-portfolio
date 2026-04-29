@@ -14,8 +14,10 @@ import MonopolyCardModal from "../components/Catan/MonopolyCardModal.jsx";
 import VictoryPanel from "../components/Catan/VictoryPanel.jsx"
 import { CAMERA_STATES, calculateCatanSizes, calculateCatanCameraPositions } from "../constants/CatanStates.js";
 import DiceWorld from "../components/Catan/Dice.jsx";
+import { useLanguage } from "../context/LanguageContext.jsx";
 
 const Catan = () => {
+    const { UI_TEXTS } = useLanguage();
     const { username } = useAuth();
     const [selectedBuildId, setSelectedBuildId] = useState(0);
     const [victoryPlayer, setVictoryPlayer] = useState([]);
@@ -221,7 +223,7 @@ const Catan = () => {
             <div className="w-full h-full absolute inset-0">
                 <div className="flex flex-col h-2/3 w-1/3">
                     <a href="/games" className="relative w-fit top-2 left-2 z-20 px-4 py-2 rounded-full border border-white/30 bg-black/50 text-white text-sm font-semibold backdrop-blur-sm hover:border-white/70 hover:bg-black/70 transition" >
-                        Exit game
+                        {UI_TEXTS.catan.exitGame}
                     </a>
                     <button
                         type="button"
@@ -230,7 +232,7 @@ const Catan = () => {
                     >
                         <img
                             src={frontCamera ? "/assets/camera_perspective_icon.png" : "/assets/camera_front_icon.png"}
-                            alt="Toggle camera view"
+                            alt={UI_TEXTS.catan.cameraToggleAlt}
                         />
                     </button>
                     <div className="flex flex-row ml-1 mt-2 gap-4 w-full">

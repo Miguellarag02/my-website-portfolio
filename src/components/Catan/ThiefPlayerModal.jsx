@@ -5,6 +5,7 @@ import {
     parseResources,
     toVeryLightColor,
 } from "../../constants/CatanStates.js";
+import { useLanguage } from "../../context/LanguageContext.jsx";
 
 const ThiefPlayerModal = ({
     username,
@@ -15,13 +16,14 @@ const ThiefPlayerModal = ({
     onTakeCard,
     onAccept,
 }) => {
+    const { UI_TEXTS } = useLanguage();
     return (
         <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 sm:p-6">
             <div className="absolute inset-0 bg-black/50 backdrop-blur-sm pointer-events-auto" />
 
             <div className="relative z-10 flex max-h-[90vh] w-full max-w-6xl flex-col gap-4 overflow-hidden rounded-3xl border border-white/40 bg-white/95 p-4 shadow-2xl backdrop-blur-sm sm:p-6 md:p-8 animate-fadeIn">
                 <h2 className="text-center text-lg font-bold text-slate-900 sm:text-xl md:text-2xl">
-                    Selecciona al jugador al que quieres robar recursos
+                    {UI_TEXTS.catan.thiefPlayerTitle}
                 </h2>
 
                 {stealedResources == 0 && (
@@ -103,7 +105,7 @@ const ThiefPlayerModal = ({
                             }
                         />
                         <span className="font-sans font-bold items-center mt-8">
-                            {stealedResources == 6 ? "Robando..." : "Robado!"}
+                            {stealedResources == 6 ? UI_TEXTS.catan.thiefStealing : UI_TEXTS.catan.thiefStolen}
                         </span>
                     </div>
                 )}
@@ -116,7 +118,7 @@ const ThiefPlayerModal = ({
                             }}
                             className={`mt-2 self-center rounded-xl bg-blue-600 px-6 py-2.5 font-semibold text-white transition hover:scale-105 hover:bg-blue-700 ${selectedThiefPlayerId != 0 ? "" : "bg-white-500 text-black-100 pointer-events-none"}`}
                         >
-                            Robar
+                            {UI_TEXTS.catan.thiefAction}
                         </button>
                     )}
 
@@ -125,7 +127,7 @@ const ThiefPlayerModal = ({
                             onClick={onAccept}
                             className="mt-2 self-center rounded-xl bg-green-600 px-6 py-2.5 font-semibold text-white transition hover:scale-105 hover:bg-green-700"
                         >
-                            Aceptar
+                            {UI_TEXTS.catan.accept}
                         </button>
                     )}
                 </div>

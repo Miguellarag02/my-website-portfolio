@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 import Navbar from "./sections/Navbar.jsx"
 import Hero from "./sections/Hero.jsx"
@@ -7,9 +7,13 @@ import Footer from "./sections/Footer.jsx"
 import Games from "./sections/Games.jsx"
 import Catan from "./sections/Catan.jsx"
 import Risk from "./sections/Risk.jsx"
+import { DEFAULT_UI_LANG } from "./constants/index.js"
+import { LanguageProvider } from "./context/LanguageContext.jsx"
 
 
 const App = () => {
+    const [language, setLanguage] = useState(DEFAULT_UI_LANG)
+
     const Home = () => (
         <>
             <Navbar root={""} isGamePage={false} />
@@ -28,16 +32,18 @@ const App = () => {
     )
 
     return (
-        <BrowserRouter>
-            <main className="max-w-7xl mx-auto">
-                <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/games" element={<GamesPage />} />
-                    <Route path="/catan" element={<Catan />} />
-                    <Route path="/risk" element={<Risk />} />
-                </Routes>
-            </main>
-        </BrowserRouter>
+        <LanguageProvider language={language} setLanguage={setLanguage}>
+            <BrowserRouter>
+                <main className="max-w-7xl mx-auto">
+                    <Routes>
+                        <Route path="/" element={<Home />} />
+                        <Route path="/games" element={<GamesPage />} />
+                        <Route path="/catan" element={<Catan />} />
+                        <Route path="/risk" element={<Risk />} />
+                    </Routes>
+                </main>
+            </BrowserRouter>
+        </LanguageProvider>
     )
 }
 

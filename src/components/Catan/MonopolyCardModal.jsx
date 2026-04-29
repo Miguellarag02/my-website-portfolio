@@ -2,6 +2,7 @@ import {
     RESOURCE_CARDS, parseResources
 } from "../../constants/CatanStates.js";
 import { useState, useEffect } from "react";
+import { useLanguage } from "../../context/LanguageContext.jsx";
 
 const MonopolyCardModal = ({
     username,
@@ -9,6 +10,7 @@ const MonopolyCardModal = ({
     playersInfo,
     setUsedRandomCard
 }) => {
+    const { UI_TEXTS } = useLanguage();
     const [selectedResource, setSelectedResource] = useState(0)
 
     const totals = playersInfo
@@ -48,7 +50,7 @@ const MonopolyCardModal = ({
             <div className="relative z-10 flex max-h-[90vh] w-full max-w-6xl flex-col gap-4 overflow-hidden rounded-3xl border border-white/40 bg-white/95 p-4 shadow-2xl backdrop-blur-sm sm:p-6 md:p-8 animate-fadeIn">
                 
                 <h2 className="text-center text-lg font-bold text-slate-900 sm:text-xl md:text-2xl">
-                    Selecciona el recurso que deseas robar de todos los jugadores
+                    {UI_TEXTS.catan.monopolyTitle}
                 </h2>
 
                 <div className="grid grid-cols-5 gap-8">
@@ -69,7 +71,7 @@ const MonopolyCardModal = ({
                             onClick={() => addMonopolyResourcesCard(selectedResource)}
                             className="mt-2 self-center rounded-xl bg-green-600 px-6 py-2.5 font-semibold text-white transition hover:scale-105 hover:bg-green-700"
                         >
-                            Aceptar
+                            {UI_TEXTS.catan.accept}
                         </button>
                     )}
                 </div>

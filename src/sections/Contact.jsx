@@ -1,7 +1,9 @@
 import { useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
+import { useLanguage } from "../context/LanguageContext.jsx";
 
 const Contact = () => {
+    const { UI_TEXTS } = useLanguage();
     const  formRef = useRef();
     const [loading, setLoading] = useState(false)
     const [form, setForm] = useState({
@@ -29,7 +31,7 @@ const Contact = () => {
             'H9RQDqLY-XZtKLYBI'
             )
             setLoading(false);
-            alert('Your message has been sent!')
+            alert(UI_TEXTS.contact.messageSent)
             setForm({
                 name:'',
                 email:'',
@@ -37,7 +39,7 @@ const Contact = () => {
             });
         } catch (error) {
             console.log(error);
-            alert('Something went wrong!')
+            alert(UI_TEXTS.contact.somethingWrong)
         }
     } 
 
@@ -46,11 +48,11 @@ const Contact = () => {
             <div className="relative min-h-screen flex items-center justify-center flex-col">
                 <img src="/assets/terminal.png" alt="terminal background" className="absolute inset-0 min-h-screen"/>
                 <div className="contact-container">
-                    <h3 className="head-text">Let's talk</h3>
-                    <p className="text-lg text-white-600 mt-3">Contar un poco de mi aportacion al equipo</p>
+                    <h3 className="head-text">{UI_TEXTS.contact.heading}</h3>
+                    <p className="text-lg text-white-600 mt-3">{UI_TEXTS.contact.subheading}</p>
                     <form ref={formRef} onSubmit={handleSubmit} className="mt-12 flex flex-col space-y-7">
                         <label className="space-y-3">
-                            <span className="field-label">Full Name</span>
+                            <span className="field-label">{UI_TEXTS.contact.fullName}</span>
                             <input
                                 type="text"
                                 name="name"
@@ -58,12 +60,12 @@ const Contact = () => {
                                 onChange={handleChange}
                                 required
                                 className="field-input"
-                                placeholder="Miguel Ángel Lara"
+                                placeholder={UI_TEXTS.contact.namePlaceholder}
                             />
                         </label>
 
                         <label className="space-y-3">
-                            <span className="field-label">Email</span>
+                            <span className="field-label">{UI_TEXTS.contact.email}</span>
                             <input
                                 type="email"
                                 name="email"
@@ -71,12 +73,12 @@ const Contact = () => {
                                 onChange={handleChange}
                                 required
                                 className="field-input"
-                                placeholder="miguelangellarag@gmail.com"
+                                placeholder={UI_TEXTS.contact.emailPlaceholder}
                             />
                         </label>
 
                         <label className="space-y-3">
-                            <span className="field-label">Your Message</span>
+                            <span className="field-label">{UI_TEXTS.contact.message}</span>
                             <textarea
                                 name="message"
                                 value={form.message}
@@ -84,13 +86,13 @@ const Contact = () => {
                                 required
                                 rows={5}
                                 className="field-input"
-                                placeholder="Hi, I wanna give you a job..."
+                                placeholder={UI_TEXTS.contact.messagePlaceholder}
                             />
                         </label>
 
                         <label>
                             <button className="field-btn" type="submit" disabled={loading}>
-                                {loading ? 'Sending...' : 'Send Message'}
+                                {loading ? UI_TEXTS.contact.sending : UI_TEXTS.contact.sendMessage}
                                 <img src="/assets/arrow-up.png" alt="arrow-up" className="field-btn_arrow" />
                             </button>
                         </label>

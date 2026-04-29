@@ -1,8 +1,11 @@
+import { useLanguage } from "../context/LanguageContext.jsx";
+
 const PdfViewer = ({ pdfLink }) => {
+  const { UI_TEXTS } = useLanguage();
   if (!pdfLink) {
     return (
       <div className="h-[70vh] w-full overflow-y-auto rounded-xl border p-4">
-        No hay un PDF disponible para este proyecto.
+        {UI_TEXTS.pdf.noPdf}
       </div>
     );
   }
@@ -15,9 +18,9 @@ const PdfViewer = ({ pdfLink }) => {
         className="w-full h-full"
       >
         <p className="p-4">
-          No se pudo mostrar el PDF.{" "}
+          {UI_TEXTS.pdf.cannotShowPdf}{" "}
           <a className="underline" href={pdfLink} target="_blank" rel="noreferrer">
-            Abrir en una pestaña
+            {UI_TEXTS.pdf.openInTab}
           </a>
         </p>
       </object>

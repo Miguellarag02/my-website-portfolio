@@ -117,11 +117,11 @@ export const RANDOM_CARDS = {
     5: '/assets/catan/cards/invention_card.png',
 }
 
-export const BUILD_COSTS = [
-    {id: 1, name:"Carretera",   resources: [{id:5, qty:1}, {id:1, qty:1}]},
-    {id: 2, name:"Poblado",     resources: [{id:5, qty:1}, {id:1, qty:1}, {id:2, qty:1}, {id:4, qty:1}]},
-    {id: 3, name:"Ciudad",      resources: [{id:4, qty:2}, {id:3, qty:3}]},
-    {id: 4, name:"Gamblear",    resources: [{id:2, qty:1}, {id:4, qty:1}, {id:3, qty:1}]}
+export const getBuildCosts = (UI_TEXTS) => [
+    {id: 1, name: UI_TEXTS.catan.buildRoad,       resources: [{id:5, qty:1}, {id:1, qty:1}]},
+    {id: 2, name: UI_TEXTS.catan.buildTown,       resources: [{id:5, qty:1}, {id:1, qty:1}, {id:2, qty:1}, {id:4, qty:1}]},
+    {id: 3, name: UI_TEXTS.catan.buildCity,       resources: [{id:4, qty:2}, {id:3, qty:3}]},
+    {id: 4, name: UI_TEXTS.catan.buildRandomCard, resources: [{id:2, qty:1}, {id:4, qty:1}, {id:3, qty:1}]}
 ]
 
 export const DICE_FACES = [

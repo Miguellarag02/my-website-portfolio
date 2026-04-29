@@ -1,10 +1,11 @@
 import { useState  } from 'react'
 import { useGLTF, Outlines, useTexture } from '@react-three/drei'
-import { myProjects } from '../../constants/index.js'
 import { STATES } from '../../constants/HeroRoutes.js'
 import CoffeeSteam from './CoffeeSteam.jsx'
+import { useLanguage } from "../../context/LanguageContext.jsx";
 
 const MyDesktop = ({stateSection, onLaptopClick, onMonitorClick, onKeyboardClick, onGameClick, outlineEnable, selectedProjectIndex, ...props }) => {
+  const { myProjects } = useLanguage();
   const { nodes, materials } = useGLTF('/models/my_desktop.glb')
   const [hoverLaptop, setHoverLaptop] = useState(false)
   const [hoverMonitor, setHoverMonitor] = useState(false)

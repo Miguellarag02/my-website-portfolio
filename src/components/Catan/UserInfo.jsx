@@ -6,7 +6,8 @@ import { useAuth } from "../../context/AuthContext.jsx";
 import { BuildModel } from "../Catan/BuildModel.jsx";
 import ModelCamera from "../Catan/ModelCamera.jsx";
 import SpecialButton from "../SpecialButton.jsx"
-import { RESOURCE_ICONS, BUILD_COSTS, RESOURCE_CARDS, RANDOM_CARDS, PLAYER_COLORS } from "../../constants/CatanStates.js";
+import { RESOURCE_ICONS, getBuildCosts, RESOURCE_CARDS, RANDOM_CARDS, PLAYER_COLORS } from "../../constants/CatanStates.js";
+import { useLanguage } from "../../context/LanguageContext.jsx";
 
 const UserInfo = ({ 
     open, 
@@ -33,7 +34,9 @@ const UserInfo = ({
     buildRoads
   }) => {
 
+  const { UI_TEXTS } = useLanguage();
   const { username } = useAuth();
+  const BUILD_COSTS = getBuildCosts(UI_TEXTS);
   const [userInfo, setUserInfo] = useState({});
   const [userRandom, setUserRandom] = useState([]);
   const [availableBuilding, setAvailableBuilding] = useState([]);
@@ -213,7 +216,7 @@ const UserInfo = ({
           open ? "translate-x-0" : "translate-x-full",
         ].join(" ")}
         role="complementary"
-        aria-label="Barra de herramientas"
+        aria-label={UI_TEXTS.catan.drawerAria}
       >
         <div className="p-2 h-full w-full mt-2">
           {banckTrade.from_id == 0 &&
@@ -245,7 +248,7 @@ const UserInfo = ({
                       selectedBuildId === build.id ? "opacity-80 hover:opacity-100" : "hidden"
                     }`}
                   >
-                    <button onClick={() => addRandomCard()}>Comprar</button>
+                    <button onClick={() => addRandomCard()}>{UI_TEXTS.catan.buy}</button>
                   </div>
                 </>
                 }
@@ -272,7 +275,7 @@ const UserInfo = ({
           </div>
           ||
             <div className="relative gap-2 grid grid-cols-4 grid-rows-3 justify-items-center">
-              <span className="text-lg font-serif font-bold col-span-4 row-span-1">Select a resource for exchange</span>
+              <span className="text-lg font-serif font-bold col-span-4 row-span-1">{UI_TEXTS.catan.bankTradeTitle}</span>
               <div className="flex w-full col-span-3 row-span-2 gap-2 justify-items-center ">
                 {userResources.map(resource => (
                     <button 
@@ -337,7 +340,7 @@ const UserInfo = ({
           "hover:bg-slate-50 active:scale-95 transition-all duration-700 ease-out",
           open ? "right-[28rem]" : "right-0",
         ].join(" ")}
-        aria-label={open ? "Cerrar barra lateral" : "Abrir barra lateral"}
+        aria-label={open ? UI_TEXTS.catan.closeSidebarAria : UI_TEXTS.catan.openSidebarAria}
       >
         <img src="/assets/build.png" className="w-8"/>
       </button>
@@ -367,7 +370,7 @@ const UserInfo = ({
                         style={{ border: `3px solid ${PLAYER_COLORS[fromPlayerInfo?.color] ?? "#ccc"}` }}
                       />
                       <span className="mt-2 text-center text-sm font-semibold tracking-tight text-slate-800">
-                        {fromPlayerInfo?.username ?? "Desconocido"}
+                        {fromPlayerInfo?.username ?? UI_TEXTS.common.unknown}
                       </span>
                     </div>
 
@@ -451,7 +454,7 @@ const UserInfo = ({
                         style={{ border: `3px solid ${PLAYER_COLORS[toPlayerInfo?.color] ?? "#ccc"}` }}
                       />
                       <span className="mt-2 text-center text-sm font-semibold tracking-tight text-slate-800">
-                        {toPlayerInfo?.username ?? "Desconocido"}
+                        {toPlayerInfo?.username ?? UI_TEXTS.common.unknown}
                       </span>
                     </div>
 
@@ -486,7 +489,7 @@ const UserInfo = ({
                 <SpecialButton
                   color="green"
                   width="w-32"
-                  text={`Play​ ${gameMatch.n_players}/${gameMatch.max_player}`}
+                  text={`${UI_TEXTS.catan.play}​ ${gameMatch.n_players}/${gameMatch.max_player}`}
                   onClick={() => playGame()}
                   visibility= {true}
                   isToggle={true}
@@ -497,7 +500,7 @@ const UserInfo = ({
                 <SpecialButton
                   color="blue"
                   width="w-20"
-                  text="Throw 🎲​🎲​"
+                  text={UI_TEXTS.catan.throwDice}
                   onClick={() => setThrowDice(true)}
                   visibility={availableThrowDice && gameMatch.turn == userInfo.order && (gameMatch.round != 1 && gameMatch.round != 2)}
                 />
@@ -505,7 +508,7 @@ const UserInfo = ({
                   <SpecialButton
                     color="red"
                     width="w-20"
-                    text="​Thief 🥷💰​"
+                    text={UI_TEXTS.catan.thief}
                     onClick={() => setMoveThief(prev => !prev)}
                     visibility={true}
                     isToggle ={true}
@@ -514,7 +517,7 @@ const UserInfo = ({
                   <SpecialButton
                     color="green"
                     width="w-20"
-                    text="Next ➡️"
+                    text={UI_TEXTS.catan.next}
                     onClick={() => nextTurn()}
                     visibility= {(gameMatch.turn == userInfo.order && !allowThief) || (gameMatch.turn == userInfo.order && (gameMatch.round == 1 || gameMatch.round == 2) && !availableBuild(1) && !availableBuild(2))}
                   />
@@ -551,7 +554,7 @@ const UserInfo = ({
                       <button 
                         className={`absolute left-1/2 -translate-x-1/2 mt-24 opacity-0 scale-50 bg-green-700 border-2 border-black-100 rounded-2xl w-20 text-center font-serif text-sm font-bold z-50 transition-all group-hover:opacity-100 group-hover:scale-100`}
                         onClick={() => setRandomCard(random.id)}>
-                        Utilizar
+                        {UI_TEXTS.catan.useCard}
                       </button>
                     }
                   </div>

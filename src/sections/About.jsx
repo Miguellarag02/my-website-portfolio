@@ -1,9 +1,9 @@
 import { useState, useRef } from "react"
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { AboutMe, myAbilities, myHobbies } from "../constants";
 import AbilitiesCard from "../components/AbilitiesCard.jsx";
 import IconBox from "../components/FloatingIcon3D.jsx";
+import { useLanguage } from "../context/LanguageContext.jsx";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -20,6 +20,7 @@ const cardItems = {
   };
 
 const About = () => {
+  const { AboutMe, myAbilities, myHobbies, UI_TEXTS } = useLanguage();
   const boxRef = useRef(null);
   const [openId, setOpenId] = useState(0);
   const cardPositions = {
@@ -55,7 +56,7 @@ const About = () => {
       <ul className="relative min-h-screen py-10 perspective-1200 preserve-3d">
           {/* My Hobbies */}
           <li className={`grid grid-rows-7 card ${cardPositions[cardStates[cardItems.HOBBIES]]}`} onClick={(e) => rotate(e, cardStates[cardItems.HOBBIES] > cardStates[cardItems.ABOUT], cardItems.HOBBIES)}>
-            <p className="card_tag text-gray row-span-1">My Hobbies </p>
+            <p className="card_tag text-gray row-span-1">{UI_TEXTS.about.hobbiesTitle}</p>
             {/* Hobbies: projects */}
             <div className="hobby-section">
               <div className="hobby-image">
@@ -105,14 +106,14 @@ const About = () => {
           {/* About Me */}
           <li className={`grid grid-rows-8 card ${cardPositions[cardStates[cardItems.ABOUT]]}`} onClick={(e) => rotate(e, cardStates[1] > cardStates[cardItems.ABILITIES], cardItems.ABOUT)}>
             <p className="card_tag text-gray row-span-2">
-              About Me <span className="waving-hand">👋</span>
+              {UI_TEXTS.about.aboutTitle} <span className="waving-hand">👋</span>
             </p>
             <div className="flex items-center justify-center xl:row-span-3 row-span-2">
               <div className="avatar-frame">
                 <div className="w-full h-full rounded-full overflow-hidden bg-zinc-900">
                   <img
                     src="/assets/me.png"
-                    alt="Foto de perfil"
+                    alt={UI_TEXTS.about.profileAlt}
                     className="w-full h-full object-cover"
                   />
                 </div>
@@ -132,7 +133,7 @@ const About = () => {
 
           {/* My Abilities */}
           <li className={`grid grid-rows-12 card ${cardPositions[cardStates[cardItems.ABILITIES]]}`} onClick={(e) => rotate(e, cardStates[cardItems.ABILITIES] > cardStates[cardItems.HOBBIES], cardItems.ABILITIES)}>
-            <p className="card_tag text-gray row-span-2">My Abilities</p>
+            <p className="card_tag text-gray row-span-2">{UI_TEXTS.about.abilitiesTitle}</p>
             <div className={`md:row-span-6 row-span-10 z-100 md:mr-8 md:ml-8 md:mb-0 mb-6 ${cardContent[cardStates[cardItems.ABILITIES]]}`} >
               <AbilitiesCard openId={openId} setOpenId={setOpenId}/>
             </div>
@@ -164,7 +165,7 @@ const About = () => {
         <a href="#home" className="w-fit">
           <button
             className="close_button"
-            aria-label="Close"
+            aria-label={UI_TEXTS.common.close}
           >
           ✕
           </button>

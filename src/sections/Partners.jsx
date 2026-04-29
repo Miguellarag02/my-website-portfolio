@@ -1,10 +1,11 @@
-import { partnerReviews } from '../constants/index.js'
+import { useLanguage } from "../context/LanguageContext.jsx";
 
 
 const Partners = () => {
+    const { partnerReviews, UI_TEXTS } = useLanguage();
     return (
         <section className="c-space my-20" id="partners">
-            <h3 className="head-text">Hear from my partners</h3>
+            <h3 className="head-text">{UI_TEXTS.partners.title}</h3>
             <div className="partner-container">
                 {partnerReviews.map(({id, name, review, img, position}) => (
                     <div key={id} className="partner-review">
@@ -20,7 +21,7 @@ const Partners = () => {
                                 </div>
                                 <div className="flex self-end items-center gap-2">
                                     {Array.from({length:5}).map((_, index) => (
-                                        <img key={index} src="/assets/star.png" alt="star" className="w-5 h-5" />
+                                        <img key={index} src="/assets/star.png" alt={UI_TEXTS.partners.starAlt} className="w-5 h-5" />
                                     ))}
                                 </div>
                             </div>

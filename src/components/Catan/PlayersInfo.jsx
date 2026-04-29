@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthContext.jsx";
 import { PLAYER_COLORS, RESOURCE_ICONS, toVeryLightColor, parseResources } from "../../constants/CatanStates.js";
+import { useLanguage } from "../../context/LanguageContext.jsx";
 
 const EMPTY_RESOURCES = [0, 0, 0, 0, 0];
 
 const PlayersInfo = ({ open, setOpen, userResources, playersInfo, setPlayersInfo, pendingTrades, gameMatch, isPlayerTurn }) => {
+  const { UI_TEXTS } = useLanguage();
   const { username } = useAuth();
   const [tradingOpen, setTradingOpen] = useState(0);
   const [selectedResources, setSelectedResources] = useState(EMPTY_RESOURCES);
@@ -89,7 +91,7 @@ const PlayersInfo = ({ open, setOpen, userResources, playersInfo, setPlayersInfo
           open ? "translate-x-0" : "translate-x-full",
         ].join(" ")}
         role="complementary"
-        aria-label="Barra de herramientas"
+        aria-label={UI_TEXTS.catan.drawerAria}
       >
         <div className="p-2 mt-1 h-full">
           <div className="h-full gap-1 grid">
@@ -288,13 +290,13 @@ const PlayersInfo = ({ open, setOpen, userResources, playersInfo, setPlayersInfo
                                 setSelectedResources(EMPTY_RESOURCES);
                               }}
                             >
-                              Cancel
+                              {UI_TEXTS.catan.cancel}
                             </button>
                             <button
                               className="minecraft-btn w-full text-sm text-center text-white truncate p-1 border-2 border-b-4 [text-shadow:3px_3px_#4C4C4C] hover:text-yellow-200"
                               onClick={() => sendTradeNotification(playerInfo.id, selectedResources)}
                             >
-                              Send
+                              {UI_TEXTS.catan.send}
                             </button>
                           </div>
                         </div>
@@ -317,7 +319,7 @@ const PlayersInfo = ({ open, setOpen, userResources, playersInfo, setPlayersInfo
           "hover:bg-slate-50 active:scale-95 transition-all duration-700 ease-out",
           open ? "right-[28rem]" : "right-0",
         ].join(" ")}
-        aria-label={open ? "Cerrar barra lateral" : "Abrir barra lateral"}
+        aria-label={open ? UI_TEXTS.catan.closeSidebarAria : UI_TEXTS.catan.openSidebarAria}
       >
         <img src="/assets/group.png" className="w-6 opacity-80" />
       </button>

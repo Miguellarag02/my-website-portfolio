@@ -1,17 +1,18 @@
-import { workExperiences } from "../constants/index.js"
+import { useLanguage } from "../context/LanguageContext.jsx";
 
 export default function Work() {
+  const { workExperiences, UI_TEXTS } = useLanguage();
 
   return (
     <section className="c-space lg:ml-12 md:mt-48 mt-36 z-10 fade-in">
       <div className="w-full text-white-600">
         <div className= "flex">
-          <h3 className="head-text">My Work Experience</h3>
+          <h3 className="head-text">{UI_TEXTS.work.title}</h3>
           <div className="ml-auto z-[9999]">
             <a href="#home" className="w-fit">
                 <button
                     className="close_button"
-                    aria-label="Close"
+                    aria-label={UI_TEXTS.common.close}
                 >
                 ✕
                 </button>
@@ -27,7 +28,7 @@ export default function Work() {
               <div key={id} className="work-content_container group">
                 <div className="flex flex-col h-full justify-start items-center py-2">
                   <div className="work-content_logo">
-                    <img src={icon} alt="logo" className="w-full h-full"/>
+                    <img src={icon} alt={UI_TEXTS.work.logoAlt} className="w-full h-full"/>
                   </div>
                   <div className="work-content_bar"/>
                 </div>
