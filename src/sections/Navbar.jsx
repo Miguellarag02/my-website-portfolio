@@ -1,6 +1,35 @@
 import { useEffect, useState } from "react"
 import { useLanguage } from "../context/LanguageContext.jsx";
 
+const LANGUAGE_HINT_STORAGE_KEY = "language_hint_seen_v3";
+
+const LanguageSwitcher = ({ className = "", onSelect }) => {
+    const { language, setLanguage } = useLanguage();
+
+    const handleLanguageChange = (nextLanguage) => {
+        setLanguage(nextLanguage);
+        onSelect?.();
+    };
+
+    return (
+        <div className={className}>
+            <button
+                type="button"
+                onClick={() => handleLanguageChange("es")}
+                className={`px-2 py-1 rounded text-xs border transition-colors ${language === "es" ? "bg-white text-black border-white" : "text-white border-white/40 hover:border-white/70"}`}
+            >
+                ES
+            </button>
+            <button
+                type="button"
+                onClick={() => handleLanguageChange("en")}
+                className={`px-2 py-1 rounded text-xs border transition-colors ${language === "en" ? "bg-white text-black border-white" : "text-white border-white/40 hover:border-white/70"}`}
+            >
+                EN
+            </button>
+        </div>
+    );
+};
 
 const NavItems = ({ onItemClick, root, isGamePage }) => {
     const { navLinks } = useLanguage();
@@ -58,12 +87,48 @@ const AliveCheck = () => {
 }
 
 const Navbar = ({root, isGamePage}) => {
-    const { UI_TEXTS, language, setLanguage } = useLanguage();
+    const { UI_TEXTS } = useLanguage();
     const [isOpen, setIsOpen] = useState(false);
+    const [showLanguageHint, setShowLanguageHint] = useState(false);
     const toggleMenu = () => setIsOpen(prevIsOpen => !prevIsOpen);
+
+    useEffect(() => {
+        const hintSeen = window.localStorage.getItem(LANGUAGE_HINT_STORAGE_KEY);
+
+        if (hintSeen) {
+            return;
+        }
+
+        setShowLanguageHint(true);
+    }, []);
 
     return (
         <header className="fixed top-0 left-0 right-0 z-50 bg-black/90">
+            {showLanguageHint && (
+                <div className="language-hint-card fixed top-20 right-4 z-[70] w-[min(18rem,calc(100vw-2rem))] sm:top-24 sm:right-6">
+                    <div className="language-hint-glow" />
+                    <button
+                        type="button"
+                        onClick={() => {
+                            setShowLanguageHint(false);
+                            window.localStorage.setItem(LANGUAGE_HINT_STORAGE_KEY, "true");
+                        }}
+                        aria-label={UI_TEXTS.navbar.closeHintAria}
+                        className="language-hint-close"
+                    >
+                        ×
+                    </button>
+                    <div className="language-hint-badge">Language</div>
+                    <p className="language-hint-text pr-6 sm:hidden">{UI_TEXTS.navbar.languageHintMobile}</p>
+                    <p className="language-hint-text hidden pr-6 sm:block">{UI_TEXTS.navbar.languageHint}</p>
+                    <div className="language-hint-indicator">
+                        <span />
+                        <span />
+                        <span />
+                    </div>
+                    <div className="language-hint-arrow" />
+                </div>
+            )}
             <div className="max-w-10xl mx-auto">
                 <div className="flex justify-between items-center py-5 mx-auto c-space">
                     <div className="flex items-center gap-3 whitespace-nowrap flex-row">
@@ -80,27 +145,18 @@ const Navbar = ({root, isGamePage}) => {
                     <nav className="sm:flex hidden">
                         <NavItems root={root} isGamePage={isGamePage} />
                     </nav>
-                    <div className="hidden sm:flex items-center gap-1 ml-4">
-                        <button
-                            type="button"
-                            onClick={() => setLanguage("es")}
-                            className={`px-2 py-1 rounded text-xs border ${language === "es" ? "bg-white text-black border-white" : "text-white border-white/40"}`}
-                        >
-                            ES
-                        </button>
-                        <button
-                            type="button"
-                            onClick={() => setLanguage("en")}
-                            className={`px-2 py-1 rounded text-xs border ${language === "en" ? "bg-white text-black border-white" : "text-white border-white/40"}`}
-                        >
-                            EN
-                        </button>
+                    <div className="hidden sm:flex items-center ml-4">
+                        <LanguageSwitcher className="flex items-center gap-1" />
                     </div>
                 </div>
             </div>
             <div className={`nav-sidebar ${isOpen ? 'max-h-screen' : 'max-h-0'}`}>
                 <nav className="p-5">
                     <NavItems onItemClick={() => setIsOpen(false)} root={root} isGamePage={isGamePage} />
+                    <div className="mt-4 flex items-center justify-end gap-2 sm:hidden">
+                        <span className="text-xs text-white/70">{UI_TEXTS.navbar.languageHintMobile}</span>
+                        <LanguageSwitcher className="flex items-center gap-1" onSelect={() => setIsOpen(false)} />
+                    </div>
                 </nav>
             </div>
         </header>

@@ -210,6 +210,10 @@ body {
     @apply w-16 h-10 rounded-md p-2 backdrop-filter backdrop-blur-lg flex justify-center items-center;
   }
 
+  .tech-logo img {
+    @apply max-w-full max-h-full object-contain;
+  }
+
   /* partners section */
   .partner-container {
     @apply grid md:grid-cols-2 grid-cols-1 gap-5 mt-12;
@@ -245,20 +249,64 @@ body {
     @apply max-w-xl relative z-10 sm:px-10 px-5 mt-12;
   }
 
+  .contact-shell {
+    @apply relative z-10 grid w-full max-w-6xl grid-cols-1 gap-8 lg:grid-cols-[1.05fr_0.95fr] items-start;
+  }
+
+  .contact-copy {
+    @apply relative overflow-hidden rounded-[2rem] border border-white/10 bg-[linear-gradient(145deg,rgba(7,10,15,0.95),rgba(17,25,37,0.92))] p-8 sm:p-10 shadow-2xl;
+  }
+
+  .contact-form_card {
+    @apply relative overflow-hidden rounded-[2rem] border border-white/10 bg-[linear-gradient(145deg,rgba(8,12,18,0.96),rgba(14,22,32,0.93))] p-8 sm:p-10 shadow-2xl backdrop-blur-sm;
+  }
+
+  .contact-badge {
+    @apply inline-flex items-center rounded-full border border-cyan-300/25 bg-cyan-300/10 px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] text-cyan-200 mb-6;
+  }
+
+  .contact-story {
+    @apply mt-8 rounded-3xl border border-white/10 bg-white/5 p-6;
+  }
+
+  .contact-story_title {
+    @apply text-xl font-semibold text-white;
+  }
+
+  .contact-story_text {
+    @apply mt-3 text-base leading-relaxed text-white/75;
+  }
+
+  .contact-facts {
+    @apply mt-8 grid gap-4;
+  }
+
+  .contact-fact {
+    @apply rounded-2xl border border-white/10 bg-black/20 px-5 py-4;
+  }
+
+  .contact-fact_label {
+    @apply block text-[0.7rem] font-bold uppercase tracking-[0.18em] text-white/45;
+  }
+
+  .contact-fact_value {
+    @apply mt-2 block text-sm sm:text-base font-medium text-white transition-colors duration-300 hover:text-cyan-200;
+  }
+
   .field-label {
     @apply text-lg text-white-600;
   }
 
   .field-input {
-    @apply w-full bg-black-300 px-5 py-2 min-h-14 rounded-lg placeholder:text-white-500 text-lg text-white-800 shadow-black-200 shadow-2xl focus:outline-none;
+    @apply w-full border border-white/10 bg-black-300/70 px-5 py-3 min-h-14 rounded-2xl placeholder:text-white-500 text-lg text-white-800 shadow-black-200 shadow-2xl focus:outline-none focus:border-cyan-300/40 transition-colors;
   }
 
   .field-btn {
-    @apply bg-black-500 px-5 py-2 min-h-12 rounded-lg shadow-black-200 shadow-2xl flex justify-center items-center text-lg text-white gap-3;
+    @apply bg-white px-5 py-3 min-h-12 rounded-2xl shadow-black-200 shadow-2xl flex justify-center items-center text-lg font-semibold text-black gap-3 transition-all duration-300 hover:scale-[1.01] hover:shadow-cyan-400/10 disabled:opacity-70;
   }
 
   .field-btn_arrow {
-    @apply w-2.5 h-2.5 object-contain invert brightness-0;
+    @apply w-2.5 h-2.5 object-contain;
   }
 
   /* hobbies section */
@@ -359,6 +407,180 @@ body {
   pointer-events: auto;
 }
 
+.language-hint-card {
+  position: fixed;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 1rem;
+  background:
+    radial-gradient(circle at top right, rgba(125, 211, 252, 0.26), transparent 32%),
+    linear-gradient(135deg, rgba(12, 18, 28, 0.97), rgba(5, 9, 16, 0.95));
+  padding: 0.95rem 1rem 1rem;
+  color: #f8fafc;
+  box-shadow:
+    0 22px 60px rgba(2, 6, 23, 0.48),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(16px);
+  animation: languageHintEnter 0.75s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.language-hint-card-secondary {
+  background:
+    radial-gradient(circle at top right, rgba(251, 191, 36, 0.24), transparent 34%),
+    linear-gradient(135deg, rgba(33, 19, 6, 0.96), rgba(17, 10, 3, 0.95));
+  border-color: rgba(251, 191, 36, 0.22);
+}
+
+.language-hint-card-secondary .language-hint-glow {
+  background: radial-gradient(circle, rgba(251, 191, 36, 0.32), transparent 68%);
+}
+
+.language-hint-card-secondary .language-hint-badge {
+  border-color: rgba(251, 191, 36, 0.28);
+  background: rgba(251, 191, 36, 0.1);
+  color: #fde68a;
+}
+
+.language-hint-glow {
+  position: absolute;
+  inset: -30% auto auto 55%;
+  width: 8rem;
+  height: 8rem;
+  border-radius: 9999px;
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.34), transparent 68%);
+  filter: blur(8px);
+  pointer-events: none;
+}
+
+.language-hint-badge {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-bottom: 0.55rem;
+  padding: 0.25rem 0.55rem;
+  border: 1px solid rgba(125, 211, 252, 0.28);
+  border-radius: 9999px;
+  background: rgba(125, 211, 252, 0.08);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #bae6fd;
+}
+
+.language-hint-text {
+  position: relative;
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.45;
+  color: rgba(248, 250, 252, 0.96);
+}
+
+.language-hint-close {
+  position: absolute;
+  top: 0.7rem;
+  right: 0.7rem;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.68);
+  transition: transform 180ms ease, background-color 180ms ease, color 180ms ease, border-color 180ms ease;
+}
+
+.language-hint-close:hover {
+  transform: scale(1.06);
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.22);
+  color: rgba(255, 255, 255, 0.96);
+}
+
+.language-hint-indicator {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 0.8rem;
+}
+
+.language-hint-indicator span {
+  display: block;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, rgba(125, 211, 252, 0.9), rgba(255, 255, 255, 0.55));
+}
+
+.language-hint-indicator span:nth-child(1) {
+  width: 1.9rem;
+  height: 2px;
+  opacity: 0.45;
+}
+
+.language-hint-indicator span:nth-child(2) {
+  width: 2.8rem;
+  height: 2px;
+  opacity: 0.7;
+}
+
+.language-hint-indicator span:nth-child(3) {
+  width: 0.55rem;
+  height: 0.55rem;
+  box-shadow: 0 0 16px rgba(125, 211, 252, 0.8);
+  animation: languageHintPulse 1.8s ease-in-out infinite;
+}
+
+.language-hint-arrow {
+  position: absolute;
+  top: -0.35rem;
+  right: 1.65rem;
+  width: 1rem;
+  height: 1rem;
+  border-left: 1px solid rgba(255, 255, 255, 0.18);
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(10, 14, 22, 0.98);
+  transform: rotate(45deg);
+}
+
+.desk-hover-tooltip {
+  position: fixed;
+  z-index: 75;
+  pointer-events: none;
+  transform: translateY(-100%);
+  padding: 0.65rem 0.9rem;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 0.95rem;
+  background:
+    radial-gradient(circle at top left, rgba(125, 211, 252, 0.18), transparent 36%),
+    linear-gradient(135deg, rgba(10, 15, 24, 0.96), rgba(5, 8, 14, 0.94));
+  color: #f8fafc;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  box-shadow:
+    0 16px 36px rgba(2, 6, 23, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(14px);
+  animation: deskTooltipEnter 180ms ease-out;
+}
+
+.desk-hover-tooltip::after {
+  content: "";
+  position: absolute;
+  left: 1rem;
+  bottom: -0.35rem;
+  width: 0.75rem;
+  height: 0.75rem;
+  border-right: 1px solid rgba(255, 255, 255, 0.16);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(8, 12, 19, 0.96);
+  transform: rotate(45deg);
+}
+
 ::-webkit-scrollbar-button {
   display: none;
   width: 0;
@@ -452,6 +674,46 @@ body {
   }
   to {
     opacity: 1;
+  }
+}
+
+@keyframes languageHintEnter {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -18px, 0) scale(0.92);
+    filter: blur(10px);
+  }
+  60% {
+    opacity: 1;
+    transform: translate3d(0, 4px, 0) scale(1.02);
+    filter: blur(0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes languageHintPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.85;
+  }
+  50% {
+    transform: scale(1.35);
+    opacity: 1;
+  }
+}
+
+@keyframes deskTooltipEnter {
+  from {
+    opacity: 0;
+    transform: translateY(-92%) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(-100%) scale(1);
   }
 }
 

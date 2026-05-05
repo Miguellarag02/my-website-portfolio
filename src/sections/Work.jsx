@@ -2,6 +2,7 @@ import { useLanguage } from "../context/LanguageContext.jsx";
 
 export default function Work() {
   const { workExperiences, UI_TEXTS } = useLanguage();
+  const cvHref = "/pdf/Miguel_Angel_Lara_Embedded_Software_CV_Strategic.pdf";
 
   return (
     <section className="c-space lg:ml-12 md:mt-48 mt-36 z-10 fade-in">
@@ -35,12 +36,34 @@ export default function Work() {
                 <div className="sm:p-5 px-2.5 py-5">
                   <p className="font-bold text-white-800">{name}</p>
                   <p className="text-sm mb-5">{pos} -- {duration}</p>
-                  <p className="group-hover:text-white sm:text-lg text-xs transition ease-in-out duration-500">
+                  <p className="group-hover:text-white sm:text-lg text-xs whitespace-pre-line transition ease-in-out duration-500">
                     {title}
                   </p>
                 </div>
               </div>
             ))}
+            <div className="work-content_container group">
+              <div className="flex flex-col h-full justify-start items-center py-2">
+                <div className="work-content_logo flex items-center justify-center text-2xl font-bold text-black">
+                  CV
+                </div>
+                <div className="work-content_bar"/>
+              </div>
+              <div className="sm:p-5 px-2.5 py-5">
+                <p className="font-bold text-white-800">{UI_TEXTS.work.downloadCvTitle}</p>
+                <p className="text-sm mb-5">PDF</p>
+                <p className="group-hover:text-white sm:text-lg text-xs transition ease-in-out duration-500">
+                  {UI_TEXTS.work.downloadCvDesc}
+                </p>
+                <a
+                  href={cvHref}
+                  download
+                  className="inline-flex mt-4 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-semibold text-white transition-all duration-300 hover:bg-white hover:text-black"
+                >
+                  {UI_TEXTS.work.downloadCvCta}
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </div>

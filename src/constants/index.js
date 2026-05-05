@@ -20,9 +20,17 @@ export const ICONS = {
   vite:         {name: "Vite",        src: "/assets/vitejs.svg"},
   tailwindcss:  {name: "TailwindCSS", src: "/assets/tailwindcss.png"},
   typescript:   {name: "TypeScript",  src: "/assets/typescript.png"},
+  arduino:      {name: "Arduino",     src: "/assets/arduino.svg"},
 };
 
-export const DEFAULT_UI_LANG = "es";
+export const DEFAULT_UI_LANG = "en";
+
+export const PROFILE_LINKS = {
+  cv: "/pdf/Miguel_Angel_Lara_Embedded_Software_CV_Strategic.pdf",
+  email: "mailto:miguelangellarag@gmail.com",
+  github: "https://github.com/Miguellarag02",
+  linkedin: "https://www.linkedin.com/in/miguel-angel-lara-guarino",
+};
 
 export const CONTENT_BY_LANG = {
   es: {
@@ -51,10 +59,11 @@ export const CONTENT_BY_LANG = {
     myProjects: [
       {
         title: "Diseno e implementacion de un sistema de adquisicion de datos para un sensor optico",
-        desc: "Este trabajo aborda el diseno e implementacion de un sistema completo de adquisicion de datos para sensores opticos, pensado para configurar, capturar y almacenar informacion en tiempo real de forma fiable. La solucion se desarrollo con lenguaje de descripcion hardware para responder a las exigencias del entorno.\nAdemas, inclui una aplicacion de apoyo para facilitar el control del sistema y el procesamiento eficiente de los datos por parte del usuario. Con ello fue posible caracterizar el sensor y comprobar su comportamiento frente a los requisitos establecidos.\nEste Trabajo Fin de Grado se realizo dentro de un proyecto de investigacion en colaboracion con Alter Technology TUV Nord, orientado al desarrollo de una plataforma modular para la caracterizacion de sensores de imagen.",
+        desc: "Este proyecto consistio en el diseno e implementacion de un sistema completo de adquisicion de datos para un sensor optico, capaz de configurar, capturar y almacenar informacion en tiempo real con un alto nivel de fiabilidad. La solucion se desarrollo sobre FPGA con VHDL y se completo con software de apoyo para el control del sistema y el procesado eficiente de los datos.\nEl trabajo no se limito a la implementacion: tambien incluyo la integracion de hardware y software, la puesta a punto del flujo de adquisicion y la validacion del comportamiento del sensor frente a los requisitos definidos. Esto permitio caracterizar el sistema de forma rigurosa y reducir incertidumbres en un entorno tecnico especialmente sensible.\nSe trata de un proyecto con claro enfoque de ingenieria aplicada, realizado en colaboracion con Alter Technology TUV Nord dentro de una linea de investigacion orientada al desarrollo de una plataforma modular para caracterizacion de sensores de imagen.",
         href: "/pdf/TFG_Lara_Guarino.pdf",
         checkLinkTxt: "Ver documento (Espanol)",
         extraInformation: "/pdf/TFG_Lara_Guarino_power_point.pdf",
+        video: "/video/TFG_Miguellara02.mp4",
         logo: "/assets/project-logo1.png",
         logoStyle: {
           backgroundColor: "#2A1816",
@@ -72,10 +81,11 @@ export const CONTENT_BY_LANG = {
       },
       {
         title: "Mi propio portfolio web",
-        desc: "Este portfolio web es un proyecto personal que desarrolle con mucho cuidado y atencion al detalle. Esta construido como una aplicacion moderna e interactiva con React, TypeScript, Vite y Tailwind CSS, poniendo el foco en el rendimiento, una arquitectura clara y animaciones fluidas.\nMas alla de servir como escaparate de proyectos y habilidades, tambien refleja mi manera de entender el desarrollo frontend: unir criterio tecnico, diseno y experiencia de usuario en un mismo producto. Es un proyecto que disfrute de principio a fin y que representa bien como me gusta transformar ideas en soluciones solidas y bien rematadas.",
+        desc: "Este portfolio web es un proyecto personal concebido no solo como escaparate, sino como una demostracion practica de como entiendo el desarrollo de software: combinar criterio tecnico, diseno intencional y una experiencia de usuario cuidada. Esta construido con React, TypeScript, Vite y Tailwind CSS, con especial atencion al rendimiento, la claridad estructural y la fluidez de las interacciones.\nLa aplicacion incorpora escenas 3D, transiciones, contenido bilingue y una navegacion no convencional basada en una mesa interactiva, lo que me permitio trabajar tanto la parte visual como la organizacion del codigo, la mantenibilidad y la coherencia global del producto.\nEs un proyecto que representa bien mi perfil porque une desarrollo frontend moderno, gusto por el detalle y capacidad para convertir una idea personal en una solucion tecnica solida, diferencial y bien rematada.",
         href: "https://github.com/Miguellarag02/my-website-portfolio#",
         checkLinkTxt: "Ver repositorio",
         extraInformation: "/pdf/TFG_Lara_Guarino_power_point.pdf",
+        video: "/video/my_own_website.mp4",
         logo: "/assets/project-logo1.png",
         logoStyle: {
           backgroundColor: "#13202F",
@@ -90,6 +100,24 @@ export const CONTENT_BY_LANG = {
           { id: 4, name: ICONS.tailwindcss.name, path: ICONS.tailwindcss.src },
         ],
       },
+      {
+        title: "Seguidor solar con Arduino - Primer premio en Tecnoingenia 2019",
+        desc: "Este proyecto fue presentado en Tecnoingenia 2019, donde obtuvo el primer premio de la cuarta categoria. Consistio en el diseno y construccion de un mini panel solar capaz de orientarse automaticamente hacia la posicion con mayor aprovechamiento de luz.\nEl sistema integraba cuatro sensores fotosensibles distribuidos alrededor del panel, dos servomotores y una placa Arduino como unidad de control. A partir de la diferencia de luz detectada por los sensores, el Arduino calculaba la orientacion mas favorable y accionaba los servos para ajustar la inclinacion y el giro del panel.\nFue uno de mis primeros proyectos completos de electronica y control, y me permitio trabajar de forma practica la lectura de sensores, el control de actuadores, la integracion hardware-software y la construccion de un prototipo funcional orientado a mejorar la eficiencia energetica.",
+        href: "https://www.uco.es/servicios/actualidad/vida-academica/item/133727-entregados-los-premios-del-iii-concurso-de-ideas-tecno-ingenia-2019",
+        checkLinkTxt: "Mas información",
+        extraInformation: "",
+        video: "/video/tecnoingenia.mp4",
+        logo: "/assets/project-logo1.png",
+        logoStyle: {
+          backgroundColor: "#182A1F",
+          border: "0.2px solid #1E3A2A",
+          boxShadow: "0px 0px 60px 0px #37A56B4D",
+        },
+        spotlight: "/assets/spotlight3.png",
+        tags: [
+          { id: 1, name: ICONS.arduino.name, path: ICONS.arduino.src }
+        ],
+      },
     ],
     workExperiences: [
       {
@@ -98,7 +126,7 @@ export const CONTENT_BY_LANG = {
         pos: "Investigador en el Departamento de Electronica",
         duration: "Sept 2023 - Abr 2024",
         title:
-          "Disene e implemente un sistema de adquisicion para sensores opticos basado en FPGA, usando VHDL, C y PetaLinux para el control embebido. Tambien desarrolle la gestion de interrupciones DMA a nivel de kernel, lo que permitio capturar y procesar datos en tiempo real de forma fiable. Valide el sistema de extremo a extremo, reduciendo latencia y mejorando la consistencia de la senal.",
+          "Disene e implemente un sistema de adquisicion de datos para sensores opticos basado en FPGA, combinando VHDL, C y PetaLinux para cubrir desde el control embebido hasta la captura fiable de informacion en tiempo real. Desarrolle tambien la gestion de interrupciones DMA a nivel de kernel, mejorando la eficiencia del flujo de datos, la capacidad de respuesta del sistema y la estabilidad del comportamiento en operacion.\nEl trabajo incluyo integracion hardware-software, ajuste del pipeline de adquisicion, caracterizacion del sensor y validacion de extremo a extremo frente a requisitos tecnicos. Esta etapa me dio una base muy solida en sistemas embebidos, software cercano al hardware y entornos donde el rigor tecnico es imprescindible para obtener resultados fiables.",
         icon: "/assets/university.png",
       },
       {
@@ -107,7 +135,7 @@ export const CONTENT_BY_LANG = {
         pos: "Ingeniero de Software en practicas",
         duration: "May 2024 - Oct 2024",
         title:
-          "Mejore la plataforma de robotica autonoma Philobot con C++ y ROS, integrando modelos YOLO mediante TensorFlow y PyTorch para deteccion de objetos en tiempo real. Despliegue pipelines de inferencia que mejoraron el reconocimiento y redujeron la latencia de respuesta. Trabaje en un entorno Agile/Scrum, participando en la planificacion de sprints y en un desarrollo claramente iterativo.",
+          "Trabaje en la mejora de la plataforma de robotica autonoma Philobot con C++ y ROS, integrando modelos YOLO mediante TensorFlow y PyTorch para deteccion de objetos en tiempo real. Despliegue pipelines de inferencia orientados a mejorar el reconocimiento, reducir la latencia de respuesta y mantener la coherencia entre software, percepcion y comportamiento del sistema.\nEsta etapa me permitio consolidar una forma de trabajo muy practica: iteracion rapida, analisis tecnico, resolucion de problemas reales y colaboracion con otros perfiles dentro de un entorno Agile/Scrum. Fue una experiencia muy util para reforzar tanto la base de desarrollo como la orientacion a producto y rendimiento.",
         icon: "/assets/bertrandt.svg",
       },
       {
@@ -116,7 +144,7 @@ export const CONTENT_BY_LANG = {
         pos: "Ingeniero de Software",
         duration: "Oct 2024 - Jul 2025",
         title:
-          "Investigue interfaces humano-maquina (HMI) adaptativas para el programa europeo FCAS, dentro del proyecto EPIIC, mejorando la fiabilidad de integracion entre sistemas modulares. Tambien desarrolle APIs backend en Python y aplicaciones de escritorio en Java para proyectos de Airbus, optimizando el flujo de datos y reduciendo la sobrecarga de procesamiento. Participe ademas en workshops internacionales, reforzando la colaboracion entre equipos y disciplinas.",
+          "Investigue interfaces humano-maquina adaptativas para el programa europeo FCAS dentro del proyecto EPIIC, contribuyendo a mejorar la fiabilidad de integracion entre sistemas modulares en un contexto internacional y tecnicamente muy exigente. Esta experiencia me acerco a un entorno de ingenieria donde interoperabilidad, consistencia funcional y coordinacion entre organizaciones tienen un peso real en el resultado final.\nDe forma paralela, desarrolle APIs backend en Python y aplicaciones de escritorio en Java para proyectos de Airbus, optimizando flujos de datos, reduciendo sobrecarga de procesamiento y mejorando la integracion entre componentes. Tambien participe en workshops internacionales, reforzando mi capacidad para trabajar con equipos multidisciplinares y moverme con soltura en entornos aeroespaciales y de alta criticidad.",
         icon: "/assets/bertrandt.svg",
       },
       {
@@ -125,7 +153,7 @@ export const CONTENT_BY_LANG = {
         pos: "Ingeniero de Requisitos y Arquitectura de Software",
         duration: "Jul 2025 - Presente",
         title:
-          "Defini la arquitectura de software y las especificaciones funcionales de un sistema radar de defensa desarrollado por Indra. Disene procesos de verificacion y validacion alineados con los estandares de la industria, mejorando la trazabilidad del desarrollo. Ademas, colabore directamente con cliente para mantener la consistencia tecnica a lo largo de todo el ciclo de vida del sistema.",
+          "Defino la arquitectura de software y las especificaciones funcionales de un sistema radar de defensa desarrollado por Indra, dentro de un entorno donde la criticidad del producto exige rigor, trazabilidad y consistencia tecnica en todo el ciclo de vida. Mi trabajo combina vision de sistema con detalle de ingenieria, asegurando que requisitos, arquitectura, interfaces y decisiones de diseno permanezcan alineados.\nTambien diseno procesos de verificacion y validacion acordes a los estandares del sector y colaboro directamente con cliente para mantener coherencia entre necesidades operativas, implementacion y evidencia de cumplimiento. Es una experiencia especialmente valiosa por su cercania a software de mision critica y por el nivel de exigencia que impone el sector defensa en terminos de calidad, claridad y responsabilidad tecnica.",
         icon: "/assets/bertrandt.svg",
       },
     ],
@@ -133,25 +161,25 @@ export const CONTENT_BY_LANG = {
       {
         id: 1,
         title: "Software",
-        desc: "Mi base esta en el desarrollo de software con foco en estructura, claridad y calidad tecnica. Trabajo sobre todo con Python, Java, C++ y MATLAB, y me siento comodo construyendo soluciones apoyadas en arquitectura, APIs, bases de datos y modelado UML.\nNo me centro solo en que el codigo funcione: me importa que responda a una necesidad real, que sea mantenible y que encaje bien en el sistema. Por eso suelo trabajar guiado por requisitos, con especial atencion a la verificacion, la validacion y la trazabilidad.",
+        desc: "Mi base esta en el desarrollo de software con foco en estructura, calidad tecnica y sentido de sistema. Trabajo sobre todo con Python, Java, C++ y MATLAB, y me siento comodo construyendo soluciones apoyadas en arquitectura, APIs, bases de datos, modelado UML y criterios claros de mantenibilidad.\nNo entiendo el software como codigo aislado, sino como parte de un sistema que debe responder a requisitos reales y sostenerse en el tiempo. Por eso presto mucha atencion a la claridad del diseno, la trazabilidad, la verificacion y la validacion, especialmente en entornos donde el margen de error es bajo.\nBuena parte de mi experiencia ha estado ligada a defensa y aeroespacio, sectores en los que la robustez, la consistencia tecnica y la disciplina de ingenieria importan tanto como la implementacion en si.",
         icons: [ICONS.python, ICONS.java, ICONS.cpp, ICONS.matlab, ICONS.mysql],
       },
       {
         id: 2,
         title: "Herramientas",
-        desc: "A lo largo de distintos proyectos he ido consolidando una forma de trabajo apoyada en herramientas de ingenieria y colaboracion. Uso Git en el dia a dia para control de versiones, Jira para organizar tareas y Wireshark cuando necesito bajar al detalle de una comunicacion o un protocolo.\nEn entornos mas exigentes tambien he trabajado con IBM DOORS para gestionar requisitos, versiones y trazabilidad, lo que me dio una vision mas completa de como se conectan diseno, implementacion y verificacion en proyectos industriales. A esto se suman herramientas que utilizo con frecuencia como Vivado, Linux/WSL y MATLAB.",
+        desc: "A lo largo de distintos proyectos he consolidado una forma de trabajo apoyada en herramientas de ingenieria, colaboracion y control tecnico. Uso Git en el dia a dia para versionado, Jira para organizacion y seguimiento, y Wireshark cuando necesito analizar al detalle una comunicacion o un protocolo.\nTambien he trabajado con IBM DOORS para gestionar requisitos, cambios y trazabilidad, algo especialmente relevante en entornos de defensa y aeroespacio donde cada decision necesita justificacion tecnica y evidencia de cumplimiento. Esta forma de trabajar me dio una vision mas completa de como conectar necesidades de sistema, implementacion y validacion.\nA ello se suman herramientas que utilizo con frecuencia como Vivado, Linux/WSL y MATLAB, con las que me muevo con soltura tanto en tareas de desarrollo como de integracion y analisis.",
         icons: [ICONS.git, ICONS.docker, ICONS.ubuntu],
       },
       {
         id: 3,
         title: "Firmware",
-        desc: "Mi interes por los sistemas de bajo nivel me llevo de forma natural al desarrollo firmware y embebido, trabajando con C y VHDL. He tenido experiencia practica con plataformas FPGA y SoC como Zynq, lo que me dio una base solida para entender la relacion entre hardware y software.\nEl trabajo con PetaLinux y kernel Linux me permitio ver el ciclo completo: desde el arranque y la integracion hardware hasta las capas de software de mas alto nivel. Esa experiencia reforzo mi interes por construir sistemas robustos, eficientes y cercanos al hardware.",
+        desc: "Mi interes por los sistemas de bajo nivel me llevo de forma natural al desarrollo firmware y embebido, trabajando con C y VHDL sobre plataformas FPGA y SoC como Zynq. Esa base me permitio entender con profundidad la relacion entre hardware y software, y desenvolverme con soltura en sistemas donde rendimiento, temporizacion y fiabilidad son factores reales de diseno.\nEl trabajo con PetaLinux y kernel Linux me dio visibilidad del ciclo completo: arranque, integracion hardware, gestion de datos, capas de software y validacion del comportamiento final. Esto refuerza un perfil que no se queda solo en la aplicacion, sino que entiende bien lo que ocurre por debajo.\nMe atraen especialmente los entornos donde esa cercania al hardware se traduce en sistemas tecnicamente exigentes y con impacto directo en la fiabilidad global del producto.",
         icons: [ICONS.vivado, ICONS.csharp, ICONS.zynq],
       },
       {
         id: 4,
         title: "Habilidades blandas",
-        desc: "En el trabajo valoro tanto la parte tecnica como la forma en la que se construyen las cosas en equipo. Me considero una persona curiosa, proactiva y facil de integrar, comoda compartiendo ideas, haciendo preguntas y explicando temas tecnicos con claridad.\nSuelo moverme bien en entornos Agile y en equipos multidisciplinares o internacionales. Me gusta aprender de forma continua, mantener el orden incluso cuando el ritmo aprieta y abordar los problemas paso a paso, sin perder de vista la colaboracion ni la calidad.",
+        desc: "En el trabajo valoro tanto la parte tecnica como la forma en la que se construyen las cosas en equipo. Me considero una persona curiosa, proactiva y facil de integrar, comoda compartiendo ideas, haciendo preguntas y explicando temas tecnicos con claridad cuando el contexto lo requiere.\nHe trabajado en entornos internacionales y multidisciplinares, incluyendo colaboraciones vinculadas al programa FCAS, donde coordinarse bien entre perfiles, disciplinas y organizaciones resulta tan importante como acertar en la solucion tecnica. Esa experiencia me ayudo a desarrollar criterio, capacidad de adaptacion y una comunicacion profesional clara.\nMe siento comodo en contextos exigentes, con interlocucion diversa y alto nivel de responsabilidad, manteniendo orden, foco y compromiso con la calidad incluso cuando el proyecto aprieta.",
         icons: [ICONS.partners, ICONS.proactivity, ICONS.agile],
       },
     ],
@@ -206,10 +234,11 @@ export const CONTENT_BY_LANG = {
     myProjects: [
       {
         title: "Design and implementation of a data acquisition system for an optical sensor",
-        desc: "Given the complexity of handling real-time data presented by optical sensors, this work develops the design and implementation of a complete acquisition system that allows for the configuration, extraction, and storage of the information generated in a file. This system will be developed using Hardware Description Language.\nAdditionally, an application is incorporated to allow efficient control and processing of the data by the user. This enables the characterization of the sensor and ensures it meets the environmental requirements.\nFinally, it is important to mention that this Final Degree Project has been carried out within the context of a research project in collaboration with the company Alter Technology TUV Nord. The objective of this project is the development of a modular platform for the characterization of image sensors.",
+        desc: "This project focused on the design and implementation of a complete data acquisition system for an optical sensor, capable of configuring, capturing, and storing real-time information with a strong emphasis on reliability. The solution was built around FPGA development with VHDL and complemented with supporting software for system control and efficient data processing.\nThe work went beyond implementation alone: it also involved hardware-software integration, tuning of the acquisition flow, and validation of the sensor behavior against defined requirements. This made it possible to characterize the system rigorously and reduce uncertainty in a technically sensitive environment.\nIt was developed as a research-oriented engineering project in collaboration with Alter Technology TUV Nord, within an initiative focused on building a modular platform for image sensor characterization.",
         href: "/pdf/TFG_Lara_Guarino.pdf",
         checkLinkTxt: "Check document (Spanish)",
         extraInformation: "/pdf/TFG_Lara_Guarino_power_point.pdf",
+        video: "/video/TFG_Miguellara02.mp4",
         logo: "/assets/project-logo1.png",
         logoStyle: {
           backgroundColor: "#2A1816",
@@ -227,11 +256,12 @@ export const CONTENT_BY_LANG = {
       },
       {
         title: "My own website portfolio",
-        desc: "This website is a personal portfolio project that I developed with great enthusiasm and attention to detail. It is built as a modern, interactive web application using React, TypeScript, Vite, and Tailwind CSS, with a strong focus on performance, clean architecture, and smooth animations.\nBeyond showcasing my projects and skills, this portfolio represents my personal approach to frontend development, combining technical rigor with thoughtful design and user experience. It is a project I was genuinely excited to design, build, and deploy, and it reflects how I enjoy turning ideas into polished, functional products.",
+        desc: "This website portfolio is a personal project designed not just as a showcase, but as a practical demonstration of how I approach software development: combining technical rigor, intentional design, and a carefully built user experience. It is developed with React, TypeScript, Vite, and Tailwind CSS, with strong attention to performance, clean structure, and fluid interaction design.\nThe application includes 3D scenes, transitions, bilingual content, and a non-traditional navigation model based on an interactive desk, which allowed me to work on both visual impact and maintainable code architecture at the same time.\nIt represents my profile well because it brings together modern frontend engineering, attention to detail, and the ability to turn a personal concept into a polished, technically solid product.",
         href: "https://github.com/Miguellarag02/my-website-portfolio#",
         checkLinkTxt: "Check my repository",
+        video: "/video/my_own_website.mp4",
         extraInformation: "/pdf/TFG_Lara_Guarino_power_point.pdf",
-        logo: "/assets/project-logo1.png",
+        logo: "/assets/project-logo2.png",
         logoStyle: {
           backgroundColor: "#13202F",
           border: "0.2px solid #17293E",
@@ -245,6 +275,24 @@ export const CONTENT_BY_LANG = {
           { id: 4, name: ICONS.tailwindcss.name, path: ICONS.tailwindcss.src },
         ],
       },
+      {
+        title: "Arduino solar tracker - First prize at Tecnoingenia 2019",
+        desc: "This project was presented at Tecnoingenia 2019, where it won first prize in the fourth category. It consisted of designing and building a small solar panel able to automatically orient itself toward the position where it could capture the greatest amount of light.\nThe system combined four photosensitive sensors placed around the panel, two servomotors, and an Arduino board as the control unit. Based on the light differences detected by the sensors, the Arduino determined the most favorable orientation and drove the servos to adjust the panel tilt and rotation.\nIt was one of my first complete electronics and control projects, and it gave me practical experience with sensor reading, actuator control, hardware-software integration, and the development of a functional prototype focused on improving energy efficiency.",
+        href: "https://www.uco.es/servicios/actualidad/vida-academica/item/133727-entregados-los-premios-del-iii-concurso-de-ideas-tecno-ingenia-2019",
+        checkLinkTxt: "More information",
+        video: "/video/tecnoingenia.mp4",
+        extraInformation: "",
+        logo: "/assets/project-logo1.png",
+        logoStyle: {
+          backgroundColor: "#182A1F",
+          border: "0.2px solid #1E3A2A",
+          boxShadow: "0px 0px 60px 0px #37A56B4D",
+        },
+        spotlight: "/assets/spotlight3.png",
+        tags: [
+          { id: 1, name: ICONS.arduino.name, path: ICONS.arduino.src }
+        ],
+      },
     ],
     workExperiences: [
       {
@@ -253,7 +301,7 @@ export const CONTENT_BY_LANG = {
         pos: "Researcher in Electronics Department",
         duration: "Sept 2023 - Apr 2024",
         title:
-          "Designed and implemented an FPGA-based optical sensor acquisition system using VHDL, C, and Petalinux for embedded control. Developed DMA-driven interrupt handling at kernel level, enabling reliable real-time data capture and processing. Validated the system end-to-end, reducing latency and improving signal consistency.",
+          "Designed and implemented an FPGA-based data acquisition system for optical sensors, combining VHDL, C, and PetaLinux to cover everything from embedded control to reliable real-time capture. I also developed DMA-driven interrupt handling at kernel level, improving data-flow efficiency, responsiveness, and operational stability.\nThe work included hardware-software integration, acquisition-pipeline tuning, sensor characterization, and end-to-end validation against technical requirements. This stage gave me a strong foundation in embedded systems, low-level software, and engineering environments where rigor is essential to achieve reliable results.",
         icon: "/assets/university.png",
       },
       {
@@ -262,7 +310,7 @@ export const CONTENT_BY_LANG = {
         pos: "Software Engineer Intern",
         duration: "May 2024 - Oct 2024",
         title:
-          "Enhanced the Philobot autonomous robotics platform using C++ and ROS, integrating YOLO models via TensorFlow and PyTorch for real-time object detection. Deployed inference pipelines that improved recognition performance and reduced response latency. Worked within an Agile/Scrum environment, contributing to sprint planning and iterative development.",
+          "Worked on improving the Philobot autonomous robotics platform with C++ and ROS, integrating YOLO models through TensorFlow and PyTorch for real-time object detection. I deployed inference pipelines aimed at improving recognition performance, reducing response latency, and keeping software behavior aligned with operational needs.\nThis stage helped me consolidate a practical engineering mindset centered on iteration, technical analysis, real problem solving, and collaboration with other profiles inside an Agile/Scrum environment. It was a valuable step in strengthening both my development base and my performance-oriented approach.",
         icon: "/assets/bertrandt.svg",
       },
       {
@@ -271,7 +319,7 @@ export const CONTENT_BY_LANG = {
         pos: "Software Engineer",
         duration: "Oct 2024 - Jul 2025",
         title:
-          "Research adaptive Human-Machine Interfaces (HMI) for the European FCAS program (EPIIC Project), improving integration reliability across multi-module systems. Built backend APIs in Python and desktop applications in Java for Airbus projects, optimizing data flow and reducing processing overhead. Actively participated in international workshops, enhancing cross-functional collaboration.",
+          "Researched adaptive Human-Machine Interfaces for the European FCAS program within the EPIIC project, contributing to improved integration reliability across modular systems in an international and technically demanding environment. This experience exposed me to an engineering context where interoperability, functional consistency, and coordination across organizations have a direct impact on outcomes.\nIn parallel, I built backend APIs in Python and desktop applications in Java for Airbus-related projects, optimizing data flows, reducing processing overhead, and improving integration between components. I also took part in international workshops, strengthening my ability to operate effectively in multidisciplinary aerospace and critical-system environments.",
         icon: "/assets/bertrandt.svg",
       },
       {
@@ -280,7 +328,7 @@ export const CONTENT_BY_LANG = {
         pos: "Software Requirements & Architecture Engineer",
         duration: "Jul 2025 - Present",
         title:
-          "Defined software architecture and functional specifications for a defense radar system developed by Indra. Designed verification and validation processes aligned with industry standards, improving traceability. Collaborated directly with clients to ensure system lifecycle consistency and technical alignment.",
+          "Define software architecture and functional specifications for a defense radar system developed by Indra, in an environment where product criticality demands rigor, traceability, and technical consistency throughout the full lifecycle. My role combines system-level thinking with engineering detail, ensuring that requirements, architecture, interfaces, and design decisions remain aligned.\nI also design verification and validation processes aligned with sector standards and collaborate directly with the client to maintain consistency between operational needs, implementation, and compliance evidence. It is especially valuable experience because of its proximity to mission-critical software and the level of discipline required in the defense sector.",
         icon: "/assets/bertrandt.svg",
       },
     ],
@@ -288,25 +336,25 @@ export const CONTENT_BY_LANG = {
       {
         id: 1,
         title: "Software",
-        desc: "I have worked on software projects where I could combine hands-on development with a strong focus on structure and quality. I mainly use Python, Java, C++, and MATLAB, and I enjoy designing clean solutions supported by software architecture, APIs, databases, and UML models.\nWhat matters most to me is building software that makes sense beyond code, so I usually work in a requirements-driven way. This naturally leads to verification and validation, where I ensure the implementation truly matches the original requirements and is properly tested and traceable.",
+        desc: "My foundation is software development with a strong focus on structure, technical quality, and system-level thinking. I mainly work with Python, Java, C++, and MATLAB, and I am comfortable building solutions supported by software architecture, APIs, databases, UML modeling, and clear maintainability criteria.\nI do not see software as isolated code, but as part of a wider system that must respond to real requirements and remain sustainable over time. That is why I pay close attention to design clarity, traceability, verification, and validation, especially in environments where the margin for error is low.\nA significant part of my experience has been connected to defense and aerospace, where robustness, technical consistency, and engineering discipline matter just as much as implementation itself.",
         icons: [ICONS.python, ICONS.java, ICONS.cpp, ICONS.matlab, ICONS.mysql],
       },
       {
         id: 2,
         title: "Tools",
-        desc: "Over time, I have become comfortable with a range of engineering tools that support development and collaboration. I use Git daily for version control, Jira to organize and track work, and Wireshark when I need to understand what is happening at protocol level.\nIn more structured environments, I have used IBM DOORS to manage requirements, versions, and traceability, which helped me understand how design, implementation, and verification fit together in real industrial projects. I also work regularly with Vivado, Linux/WSL, and MATLAB.",
+        desc: "Over time, I have built a working style supported by engineering, collaboration, and technical-control tools. I use Git daily for version control, Jira for planning and follow-up, and Wireshark when I need to analyze communication or protocol behavior in detail.\nI have also worked with IBM DOORS to manage requirements, change, and traceability, which is especially relevant in defense and aerospace environments where decisions require technical justification and compliance evidence. This gave me a broader view of how system needs, implementation, and validation are connected.\nI also work regularly with Vivado, Linux/WSL, and MATLAB, which allows me to move comfortably across development, integration, and analysis tasks.",
         icons: [ICONS.git, ICONS.docker, ICONS.ubuntu],
       },
       {
         id: 3,
         title: "Firmware",
-        desc: "My interest in low-level systems led me into firmware and embedded development, where I have worked with C and VHDL. I have had hands-on experience with FPGA and SoC platforms such as Zynq, which gave me a solid understanding of how hardware and software interact.\nWorking with PetaLinux and the Linux kernel helped me see the full picture, from boot and hardware integration to higher-level software components, and reinforced my interest in building reliable systems close to the hardware.",
+        desc: "My interest in low-level systems naturally led me into firmware and embedded development, working with C and VHDL on FPGA and SoC platforms such as Zynq. That background gave me a solid understanding of how hardware and software interact in systems where timing, performance, and reliability are real design constraints.\nWorking with PetaLinux and the Linux kernel gave me visibility across the full lifecycle: boot, hardware integration, data handling, software layers, and validation of final behavior. It reinforced a profile that does not stop at the application layer, but understands what is happening underneath.\nI am especially drawn to environments where proximity to hardware directly affects the overall reliability and quality of the final product.",
         icons: [ICONS.vivado, ICONS.csharp, ICONS.zynq],
       },
       {
         id: 4,
         title: "Soft Skills",
-        desc: "Beyond technical skills, I see myself as a curious and proactive person who enjoys working with others. I feel comfortable in Agile teams, sharing ideas, asking questions, and communicating technical topics clearly.\nI like learning continuously, solving problems step by step, and staying organized even in fast-paced environments. Adapting to multidisciplinary and international teams comes naturally to me, and I value collaboration as much as technical excellence.",
+        desc: "Beyond technical skills, I place strong value on how work gets built within a team. I see myself as a curious, proactive person who integrates easily, shares ideas openly, asks the right questions, and explains technical topics clearly when needed.\nI have worked in multidisciplinary and international environments, including collaborations linked to the FCAS program, where coordination across teams, disciplines, and organizations matters as much as the solution itself. That experience helped me strengthen judgment, adaptability, and clear professional communication.\nI am comfortable in demanding contexts with diverse stakeholders and high levels of responsibility, maintaining structure, focus, and commitment to quality even under pressure.",
         icons: [ICONS.partners, ICONS.proactivity, ICONS.agile],
       },
     ],
@@ -393,18 +441,31 @@ export const UI_TEXTS_BY_LANG = {
     },
     hero: {
       greeting: "Hola, soy Miguel Angel",
-      role: "Ingeniero de Software",
+      role: "Ingeniero de Software | Requisitos, Arquitectura y Sistemas Embebidos",
       cta: "Trabajemos juntos",
+      downloadCv: "Descargar CV",
+      linkedin: "LinkedIn",
+      github: "GitHub",
+      deskHintBadge: "Consejo",
+      deskHint: "Para acceder a las diferentes secciones, puedes hacer click sobre los elementos de la mesa.",
+      closeDeskHintAria: "Cerrar aviso sobre la mesa interactiva",
+      hoverWork: "Experiencia",
+      hoverAbout: "Sobre mi",
+      hoverProjects: "Proyectos",
+      hoverGames: "Juegos",
     },
     about: {
-      hobbiesTitle: "Fuera del trabajo",
+      hobbiesTitle: "Hobbies",
       aboutTitle: "Sobre mi",
-      abilitiesTitle: "Como puedo aportar",
+      abilitiesTitle: "Habilidades",
       profileAlt: "Foto de perfil",
     },
     work: {
       title: "Mi experiencia laboral",
       logoAlt: "logo",
+      downloadCvTitle: "CV estrategico",
+      downloadCvDesc: "Descarga una version mas detallada de mi perfil, experiencia y foco profesional.",
+      downloadCvCta: "Descargar CV",
     },
     projects: {
       title: "Mis proyectos",
@@ -414,18 +475,30 @@ export const UI_TEXTS_BY_LANG = {
       nextAlt: "siguiente",
     },
     navbar: {
-      backendLabel: "Backend",
+      backendLabel: "Portfolio online",
       toggleMenuAria: "Alternar menu",
+      languageHint: "Puedes cambiar el idioma aqui.",
+      languageHintMobile: "Puedes cambiar el idioma desde aqui.",
+      closeHintAria: "Cerrar aviso de idioma",
     },
     contact: {
       heading: "Hablemos",
-      subheading: "Si crees que puedo aportar a tu equipo o proyecto, hablemos.",
+      subheading: "Si buscas a alguien con buena base tecnica, ganas de aprender rapido y capacidad para aportar desde fases tempranas, estare encantado de hablar contigo.",
+      availabilityBadge: "Disponible para nuevas oportunidades",
+      introTitle: "Aprendo rapido y disfruto de los proyectos exigentes",
+      introBody: "Me gusta trabajar en proyectos donde pueda seguir creciendo mientras aporto valor real, especialmente si combinan software, sistemas y contexto tecnico exigente, como defensa, aeroespacio o entornos embebidos.",
+      contactEmailLabel: "Correo directo",
+      contactEmailValue: "miguelangellarag@gmail.com",
+      contactFocusLabel: "Enfoque",
+      contactFocusValue: "Software, sistemas criticos, requisitos y arquitectura",
+      contactLocationLabel: "Ubicacion",
+      contactLocationValue: "Sevilla, Espana",
       fullName: "Nombre completo",
       email: "Correo",
       message: "Tu mensaje",
       namePlaceholder: "Miguel Angel Lara",
       emailPlaceholder: "miguelangellarag@gmail.com",
-      messagePlaceholder: "Hola, quiero ofrecerte un trabajo...",
+      messagePlaceholder: "Hola Miguel Angel, creo que tu perfil encaja en una posicion relacionada con software, sistemas o arquitectura...",
       sendMessage: "Enviar mensaje",
       sending: "Enviando...",
       messageSent: "Tu mensaje se ha enviado.",
@@ -436,9 +509,11 @@ export const UI_TEXTS_BY_LANG = {
       starAlt: "estrella",
     },
     footer: {
-      terms: "Terminos y condiciones",
-      privacy: "Politica de privacidad",
+      terms: "Contacto directo",
+      privacy: "CV disponible",
       rights: "@ 2025 Miguel Angel. Todos los derechos reservados.",
+      linkedinAria: "Abrir perfil de LinkedIn",
+      githubAria: "Abrir perfil de GitHub",
     },
     games: {
       statusLabel: "Nuevo espacio en progreso",
@@ -502,6 +577,11 @@ export const UI_TEXTS_BY_LANG = {
       cannotShowPdf: "No se pudo mostrar el PDF.",
       openInTab: "Abrir en una pestana",
     },
+    video: {
+      noVideo: "No hay un video disponible para este proyecto.",
+      cannotShowVideo: "No se pudo mostrar el video.",
+      openInTab: "Abrir en una pestana",
+    },
   },
   en: {
     common: {
@@ -510,8 +590,18 @@ export const UI_TEXTS_BY_LANG = {
     },
     hero: {
       greeting: "Hi, I am Miguel Angel",
-      role: "Software Engineer",
+      role: "Software Engineer | Requirements, Architecture, and Embedded Systems",
       cta: "Let's work together",
+      downloadCv: "Download CV",
+      linkedin: "LinkedIn",
+      github: "GitHub",
+      deskHintBadge: "Tip",
+      deskHint: "To access the different sections, you can click on the items on the desk.",
+      closeDeskHintAria: "Close desk interaction notice",
+      hoverWork: "Work",
+      hoverAbout: "About me",
+      hoverProjects: "Projects",
+      hoverGames: "Games",
     },
     about: {
       hobbiesTitle: "My hobbies",
@@ -522,6 +612,9 @@ export const UI_TEXTS_BY_LANG = {
     work: {
       title: "My work experience",
       logoAlt: "logo",
+      downloadCvTitle: "Strategic CV",
+      downloadCvDesc: "Download a more detailed version of my profile, experience, and professional focus.",
+      downloadCvCta: "Download CV",
     },
     projects: {
       title: "My projects",
@@ -531,18 +624,30 @@ export const UI_TEXTS_BY_LANG = {
       nextAlt: "next",
     },
     navbar: {
-      backendLabel: "Backend",
+      backendLabel: "Portfolio online",
       toggleMenuAria: "Toggle menu",
+      languageHint: "You can change the language here.",
+      languageHintMobile: "You can change the language from here.",
+      closeHintAria: "Close language notice",
     },
     contact: {
       heading: "Let's talk",
-      subheading: "A quick note about the value I can bring to the team",
+      subheading: "If you are looking for someone with solid technical foundations, the ability to learn quickly, and the mindset to contribute early, I would be glad to talk.",
+      availabilityBadge: "Open to new opportunities",
+      introTitle: "I learn fast and genuinely enjoy demanding projects",
+      introBody: "I am especially interested in work where I can keep growing while contributing real value, particularly when software, systems, and technical complexity come together in areas such as defense, aerospace, or embedded environments.",
+      contactEmailLabel: "Direct email",
+      contactEmailValue: "miguelangellarag@gmail.com",
+      contactFocusLabel: "Focus",
+      contactFocusValue: "Software, critical systems, requirements, and architecture",
+      contactLocationLabel: "Location",
+      contactLocationValue: "Seville, Spain",
       fullName: "Full name",
       email: "Email",
       message: "Your message",
       namePlaceholder: "Miguel Angel Lara",
       emailPlaceholder: "miguelangellarag@gmail.com",
-      messagePlaceholder: "Hi, I would like to offer you a job...",
+      messagePlaceholder: "Hi Miguel Angel, I think your profile could be a good fit for a role related to software, systems, or architecture...",
       sendMessage: "Send message",
       sending: "Sending...",
       messageSent: "Your message has been sent.",
@@ -553,9 +658,11 @@ export const UI_TEXTS_BY_LANG = {
       starAlt: "star",
     },
     footer: {
-      terms: "Terms & conditions",
-      privacy: "Privacy policy",
+      terms: "Direct contact",
+      privacy: "CV available",
       rights: "@ 2025 Miguel Angel. All rights reserved.",
+      linkedinAria: "Open LinkedIn profile",
+      githubAria: "Open GitHub profile",
     },
     games: {
       statusLabel: "New space in progress",
@@ -617,6 +724,11 @@ export const UI_TEXTS_BY_LANG = {
     pdf: {
       noPdf: "No PDF available for this project.",
       cannotShowPdf: "Could not display the PDF.",
+      openInTab: "Open in a new tab",
+    },
+    video: {
+      noVideo: "No video available for this project.",
+      cannotShowVideo: "Could not display the video.",
       openInTab: "Open in a new tab",
     },
   },

@@ -4,8 +4,8 @@ import { STATES } from '../../constants/HeroRoutes.js'
 import CoffeeSteam from './CoffeeSteam.jsx'
 import { useLanguage } from "../../context/LanguageContext.jsx";
 
-const MyDesktop = ({stateSection, onLaptopClick, onMonitorClick, onKeyboardClick, onGameClick, outlineEnable, selectedProjectIndex, ...props }) => {
-  const { myProjects } = useLanguage();
+const MyDesktop = ({stateSection, onLaptopClick, onMonitorClick, onKeyboardClick, onGameClick, onHoverChange, outlineEnable, selectedProjectIndex, ...props }) => {
+  const { myProjects, UI_TEXTS } = useLanguage();
   const { nodes, materials } = useGLTF('/models/my_desktop.glb')
   const [hoverLaptop, setHoverLaptop] = useState(false)
   const [hoverMonitor, setHoverMonitor] = useState(false)
@@ -35,6 +35,19 @@ const MyDesktop = ({stateSection, onLaptopClick, onMonitorClick, onKeyboardClick
     onGameClick?.()
   }
 
+  const showHoverHint = (label, e) => {
+    onHoverChange?.({
+      label,
+      x: e.pointer?.x,
+      y: e.pointer?.y,
+      clientX: e.clientX,
+      clientY: e.clientY,
+    })
+  }
+
+  const clearHoverHint = () => {
+    onHoverChange?.(null)
+  }
 
 
   return (
@@ -50,11 +63,14 @@ const MyDesktop = ({stateSection, onLaptopClick, onMonitorClick, onKeyboardClick
             e.stopPropagation()
             setHoverLaptop(true)
             document.body.style.cursor = "pointer"
+            showHoverHint(UI_TEXTS.hero.hoverWork, e)
           }}
+          onPointerMove={(e) => showHoverHint(UI_TEXTS.hero.hoverWork, e)}
           onPointerOut={(e) => {
             e.stopPropagation()
             setHoverLaptop(false)
             document.body.style.cursor = "default"
+            clearHoverHint()
           }}
         >
         <group rotation={[Math.PI / 2, 0, 0]}>
@@ -199,11 +215,14 @@ const MyDesktop = ({stateSection, onLaptopClick, onMonitorClick, onKeyboardClick
             e.stopPropagation()
             setHoverMonitor(true)
             document.body.style.cursor = "pointer"
+            showHoverHint(UI_TEXTS.hero.hoverAbout, e)
           }}
+          onPointerMove={(e) => showHoverHint(UI_TEXTS.hero.hoverAbout, e)}
           onPointerOut={(e) => {
             e.stopPropagation()
             setHoverMonitor(false)
             document.body.style.cursor = "default"
+            clearHoverHint()
           }}
       >
         <mesh
@@ -249,11 +268,14 @@ const MyDesktop = ({stateSection, onLaptopClick, onMonitorClick, onKeyboardClick
             e.stopPropagation()
             setHoverKeyboard(true)
             document.body.style.cursor = "pointer"
+            showHoverHint(UI_TEXTS.hero.hoverProjects, e)
           }}
+          onPointerMove={(e) => showHoverHint(UI_TEXTS.hero.hoverProjects, e)}
           onPointerOut={(e) => {
             e.stopPropagation()
             setHoverKeyboard(false)
             document.body.style.cursor = "default"
+            clearHoverHint()
           }}
       >
         <group rotation={[Math.PI / 2, 0, 0]} scale={0.01}>
@@ -380,11 +402,14 @@ const MyDesktop = ({stateSection, onLaptopClick, onMonitorClick, onKeyboardClick
             e.stopPropagation()
             setHoverKeyboard(true)
             document.body.style.cursor = "pointer"
+            showHoverHint(UI_TEXTS.hero.hoverProjects, e)
           }}
+          onPointerMove={(e) => showHoverHint(UI_TEXTS.hero.hoverProjects, e)}
           onPointerOut={(e) => {
             e.stopPropagation()
             setHoverKeyboard(false)
             document.body.style.cursor = "default"
+            clearHoverHint()
           }}
       >
         <group position={[0.001, 2.898, -0.5]} rotation={[-1.684, 0.295, -1.199]} scale={4}>
@@ -624,11 +649,14 @@ const MyDesktop = ({stateSection, onLaptopClick, onMonitorClick, onKeyboardClick
             e.stopPropagation()
             setHoverGame(true)
             document.body.style.cursor = "pointer"
+            showHoverHint(UI_TEXTS.hero.hoverGames, e)
           }}
+          onPointerMove={(e) => showHoverHint(UI_TEXTS.hero.hoverGames, e)}
           onPointerOut={(e) => {
             e.stopPropagation()
             setHoverGame(false)
             document.body.style.cursor = "default"
+            clearHoverHint()
           }}
         >
         <group name="GLTF_SceneRootNode002" rotation={[Math.PI / 2, 0, 0]}>

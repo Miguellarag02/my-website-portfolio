@@ -12,8 +12,10 @@ import ProjectsSection from "./Projects.jsx";
 import AboutSection from "./About.jsx";
 import { useKeyboardControls } from "../components/Hero/KeyboardControls.jsx";
 import { useStateSectionControl } from "../components/Hero/StateSectionControl.jsx";
-import { calculateSizes, calculateCameraPositions } from "../constants/index.js";
+import { PROFILE_LINKS, calculateSizes, calculateCameraPositions } from "../constants/index.js";
 import { useLanguage } from "../context/LanguageContext.jsx";
+
+const DESK_HINT_STORAGE_KEY = "desk_hint_seen_v1";
 
 export default function Hero() {
     const { UI_TEXTS } = useLanguage();
@@ -21,6 +23,8 @@ export default function Hero() {
     const [outlineEnable, setOutlineEnable] = useState(true);
     const [cameraIsMoving, setCameraIsMoving] = useState(false)
     const [selectedProjectIndex, setSelectedProjectIndex] = useState(0);
+    const [showDeskHint, setShowDeskHint] = useState(false);
+    const [hoveredDeskSection, setHoveredDeskSection] = useState(null);
 
     // Sizing
     const { isSmall, isMobile, isTablet, isUltraWide } = useResponsiveFlags();
@@ -53,7 +57,7 @@ export default function Hero() {
     // Enable outliners
     useEffect(() => {
         const checkHash = () => {
-            if (window.location.hash === "#home") {
+            if (window.location.hash === "#home" || window.location.hash === "#contact") {
                 setOutlineEnable(true);
             } else {
                 setOutlineEnable(false);
@@ -71,8 +75,47 @@ export default function Hero() {
         };
     }, []);
 
+    useEffect(() => {
+        const hintSeen = window.localStorage.getItem(DESK_HINT_STORAGE_KEY);
+
+        if (hintSeen) {
+            return;
+        }
+
+        setShowDeskHint(true);
+    }, []);
+
     return (
         <section className="min-h-screen w-full flex flex-col">
+            {hoveredDeskSection && (
+                <div
+                    className="desk-hover-tooltip"
+                    style={{
+                        left: `${hoveredDeskSection.clientX + 18}px`,
+                        top: `${hoveredDeskSection.clientY - 18}px`,
+                    }}
+                >
+                    {hoveredDeskSection.label}
+                </div>
+            )}
+            {showDeskHint && (
+                <div className="language-hint-card language-hint-card-secondary fixed bottom-28 right-4 z-[65] w-[min(20rem,calc(100vw-2rem))] sm:bottom-10 sm:right-6">
+                    <div className="language-hint-glow" />
+                    <button
+                        type="button"
+                        onClick={() => {
+                            setShowDeskHint(false);
+                            window.localStorage.setItem(DESK_HINT_STORAGE_KEY, "true");
+                        }}
+                        aria-label={UI_TEXTS.hero.closeDeskHintAria}
+                        className="language-hint-close"
+                    >
+                        ×
+                    </button>
+                    <div className="language-hint-badge">{UI_TEXTS.hero.deskHintBadge}</div>
+                    <p className="language-hint-text pr-6">{UI_TEXTS.hero.deskHint}</p>
+                </div>
+            )}
             {/* IDLE */}
             {stateSection === STATES.HOME && (
                 <div className="w-full mx-auto flex flex-col sm:mt-36 mt-32 c-space gap-3">
@@ -82,6 +125,17 @@ export default function Hero() {
                     <p className={`hero_tag text-gray_gradient ${stateSection === STATES.HOME ? "fade-in-delay-3" : "fade-out"}`}>
                         {UI_TEXTS.hero.role}
                     </p>
+                    <div className={`hero-actions ${stateSection === STATES.HOME ? "fade-in-delay-3" : "fade-out"}`}>
+                        <a href={PROFILE_LINKS.cv} download className="hero-action hero-action_primary">
+                            {UI_TEXTS.hero.downloadCv}
+                        </a>
+                        <a href={PROFILE_LINKS.linkedin} target="_blank" rel="noreferrer" className="hero-action">
+                            {UI_TEXTS.hero.linkedin}
+                        </a>
+                        <a href={PROFILE_LINKS.github} target="_blank" rel="noreferrer" className="hero-action">
+                            {UI_TEXTS.hero.github}
+                        </a>
+                    </div>
                 </div>
             )}
 
@@ -118,6 +172,7 @@ export default function Hero() {
                             onMonitorClick={onMonitorClick}
                             onKeyboardClick={onKeyboardClick}
                             onGameClick={onGameClick}
+                            onHoverChange={setHoveredDeskSection}
                             outlineEnable={outlineEnable}
                             selectedProjectIndex={selectedProjectIndex}
                         />

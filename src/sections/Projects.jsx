@@ -1,4 +1,4 @@
-import PdfViewer from "../components/PdfViewer.jsx";
+import VideoViewer from "../components/VideoViewer.jsx";
 import { useLanguage } from "../context/LanguageContext.jsx";
 
 export default function Projects({ selectedProjectIndex, setSelectedProjectIndex }) {
@@ -66,7 +66,7 @@ export default function Projects({ selectedProjectIndex, setSelectedProjectIndex
                 </div>
             </div>
             <div className="border border-black-300 bg-black-200 rounded-lg h-[60vh] my-2 lg:block hidden">
-                <PdfViewer pdfLink={currentProject.extraInformation ?? currentProject.href} />
+                <VideoViewer videoLink={currentProject.video} />
             </div>
         </div>
     </section>
