@@ -29,7 +29,7 @@ export const PROFILE_LINKS = {
   cv: "/pdf/Miguel_Angel_Lara_Embedded_Software_CV_Strategic.pdf",
   email: "mailto:miguelangellarag@gmail.com",
   github: "https://github.com/Miguellarag02",
-  linkedin: "https://www.linkedin.com/in/miguel-angel-lara-guarino",
+  linkedin: "https://www.linkedin.com/in/miguellara02",
 };
 
 export const CONTENT_BY_LANG = {
@@ -167,7 +167,7 @@ export const CONTENT_BY_LANG = {
       {
         id: 2,
         title: "Herramientas",
-        desc: "A lo largo de distintos proyectos he consolidado una forma de trabajo apoyada en herramientas de ingenieria, colaboracion y control tecnico. Uso Git en el dia a dia para versionado, Jira para organizacion y seguimiento, y Wireshark cuando necesito analizar al detalle una comunicacion o un protocolo.\nTambien he trabajado con IBM DOORS para gestionar requisitos, cambios y trazabilidad, algo especialmente relevante en entornos de defensa y aeroespacio donde cada decision necesita justificacion tecnica y evidencia de cumplimiento. Esta forma de trabajar me dio una vision mas completa de como conectar necesidades de sistema, implementacion y validacion.\nA ello se suman herramientas que utilizo con frecuencia como Vivado, Linux/WSL y MATLAB, con las que me muevo con soltura tanto en tareas de desarrollo como de integracion y analisis.",
+        desc: "A lo largo de distintos proyectos he consolidado una forma de trabajo apoyada en herramientas de ingenieria, colaboracion y control tecnico. Uso Git en el dia a dia para versionado, Jira para organizacion y seguimiento, y VS Code como entorno habitual de desarrollo.\nTambien he trabajado con IBM DOORS para gestionar requisitos, cambios y trazabilidad, algo especialmente relevante en entornos de defensa y aeroespacio donde cada decision necesita justificacion tecnica y evidencia de cumplimiento. Esta forma de trabajar me dio una vision mas completa de como conectar necesidades de sistema, implementacion y validacion.\nMe manejo con soltura en sistemas Linux y Windows, incluyendo entornos WSL, y utilizo herramientas como MATLAB y Wireshark, cuando son requeridas, para tareas de analisis, desarrollo, integracion y validacion tecnica.",
         icons: [ICONS.git, ICONS.docker, ICONS.ubuntu],
       },
       {
@@ -342,7 +342,7 @@ export const CONTENT_BY_LANG = {
       {
         id: 2,
         title: "Tools",
-        desc: "Over time, I have built a working style supported by engineering, collaboration, and technical-control tools. I use Git daily for version control, Jira for planning and follow-up, and Wireshark when I need to analyze communication or protocol behavior in detail.\nI have also worked with IBM DOORS to manage requirements, change, and traceability, which is especially relevant in defense and aerospace environments where decisions require technical justification and compliance evidence. This gave me a broader view of how system needs, implementation, and validation are connected.\nI also work regularly with Vivado, Linux/WSL, and MATLAB, which allows me to move comfortably across development, integration, and analysis tasks.",
+        desc: "Over time, I have built a working style supported by engineering, collaboration, and technical-control tools. I use Git daily for version control, Jira for planning and follow-up, and VS Code as my usual development environment.\nI have also worked with IBM DOORS to manage requirements, changes, and traceability, which is especially relevant in defense and aerospace environments where decisions require technical justification and compliance evidence. This gave me a broader view of how system needs, implementation, and validation are connected.\nI am comfortable working across Linux and Windows systems, including WSL environments, and I use tools such as MATLAB and Wireshark, when they are required, for analysis, development, integration, and technical validation tasks.",
         icons: [ICONS.git, ICONS.docker, ICONS.ubuntu],
       },
       {
@@ -441,7 +441,7 @@ export const UI_TEXTS_BY_LANG = {
     },
     hero: {
       greeting: "Hola, soy Miguel Angel",
-      role: "Ingeniero de Software | Requisitos, Arquitectura y Sistemas Embebidos",
+      role: "Ingeniero de Software",
       cta: "Trabajemos juntos",
       downloadCv: "Descargar CV",
       linkedin: "LinkedIn",
@@ -590,7 +590,7 @@ export const UI_TEXTS_BY_LANG = {
     },
     hero: {
       greeting: "Hi, I am Miguel Angel",
-      role: "Software Engineer | Requirements, Architecture, and Embedded Systems",
+      role: "Software Engineer",
       cta: "Let's work together",
       downloadCv: "Download CV",
       linkedin: "LinkedIn",

@@ -47,7 +47,7 @@ body {
   }
 
   .head-text {
-    @apply sm:text-4xl text-3xl font-semibold text-gray_gradient;
+    @apply sm:text-4xl text-3xl font-semibold text-[#D5D8EA];
   }
 
   .nav-ul {
@@ -64,10 +64,6 @@ body {
 
   .nav-sidebar {
     @apply absolute left-0 right-0 bg-black-200 backdrop-blur-sm transition-all duration-300 ease-in-out overflow-hidden z-20 mx-auto sm:hidden block;
-  }
-
-  .text-gray_gradient {
-    @apply bg-gradient-to-r from-[#BEC1CF] from-60% via-[#D5D8EA] via-60% to-[#D5D8EA] to-100% bg-clip-text text-transparent;
   }
 
   /* button component */
@@ -94,6 +90,18 @@ body {
   /* hero section */
   .hero_tag {
     @apply text-center xl:text-6xl md:text-5xl sm:text-4xl text-3xl font-generalsans font-black !leading-normal;
+  }
+
+  .hero-actions {
+    @apply mx-auto mt-4 flex w-full max-w-2xl flex-wrap items-center justify-center gap-3;
+  }
+
+  .hero-action {
+    @apply inline-flex min-h-11 items-center justify-center rounded-full border border-white/15 bg-black-300/75 px-5 py-2 text-sm font-semibold text-white shadow-black-200 shadow-xl backdrop-blur transition-all duration-300 hover:border-white/40 hover:bg-white/10;
+  }
+
+  .hero-action_primary {
+    @apply border-cyan-200/40 bg-white text-black hover:bg-cyan-100 hover:text-black;
   }
 
   /* about section */
@@ -352,7 +360,7 @@ body {
 
   /*  footer */
   .social-icon {
-    @apply w-12 h-12 rounded-full flex justify-center items-center bg-black-300 border border-black-200;
+    @apply w-12 h-12 rounded-full flex justify-center items-center bg-black-300 border border-black-200 transition-all duration-300 hover:border-white/40 hover:bg-white/10;
   }
 }
 

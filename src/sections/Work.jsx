@@ -1,8 +1,8 @@
 import { useLanguage } from "../context/LanguageContext.jsx";
+import { PROFILE_LINKS } from "../constants/index.js";
 
 export default function Work() {
   const { workExperiences, UI_TEXTS } = useLanguage();
-  const cvHref = "/pdf/Miguel_Angel_Lara_Embedded_Software_CV_Strategic.pdf";
 
   return (
     <section className="c-space lg:ml-12 md:mt-48 mt-36 z-10 fade-in">
@@ -56,7 +56,7 @@ export default function Work() {
                   {UI_TEXTS.work.downloadCvDesc}
                 </p>
                 <a
-                  href={cvHref}
+                  href={PROFILE_LINKS.cv}
                   download
                   className="inline-flex mt-4 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-semibold text-white transition-all duration-300 hover:bg-white hover:text-black"
                 >

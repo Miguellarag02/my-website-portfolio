@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
 import { useLanguage } from "../context/LanguageContext.jsx";
+import { PROFILE_LINKS} from "../constants/index.js";
 
 const Contact = () => {
     const { UI_TEXTS } = useLanguage();
@@ -46,7 +47,6 @@ const Contact = () => {
     return (
         <section className="c-space my-20" id="contact">
             <div className="relative min-h-screen flex items-center justify-center">
-                <img src="/assets/terminal.png" alt="terminal background" className="absolute inset-0 min-h-screen object-cover opacity-30"/>
                 <div className="contact-shell">
                     <div className="contact-copy">
                         <div className="contact-badge">{UI_TEXTS.contact.availabilityBadge}</div>
@@ -122,6 +122,15 @@ const Contact = () => {
                                 </button>
                             </label>
                         </form>
+                        <div className="border-t border-gray-300 my-6"></div>
+                        <div className={`hero-actions`}>
+                            <a href={PROFILE_LINKS.cv} download className="hero-action">
+                                {UI_TEXTS.hero.downloadCv}
+                            </a>
+                            <a href={PROFILE_LINKS.linkedin} target="_blank" rel="noreferrer" className="hero-action">
+                                {UI_TEXTS.hero.linkedin}
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>

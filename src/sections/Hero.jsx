@@ -12,7 +12,7 @@ import ProjectsSection from "./Projects.jsx";
 import AboutSection from "./About.jsx";
 import { useKeyboardControls } from "../components/Hero/KeyboardControls.jsx";
 import { useStateSectionControl } from "../components/Hero/StateSectionControl.jsx";
-import { PROFILE_LINKS, calculateSizes, calculateCameraPositions } from "../constants/index.js";
+import { calculateSizes, calculateCameraPositions } from "../constants/index.js";
 import { useLanguage } from "../context/LanguageContext.jsx";
 
 const DESK_HINT_STORAGE_KEY = "desk_hint_seen_v1";
@@ -122,20 +122,9 @@ export default function Hero() {
                     <p className={`sm:text-3xl text-2xl font-medium text-white text-center font-generalsans ${stateSection === STATES.HOME ? "fade-in-delay-2" : "fade-out"}`}>
                         {UI_TEXTS.hero.greeting} <span className="waving-hand">👋</span>
                     </p>
-                    <p className={`hero_tag text-gray_gradient ${stateSection === STATES.HOME ? "fade-in-delay-3" : "fade-out"}`}>
+                    <p className={`hero_tag text-[#D5D8EA] ${stateSection === STATES.HOME ? "fade-in-delay-3" : "fade-out"}`}>
                         {UI_TEXTS.hero.role}
                     </p>
-                    <div className={`hero-actions ${stateSection === STATES.HOME ? "fade-in-delay-3" : "fade-out"}`}>
-                        <a href={PROFILE_LINKS.cv} download className="hero-action hero-action_primary">
-                            {UI_TEXTS.hero.downloadCv}
-                        </a>
-                        <a href={PROFILE_LINKS.linkedin} target="_blank" rel="noreferrer" className="hero-action">
-                            {UI_TEXTS.hero.linkedin}
-                        </a>
-                        <a href={PROFILE_LINKS.github} target="_blank" rel="noreferrer" className="hero-action">
-                            {UI_TEXTS.hero.github}
-                        </a>
-                    </div>
                 </div>
             )}
 
