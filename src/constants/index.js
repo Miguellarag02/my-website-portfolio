@@ -405,7 +405,7 @@ export const calculateSizes = (isSmall, isMobile, isTablet, isUltraWide) => {
     deskScale:        isSmall ? 0.80                    : isMobile ? 0.80                     : isUltraWide ? 1.4 : 1.20,
     deskPos:          isSmall ? [-0.3, -2.1, 3.9]       : isMobile ? [-0.2, -1.1, 3.9]        : isUltraWide ? [0.0, -3, 3.9]        : [0.0, -2.5, 3.9],
     deskRot:          [0.39, 4.34, 0.0],
-    laptopCameraPos:  isSmall ? [1, 0.27, 4.77]         : isMobile ? [1, 1.03, 4.75]          : isTablet ? [1.9, 0.96, 5.5]         : isUltraWide ? [2.37, 1.10, 5.80]      : [1.97, 1.02, 5.44],
+    laptopCameraPos:  isSmall ? [1, 0.27, 4.77]         : isMobile ? [1, 1.03, 4.75]          : isTablet ? [1.9, 0.96, 5.5]         : isUltraWide ? [2.37, 1.10, 5.80]      : [2.1, 1.05, 5.35],
     laptopCameraRot:  isSmall ? [0.155, -0.965, -0.195] : isMobile ? [0.155, -0.965, -0.195]  : isTablet ? [0.155, -0.965, -0.195]  : isUltraWide ? [0.155, -0.965, -0.195] : [0.155, -0.965, -0.195],
     monitorCameraPos: isSmall ? [-0.95, 0.3, 5.0]       : isMobile ? [-0.9, 1.1, 5.0]         : isTablet ? [-1.06, 0.96, 5.9]       : isUltraWide ? [-1.31, 1.15, 6.48]     : [-1.16, 0.96, 6.08],
     monitorCameraRot: isSmall ? [0.39, -0.38, 0.00]     : isMobile ? [0.39, -0.38, 0.00]      : isTablet ? [0.39, -0.38, 0.00]      : isUltraWide ? [0.39, -0.38, 0.00]     : [0.39, -0.38, 0.00]
