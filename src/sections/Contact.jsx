@@ -124,8 +124,11 @@ const Contact = () => {
                         </form>
                         <div className="border-t border-gray-300 my-6"></div>
                         <div className={`hero-actions`}>
-                            <a href={PROFILE_LINKS.cv} download className="hero-action">
-                                {UI_TEXTS.hero.downloadCv}
+                            <a href={PROFILE_LINKS.embedded_cv} download className="hero-action">
+                                {UI_TEXTS.hero.downloadEmbeddedCv}
+                            </a>
+                            <a href={PROFILE_LINKS.software_cv} download className="hero-action">
+                                {UI_TEXTS.hero.downloadSoftwareCv}
                             </a>
                             <a href={PROFILE_LINKS.linkedin} target="_blank" rel="noreferrer" className="hero-action">
                                 {UI_TEXTS.hero.linkedin}

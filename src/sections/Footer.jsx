@@ -8,8 +8,6 @@ const Footer = () => {
         <section className="c-space pt-7 pb-3 border-t border-black-300 bg-black-300 flex justify-between items-center flex-wrap gap-5">
             <div className="text-white-500 flex gap-2">
                 <a href={PROFILE_LINKS.email} className="hover:text-white transition-colors">{UI_TEXTS.footer.terms}</a>
-                <span>/</span>
-                <a href={PROFILE_LINKS.cv} download className="hover:text-white transition-colors">{UI_TEXTS.footer.privacy}</a>
             </div>
             
             <div className="flex gap-3">

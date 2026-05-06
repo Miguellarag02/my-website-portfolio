@@ -108,13 +108,13 @@ const About = () => {
             <p className="card_tag text-gray row-span-2">
               {UI_TEXTS.about.aboutTitle} <span className="waving-hand">👋</span>
             </p>
-            <div className="flex items-center justify-center xl:row-span-3 row-span-2">
+            <div className="flex items-center justify-center row-span-2 px-6 py-2">
               <div className="avatar-frame">
                 <div className="w-full h-full rounded-full overflow-hidden bg-zinc-900">
                   <img
                     src="/assets/me.png"
                     alt={UI_TEXTS.about.profileAlt}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover object-center"
                   />
                 </div>
               </div>
@@ -123,7 +123,7 @@ const About = () => {
                 md:text-base sm:text-xs text-[10px]
                 leading-relaxed
                 text-justify
-                xl:row-span-3 row-span-4
+                row-span-4
                 mx-10">
               <p className="max-w-prose">
                 {AboutMe.description}

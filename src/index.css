@@ -177,13 +177,16 @@ body {
   }
 
   .avatar-frame {
-    @apply flex xl:w-[35%] lg:w-[50%] md:w-[50%] sm:w-[50%] w-[70%] -mt-12 rounded-full p-1 bg-gradient-to-tr from-white/10 via-white/40 to-white/10 transition-transform duration-1000 ease-in-out
+    width: clamp(6.5rem, 42%, 13rem);
+    aspect-ratio: 1 / 1;
+    flex: 0 0 auto;
+    @apply flex rounded-full p-1 bg-gradient-to-tr from-white/10 via-white/40 to-white/10 transition-transform duration-1000 ease-in-out;
   }
   .card-inactive .avatar-frame {@apply scale-75}
 
   .ability_card_base {
     @apply w-full h-full absolute border-[2px] border-black-300 bg-black-200 rounded-3xl
-          text-left p-5 cursor-pointer
+          text-left sm:p-5 p-3 cursor-pointer overflow-hidden
           transition-all duration-700 ease-in-out;
     transform: translate3d(0,0,0);
   }
@@ -207,6 +210,14 @@ body {
   .ability_card_expanded {
     @apply absolute translate-x-0 translate-y-0 opacity-100;
     transform: translate3d(0, 0, 80px);
+  }
+
+  .ability-card_content {
+    @apply h-full w-full overflow-y-auto pr-2 pt-8 sm:pt-7 scrollbar-thin scrollbar-thumb-white/25 scrollbar-track-transparent;
+  }
+
+  .ability-card_text {
+    @apply whitespace-pre-line break-words text-white/65 font-semibold leading-relaxed 2xl:text-sm md:text-xs sm:text-[11px] text-[9px];
   }
 
   /* projects section  */
@@ -319,28 +330,29 @@ body {
 
   /* hobbies section */
   .hobby-section {
-    @apply relative grid md:grid-cols-3 grid-cols-4 row-span-2 rounded-md mx-10 my-1
+    @apply relative grid md:grid-cols-3 grid-cols-4 row-span-2 rounded-md md:mx-10 mx-4 my-1 min-h-0 overflow-hidden
     opacity-80 md:scale-95 scale-90 transition-all ease-in-out duration-500
     pointer-events-auto hover:scale-100 hover:opacity-100;
   }
 
   .hobby-card {
     @apply relative col-span-2 rounded-md border
-          border-blue-500 items-center mx-1;
+          border-blue-500 items-center mx-1 min-h-0 overflow-hidden pb-[5%];
   }
 
   .hobby-card_title {
-    @apply md:text-base text-[10px] ml-2 my-2 font-semibold mb-1;
+    @apply md:text-base text-[9px] ml-2 md:my-2 my-1 font-semibold mb-1 leading-tight;
   }
 
   .hobby-card_desc {
-    @apply xl:text-[0.8125rem] lg:text-[10px] text-[6px] leading-tight
-    text-justify md:ml-4 md:mr-4 ml-1 mr-1 text-gray-300;
+    @apply xl:text-[0.8125rem] lg:text-[10px] text-[7px] leading-tight
+    text-justify md:ml-4 md:mr-4 ml-1 mr-1 text-gray-300 overflow-y-auto break-words scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent;
+    max-height: calc(100% - 1.35rem);
   }
 
   .hobby-image {
     @apply relative md:col-span-1 col-span-2
-          md:h-36 h-32
+          md:h-36 h-full min-h-0
           rounded-md
           mx-1 my-1 overflow-hidden;
   }

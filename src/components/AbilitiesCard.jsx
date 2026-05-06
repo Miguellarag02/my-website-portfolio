@@ -31,10 +31,10 @@ const AbilitiesCard = ({ openId, setOpenId }) => {
                 <span>{card.title}</span>
               </div>
             </div>
-            <div className={openId == card.id ? "w-full h-full" : "hidden"}>
+            <div className={openId == card.id ? "ability-card_content" : "hidden"}>
               <p className={
                 openId == card.id ? 
-                "text-white/60 items-center justify-center 2xl:text-sm md:text-xs text-[10px] mt-2 leading-relaxed whitespace-pre-line font-semibold fade-in-delay-1" 
+                "ability-card_text fade-in-delay-1" 
                 : "hidden"}>{card.desc}
               </p>
               <div className="absolute top-[1vh] right-[0.5vw] ">

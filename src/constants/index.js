@@ -26,7 +26,8 @@ export const ICONS = {
 export const DEFAULT_UI_LANG = "en";
 
 export const PROFILE_LINKS = {
-  cv: "/pdf/Miguel_Angel_Lara_Embedded_Software_CV_Strategic.pdf",
+  embedded_cv: "/pdf/Miguel_Angel_Lara_Embedded_Software_CV.pdf",
+  software_cv: "/pdf/Miguel_Angel_Lara_Software_EngineerCV.pdf",
   email: "mailto:miguelangellarag@gmail.com",
   github: "https://github.com/Miguellarag02",
   linkedin: "https://www.linkedin.com/in/miguellara02",
@@ -86,7 +87,7 @@ export const CONTENT_BY_LANG = {
         checkLinkTxt: "Ver repositorio",
         extraInformation: "/pdf/TFG_Lara_Guarino_power_point.pdf",
         video: "/video/my_own_website.mp4",
-        logo: "/assets/project-logo1.png",
+        logo: "/assets/project-logo2.png",
         logoStyle: {
           backgroundColor: "#13202F",
           border: "0.2px solid #17293E",
@@ -107,7 +108,7 @@ export const CONTENT_BY_LANG = {
         checkLinkTxt: "Mas información",
         extraInformation: "",
         video: "/video/tecnoingenia.mp4",
-        logo: "/assets/project-logo1.png",
+        logo: "/assets/project-logo3.png",
         logoStyle: {
           backgroundColor: "#182A1F",
           border: "0.2px solid #1E3A2A",
@@ -282,7 +283,7 @@ export const CONTENT_BY_LANG = {
         checkLinkTxt: "More information",
         video: "/video/tecnoingenia.mp4",
         extraInformation: "",
-        logo: "/assets/project-logo1.png",
+        logo: "/assets/project-logo3.png",
         logoStyle: {
           backgroundColor: "#182A1F",
           border: "0.2px solid #1E3A2A",
@@ -443,7 +444,8 @@ export const UI_TEXTS_BY_LANG = {
       greeting: "Hola, soy Miguel Angel",
       role: "Ingeniero de Software",
       cta: "Trabajemos juntos",
-      downloadCv: "Descargar CV",
+      downloadEmbedddedCv: "Descargar CV (Embedded software engineer)",
+      downloadSoftwareCv: "Descargar CV (Software engineer)",
       linkedin: "LinkedIn",
       github: "GitHub",
       deskHintBadge: "Consejo",
@@ -463,8 +465,10 @@ export const UI_TEXTS_BY_LANG = {
     work: {
       title: "Mi experiencia laboral",
       logoAlt: "logo",
-      downloadCvTitle: "CV estrategico",
-      downloadCvDesc: "Descarga una version mas detallada de mi perfil, experiencia y foco profesional.",
+      downloadEmbeddedCvTitle: "Embedded Software Engineer CV",
+      downloadSoftwareCvTitle: "Software Engineer CV",
+      downloadEmbeddedCvDesc: "Descarga una version mas detallada de mi perfil, experiencia y foco profesional para el puesto de Embedded Software Engineer.",
+      downloadSoftwareCvDesc: "Descarga una version mas detallada de mi perfil, experiencia y foco profesional para el puesto de Software Engineer.",
       downloadCvCta: "Descargar CV",
     },
     projects: {
@@ -510,7 +514,6 @@ export const UI_TEXTS_BY_LANG = {
     },
     footer: {
       terms: "Contacto directo",
-      privacy: "CV disponible",
       rights: "@ 2025 Miguel Angel. Todos los derechos reservados.",
       linkedinAria: "Abrir perfil de LinkedIn",
       githubAria: "Abrir perfil de GitHub",
@@ -592,7 +595,8 @@ export const UI_TEXTS_BY_LANG = {
       greeting: "Hi, I am Miguel Angel",
       role: "Software Engineer",
       cta: "Let's work together",
-      downloadCv: "Download CV",
+      downloadEmbeddedCv: "Download CV (Embedded Software Engineer)",
+      downloadSoftwareCv: "Download CV (Software Engineer)",
       linkedin: "LinkedIn",
       github: "GitHub",
       deskHintBadge: "Tip",
@@ -612,8 +616,10 @@ export const UI_TEXTS_BY_LANG = {
     work: {
       title: "My work experience",
       logoAlt: "logo",
-      downloadCvTitle: "Strategic CV",
-      downloadCvDesc: "Download a more detailed version of my profile, experience, and professional focus.",
+      downloadSoftwareCvTitle: "CV Software Engineer",
+      downloadEmbeddedCvTitle: "CV Embedded Software Engineer",
+      downloadSoftwareCvDesc: "Download a more detailed version of my profile, experience, and professional focus for the Software Engineer position.",
+      downloadEmbeddedCvDesc: "Download a more detailed version of my profile, experience, and professional focus for the Embedded Software Engineer position.",
       downloadCvCta: "Download CV",
     },
     projects: {
