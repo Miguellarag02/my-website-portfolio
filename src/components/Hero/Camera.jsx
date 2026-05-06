@@ -1,5 +1,5 @@
 import { useFrame } from "@react-three/fiber"
-import { useRef } from "react"
+import { useLayoutEffect, useRef } from "react"
 import { easing } from "maath"
 import * as THREE from "three"
 
@@ -8,6 +8,21 @@ const EPSILON = 0.01
 const HeroCamera = ({ children, freeMovement, cameraState, setCameraIsMoving }) => {
   const groupRef = useRef()
   const target = useRef(new THREE.Vector3())
+  const previousTarget = useRef(null)
+  const [targetX, targetY, targetZ] = cameraState.pos
+
+  useLayoutEffect(() => {
+    const nextTarget = new THREE.Vector3(targetX, targetY, targetZ)
+
+    if (
+      previousTarget.current &&
+      previousTarget.current.distanceTo(nextTarget) > EPSILON
+    ) {
+      setCameraIsMoving(true)
+    }
+
+    previousTarget.current = nextTarget
+  }, [targetX, targetY, targetZ, setCameraIsMoving])
 
   useFrame((state, delta) => {
     easing.damp3(state.camera.position, cameraState.pos, 0.8, delta)

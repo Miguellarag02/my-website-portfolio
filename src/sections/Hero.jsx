@@ -85,6 +85,12 @@ export default function Hero() {
         setShowDeskHint(true);
     }, []);
 
+    useEffect(() => {
+        if (cameraIsMoving) {
+            setHoveredDeskSection(null);
+        }
+    }, [cameraIsMoving]);
+
     return (
         <section className="min-h-screen w-full flex flex-col">
             {hoveredDeskSection && (
@@ -162,11 +168,11 @@ export default function Hero() {
                             onKeyboardClick={onKeyboardClick}
                             onGameClick={onGameClick}
                             onHoverChange={setHoveredDeskSection}
+                            hoverHintsEnabled={!cameraIsMoving}
                             outlineEnable={outlineEnable}
                             selectedProjectIndex={selectedProjectIndex}
                         />
                     </HeroCamera>
-
                     <ambientLight intensity={1.0} />
                     <directionalLight position={[-15, 7, 1]} intensity={3.0} />
                     </Suspense>

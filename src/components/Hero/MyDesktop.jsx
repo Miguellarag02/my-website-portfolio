@@ -4,7 +4,7 @@ import { STATES } from '../../constants/HeroRoutes.js'
 import CoffeeSteam from './CoffeeSteam.jsx'
 import { useLanguage } from "../../context/LanguageContext.jsx";
 
-const MyDesktop = ({stateSection, onLaptopClick, onMonitorClick, onKeyboardClick, onGameClick, onHoverChange, outlineEnable, selectedProjectIndex, ...props }) => {
+const MyDesktop = ({stateSection, onLaptopClick, onMonitorClick, onKeyboardClick, onGameClick, onHoverChange, hoverHintsEnabled = true, outlineEnable, selectedProjectIndex, ...props }) => {
   const { myProjects, UI_TEXTS } = useLanguage();
   const { nodes, materials } = useGLTF('/models/my_desktop.glb')
   const [hoverLaptop, setHoverLaptop] = useState(false)
@@ -36,6 +36,11 @@ const MyDesktop = ({stateSection, onLaptopClick, onMonitorClick, onKeyboardClick
   }
 
   const showHoverHint = (label, e) => {
+    if (!hoverHintsEnabled) {
+      onHoverChange?.(null)
+      return
+    }
+
     onHoverChange?.({
       label,
       x: e.pointer?.x,
