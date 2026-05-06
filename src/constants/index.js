@@ -479,7 +479,6 @@ export const UI_TEXTS_BY_LANG = {
       nextAlt: "siguiente",
     },
     navbar: {
-      backendLabel: "Portfolio online",
       toggleMenuAria: "Alternar menu",
       languageHint: "Puedes cambiar el idioma aqui.",
       languageHintMobile: "Puedes cambiar el idioma desde aqui.",
@@ -630,7 +629,6 @@ export const UI_TEXTS_BY_LANG = {
       nextAlt: "next",
     },
     navbar: {
-      backendLabel: "Portfolio online",
       toggleMenuAria: "Toggle menu",
       languageHint: "You can change the language here.",
       languageHintMobile: "You can change the language from here.",

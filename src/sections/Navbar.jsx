@@ -133,9 +133,6 @@ const Navbar = ({root, isGamePage}) => {
                 <div className="flex justify-between items-center py-5 mx-auto c-space">
                     <div className="flex items-center gap-3 whitespace-nowrap flex-row">
                         <AliveCheck />
-                        <div className="text-white font-bold text-xl">
-                            <p>{UI_TEXTS.navbar.backendLabel}</p>
-                        </div>
                     </div>
                     
                     <button onClick={toggleMenu} className="text-neutral-400 hover:text-white focus:outline-none sm:hidden flex" aria-label={UI_TEXTS.navbar.toggleMenuAria}>
